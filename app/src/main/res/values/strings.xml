@@ -1,9 +1,23 @@
 <resources>
     <string name="app_name">ISV - Registro</string>
     <string name="action_settings">Settings</string>
-    <string name="section_format">Hello World from section: %1$d</string>
-    <string name="title_activity_main">MainActivity</string>
     <string name="tab_text_1">ISV</string>
     <string name="tab_text_2">Información</string>
     <string name="tab_text_3">Datos Generales</string>
+
+    <string name="lbl_lat_lon">Captura de Latitud Y Longitud</string>
+    <string name="txt_latitude">Latitud</string>
+    <string name="txt_longitude">Longitud</string>
+
+    <string name="lbl_photos_signal">Fotos de la señal</string>
+    <string name="photo_front">Frontal</string>
+    <string name="photo_back">Dorsal</string>
+    <string name="photo_plaque">Placa</string>
+
+    <string name="lbl_clasification_signal">Clasificación de la Señal</string>
+    <string name="btn_horizontal">Horizontal</string>
+    <string name="btn_vertical">Vertical</string>
+
+    <string name="lbl_state">Estado de Registro</string>
+
 </resources>
