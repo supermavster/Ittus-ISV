@@ -13,7 +13,6 @@ class TabGeneralData: Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val rootView = inflater.inflate(R.layout.tab_general_data, container, false)
-        return rootView
+        return inflater.inflate(R.layout.tab_general_data, container, false)
     }
 }
