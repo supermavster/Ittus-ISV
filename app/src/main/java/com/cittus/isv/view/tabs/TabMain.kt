@@ -1,4 +1,4 @@
-package com.cittus.isv.controller.tabs
+package com.cittus.isv.view.tabs
 
 import android.os.Bundle
 import android.support.v4.app.Fragment

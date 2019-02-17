@@ -1,4 +1,4 @@
-package com.cittus.isv.controller.tabs
+package com.cittus.isv.view.tabs
 
 import android.os.Bundle
 import android.support.v4.app.Fragment
@@ -7,12 +7,12 @@ import android.view.View
 import android.view.ViewGroup
 import com.cittus.isv.R
 
-class TabGeneralData: Fragment() {
+class TabInformation : Fragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.tab_general_data, container, false)
+        return inflater.inflate(R.layout.tab_information, container, false)
     }
 }

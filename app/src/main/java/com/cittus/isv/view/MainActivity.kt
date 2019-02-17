@@ -1,4 +1,4 @@
-package com.cittus.isv.controller
+package com.cittus.isv.view
 
 import android.support.design.widget.TabLayout
 import android.support.design.widget.Snackbar
@@ -12,9 +12,9 @@ import android.view.Menu
 import android.view.MenuItem
 
 import com.cittus.isv.R
-import com.cittus.isv.controller.tabs.TabGeneralData
-import com.cittus.isv.controller.tabs.TabInformation
-import com.cittus.isv.controller.tabs.TabMain
+import com.cittus.isv.view.tabs.TabGeneralData
+import com.cittus.isv.view.tabs.TabInformation
+import com.cittus.isv.view.tabs.TabMain
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
