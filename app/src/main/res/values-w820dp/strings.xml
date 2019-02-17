@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     // Main Labels
     <string name="app_name">ISV - Registro</string>
@@ -54,7 +55,7 @@
     <string name="lbl_location_with_signal">Con:</string>
 
     <string name="lbl_number">Número (#):</string>
-    
+
     <string name="lbl_state_signal">Estado de la Señal:</string>
 
     // Extra LBLS

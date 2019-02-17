@@ -5,4 +5,96 @@
                                              android:id="@+id/tab_general_data"
                                              android:layout_width="match_parent"
                                              android:layout_height="match_parent"
-                                             tools:context=".controller.MainActivity"/>
+                                             tools:context=".controller.MainActivity">
+    <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="8dp" android:layout_marginStart="8dp"
+            android:id="@+id/linearLayout3" android:layout_marginTop="16dp" app:layout_constraintTop_toTopOf="parent">
+        <TextView
+                android:text="@string/lbl_location_between_signal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" android:id="@+id/lbl_location_between_signal"
+                android:layout_weight="1"/>
+        <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" android:layout_weight="1" android:layout_marginBottom="15dp">
+            <Spinner
+                    android:id="@+id/dynamic_spinner"
+                    android:layout_width="280dp"
+                    android:layout_height="wrap_content"/>
+            <EditText
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:inputType="number"
+                    android:ems="10"
+                    android:id="@+id/editText" android:layout_weight="1" android:hint="@string/lbl_number"/>
+        </LinearLayout>
+        <TextView
+                android:text="@string/lbl_location_and_signal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" android:id="@+id/lbl_location_and_signal"
+                android:layout_weight="1"/>
+        <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" android:layout_weight="1" android:layout_marginBottom="15dp">
+            <Spinner
+                    android:id="@+id/dynamic_spinner"
+                    android:layout_width="280dp"
+                    android:layout_height="wrap_content"/>
+            <EditText
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:inputType="number"
+                    android:ems="10"
+                    android:id="@+id/editText" android:layout_weight="1" android:hint="@string/lbl_number"/>
+        </LinearLayout>
+        <TextView
+                android:text="@string/lbl_location_with_signal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" android:id="@+id/lbl_location_with_signal"
+                android:layout_weight="1"/>
+        <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" android:layout_weight="1" android:layout_marginBottom="15dp">
+            <Spinner
+                    android:id="@+id/dynamic_spinner"
+                    android:layout_width="280dp"
+                    android:layout_height="wrap_content"/>
+            <EditText
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:inputType="number"
+                    android:ems="10"
+                    android:id="@+id/editText" android:layout_weight="1" android:hint="@string/lbl_number"/>
+        </LinearLayout>
+    </LinearLayout>
+    <View
+            android:id="@+id/divider6"
+            android:layout_width="379dp"
+            android:layout_height="1dp"
+            android:background="?android:attr/listDivider"
+            android:layout_marginStart="16dp" app:layout_constraintTop_toBottomOf="@+id/linearLayout3"
+            app:layout_constraintStart_toStartOf="parent" app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginEnd="16dp" android:layout_marginTop="36dp" app:layout_constraintHorizontal_bias="1.0"/>
+    <TextView
+            android:text="@string/lbl_state_signal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/lbl_state_signal" android:layout_marginTop="16dp"
+            app:layout_constraintTop_toBottomOf="@+id/divider6" app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginEnd="16dp" app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginStart="16dp"/>
+    <RatingBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/rb_state_signal" android:layout_marginTop="16dp"
+            app:layout_constraintTop_toBottomOf="@+id/lbl_state_signal" app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginStart="16dp" app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginEnd="16dp"/>
+</android.support.constraint.ConstraintLayout>
