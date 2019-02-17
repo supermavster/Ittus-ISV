@@ -27,12 +27,12 @@
                     android:layout_width="280dp"
                     android:layout_height="wrap_content"/>
             <EditText
-                    android:layout_width="0dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:inputType="number"
                     android:ems="10"
                     android:id="@+id/txt_location_between_signal" android:layout_weight="1"
-                    android:hint="@string/lbl_number" android:autofillHints=""/>
+                    android:hint="@string/lbl_number" android:autofillHints="" tools:targetApi="o"/>
         </LinearLayout>
         <TextView
                 android:text="@string/lbl_location_and_signal"
@@ -48,12 +48,12 @@
                     android:layout_width="280dp"
                     android:layout_height="wrap_content"/>
             <EditText
-                    android:layout_width="0dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:inputType="number"
                     android:ems="10"
                     android:id="@+id/txt_location_and_signal" android:layout_weight="1"
-                    android:hint="@string/lbl_number" android:autofillHints=""/>
+                    android:hint="@string/lbl_number" android:autofillHints="" tools:targetApi="o"/>
         </LinearLayout>
         <TextView
                 android:text="@string/lbl_location_with_signal"
@@ -69,12 +69,12 @@
                     android:layout_width="280dp"
                     android:layout_height="wrap_content"/>
             <EditText
-                    android:layout_width="0dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:inputType="number"
                     android:ems="10"
                     android:id="@+id/txt_location_with_signal" android:layout_weight="1"
-                    android:hint="@string/lbl_number" android:autofillHints=""/>
+                    android:hint="@string/lbl_number" android:autofillHints="" tools:targetApi="o"/>
         </LinearLayout>
     </LinearLayout>
     <View
