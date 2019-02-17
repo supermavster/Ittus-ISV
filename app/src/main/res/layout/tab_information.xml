@@ -83,19 +83,19 @@
             <ImageButton
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" app:srcCompat="@mipmap/ic_launcher_round"
-                    android:id="@+id/ibtn_60"/>
+                    android:id="@+id/ibtn_60" android:contentDescription="@string/lbl_size_signal"/>
             <ImageButton
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" app:srcCompat="@mipmap/ic_launcher_round"
-                    android:id="@+id/ibtn_75"/>
+                    android:id="@+id/ibtn_75" android:contentDescription="@string/lbl_size_signal"/>
             <ImageButton
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" app:srcCompat="@mipmap/ic_launcher_round"
-                    android:id="@+id/ibtn_90"/>
+                    android:id="@+id/ibtn_90" android:contentDescription="@string/lbl_size_signal"/>
             <ImageButton
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" app:srcCompat="@mipmap/ic_launcher_round"
-                    android:id="@+id/ibtn_120"/>
+                    android:id="@+id/ibtn_120" android:contentDescription="@string/lbl_size_signal"/>
         </LinearLayout>
         <LinearLayout
                 android:orientation="horizontal"
@@ -148,15 +148,15 @@
             <ImageButton
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" app:srcCompat="@mipmap/ic_launcher_round"
-                    android:id="@+id/ibtn_self_signal"/>
+                    android:id="@+id/ibtn_self_signal" android:contentDescription="@string/lbl_stay_signal"/>
             <ImageButton
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" app:srcCompat="@mipmap/ic_launcher_round"
-                    android:id="@+id/ibtn_light_signal"/>
+                    android:id="@+id/ibtn_light_signal" android:contentDescription="@string/lbl_stay_signal"/>
             <ImageButton
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" app:srcCompat="@mipmap/ic_launcher_round"
-                    android:id="@+id/ibtn_wall_signal"/>
+                    android:id="@+id/ibtn_wall_signal" android:contentDescription="@string/lbl_stay_signal"/>
         </LinearLayout>
         <LinearLayout
                 android:orientation="horizontal"
