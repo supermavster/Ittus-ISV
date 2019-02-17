@@ -31,7 +31,10 @@
 
     <string name="lbl_location_signal">Ubicación de la Señal en la Via</string>
     <string name="btn_left">Izquierda</string>
+    <string name="btn_arrow_left">⇐</string>
+
     <string name="btn_right">Derecha</string>
+    <string name="btn_arrow_right">⇒</string>
 
     <string name="lbl_size_signal">Tamaño de la Señal</string>
     <string name="btn_60">60 x 60</string>

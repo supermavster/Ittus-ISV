@@ -91,7 +91,8 @@
                     android:text="@string/photo_front"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" android:id="@+id/cb_front" android:layout_weight="1"
-                    android:textAlignment="center"/>
+                    android:textAlignment="center" android:enabled="false"
+            />
         </LinearLayout>
         <LinearLayout
                 android:orientation="vertical"
@@ -102,7 +103,8 @@
                     android:text="@string/photo_back"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" android:id="@+id/cb_back" android:layout_weight="1"
-                    android:textAlignment="center"/>
+                    android:textAlignment="center" android:enabled="false"
+            />
             <ImageButton
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" app:srcCompat="@drawable/ic_launcher_background"
@@ -121,7 +123,8 @@
                     android:text="@string/photo_plaque"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" android:id="@+id/cb_plaque" android:layout_weight="1"
-                    android:textAlignment="center"/>
+                    android:textAlignment="center" android:enabled="false"
+            />
         </LinearLayout>
     </LinearLayout>
     <View
