@@ -8,10 +8,10 @@
         tools:context=".view.vertical.ActivityVerticalInformative">
 
     <TextView
-            android:text="TextView"
+            android:text="@string/lbl_vts_informative"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/textView5" android:layout_marginTop="28dp"
+            android:id="@+id/lbl_vts_informative" android:layout_marginTop="28dp"
             app:layout_constraintTop_toTopOf="parent" app:layout_constraintStart_toStartOf="parent"
             android:layout_marginStart="16dp" app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginEnd="16dp"/>
@@ -19,49 +19,52 @@
             android:src="@mipmap/ic_launcher"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/imageButton2" android:layout_marginBottom="16dp"
+            android:id="@+id/ibtn_vts_informative_turist" android:layout_marginBottom="16dp"
             app:layout_constraintBottom_toBottomOf="parent" android:layout_marginTop="16dp"
-            app:layout_constraintTop_toTopOf="@+id/button9" app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/btn_vts_informative_services"
+            app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginEnd="16dp" app:layout_constraintStart_toStartOf="parent"
-            android:layout_marginStart="16dp"/>
+            android:layout_marginStart="16dp" android:contentDescription="@string/btn_vts_informative_turist"/>
     <Button
-            android:text="Button"
+            android:text="@string/btn_vts_informative_turist"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/button3"
-            app:layout_constraintTop_toBottomOf="@+id/imageButton2"
-            app:layout_constraintStart_toStartOf="@+id/imageButton2"
-            app:layout_constraintEnd_toEndOf="@+id/imageButton2"/>
+            android:id="@+id/btn_vts_informative_turist"
+            app:layout_constraintTop_toBottomOf="@+id/ibtn_vts_informative_turist"
+            app:layout_constraintStart_toStartOf="@+id/ibtn_vts_informative_turist"
+            app:layout_constraintEnd_toEndOf="@+id/ibtn_vts_informative_turist"/>
     <Button
-            android:text="Button"
+            android:text="@string/btn_vts_informative_location"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/button8"
-            app:layout_constraintTop_toBottomOf="@+id/imageButton7"
-            app:layout_constraintStart_toStartOf="@+id/imageButton7"
-            app:layout_constraintEnd_toEndOf="@+id/imageButton7"/>
+            android:id="@+id/btn_vts_informative_location"
+            app:layout_constraintTop_toBottomOf="@+id/ibtn_vts_informative_location"
+            app:layout_constraintStart_toStartOf="@+id/ibtn_vts_informative_location"
+            app:layout_constraintEnd_toEndOf="@+id/ibtn_vts_informative_location"/>
     <ImageButton
             android:src="@mipmap/ic_launcher"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/imageButton7"
-            android:layout_marginTop="64dp" app:layout_constraintTop_toBottomOf="@+id/textView5"
+            android:id="@+id/ibtn_vts_informative_location"
+            android:layout_marginTop="64dp" app:layout_constraintTop_toBottomOf="@+id/lbl_vts_informative"
             app:layout_constraintStart_toStartOf="parent" android:layout_marginStart="16dp"
-            app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="16dp"/>
+            app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="16dp"
+            android:contentDescription="@string/btn_vts_informative_location"/>
     <ImageButton
             android:src="@mipmap/ic_launcher"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/imageButton8" android:layout_marginTop="116dp"
-            app:layout_constraintTop_toBottomOf="@+id/imageButton7" app:layout_constraintEnd_toEndOf="parent"
+            android:id="@+id/ibtn_vts_informative_services" android:layout_marginTop="116dp"
+            app:layout_constraintTop_toBottomOf="@+id/ibtn_vts_informative_location"
+            app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginEnd="16dp" app:layout_constraintStart_toStartOf="parent"
-            android:layout_marginStart="16dp"/>
+            android:layout_marginStart="16dp" android:contentDescription="@string/btn_vts_informative_services"/>
     <Button
-            android:text="Button"
+            android:text="@string/btn_vts_informative_services"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/button9"
-            app:layout_constraintTop_toBottomOf="@+id/imageButton8"
-            app:layout_constraintStart_toStartOf="@+id/imageButton8"
-            app:layout_constraintEnd_toEndOf="@+id/imageButton8"/>
+            android:id="@+id/btn_vts_informative_services"
+            app:layout_constraintTop_toBottomOf="@+id/ibtn_vts_informative_services"
+            app:layout_constraintStart_toStartOf="@+id/ibtn_vts_informative_services"
+            app:layout_constraintEnd_toEndOf="@+id/ibtn_vts_informative_services"/>
 </android.support.constraint.ConstraintLayout>

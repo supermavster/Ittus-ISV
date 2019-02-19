@@ -60,6 +60,40 @@
 
     <string name="lbl_state_signal">Estado de la Señal:</string>
 
+
+    // TODO: Arreglar Sintaxis
+    // Vertical - Tipo Señal Vertical
+    <string name="lbl_vertical_type_signal">Tipo de Señal Vertical</string>
+    <string name="btn_vertical_informative">Informativa</string>
+    <string name="btn_vertical_regulatory">Reglamentaria</string>
+    <string name="btn_vertical_preventive">Preventiva</string>
+    <string name="btn_vertical_work">Obra</string>
+    <string name="btn_vertical_cycle_route">Ciclo Ruta</string>
+
+    // Vertical - Tipo Señal Vertical - Señal Informativa
+    <string name="lbl_vts_informative">Señal Informativa</string>
+    <string name="btn_vts_informative_location">Inf. de Localización</string>
+    <string name="btn_vts_informative_services">Inf. de Servicios</string>
+    <string name="btn_vts_informative_turist">Inf. de Turismo</string>
+
+
+
+    # HORIZONTALES
+
+    // Horizontal - Tipo de Señal Horizontal
+    <string name="lbl_type_horizontal_signal">Tipo de Señal Horizontal</string>
+    <string name="lbl_sense_traffic">Sentido del Trafico</string>
+    <string name="rbtn_unidirectional">Unidireccional</string>
+    <string name="rbtn_bidirectional">Bidireccional</string>
+
+    <string name="lbl_location_way">Ubicación en el Trayecto</string>
+    <string name="btn_stretch">Tramo</string>
+    <string name="btn_intersection">Intersección</string>
+
+    <string name="lbl_location_lane">Ubicación en Carril</string>
+    <string name="txt_location_signal">¿En qué carril esta úbicada la señal?</string>
+    <string name="txt_percentage_coverage">Porcentaje de Cobertura (%)</string>
+
     // Extra LBLS
     <string name="select">Seleccione</string>
     <string name="save">Guardar</string>

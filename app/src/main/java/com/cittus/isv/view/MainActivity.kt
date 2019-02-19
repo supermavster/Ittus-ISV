@@ -45,7 +45,7 @@ class MainActivity : AppCompatActivity() {
 
     private var mSectionsPagerAdapter: SectionsPagerAdapter? = null
 
-    public var locationMain: GetUserLocation? = GetUserLocation();
+    var locationMain: GetUserLocation? = GetUserLocation();
 
 
     @RequiresApi(Build.VERSION_CODES.M)

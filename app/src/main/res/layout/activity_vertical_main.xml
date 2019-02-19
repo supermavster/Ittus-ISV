@@ -8,80 +8,88 @@
         tools:context=".view.vertical.ActivityVerticalMain">
 
     <Button
-            android:text="Button"
+            android:text="@string/btn_vertical_informative"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/button2" app:layout_constraintStart_toStartOf="@+id/imageButton"
-            app:layout_constraintEnd_toEndOf="@+id/imageButton"
-            app:layout_constraintTop_toBottomOf="@+id/imageButton"/>
+            android:id="@+id/btn_vertical_informative" app:layout_constraintStart_toStartOf="@+id/ibtn_vertical_informative"
+            app:layout_constraintEnd_toEndOf="@+id/ibtn_vertical_informative"
+            app:layout_constraintTop_toBottomOf="@+id/ibtn_vertical_informative"/>
     <ImageButton
             android:src="@mipmap/ic_launcher"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/imageButton" android:layout_marginTop="100dp"
+            android:id="@+id/ibtn_vertical_informative" android:layout_marginTop="100dp"
             app:layout_constraintTop_toTopOf="parent" app:layout_constraintStart_toStartOf="parent"
-            android:layout_marginStart="60dp"/>
+            android:layout_marginStart="60dp" android:contentDescription="@string/btn_vertical_informative"/>
     <Button
-            android:text="Button"
+            android:text="@string/btn_vertical_preventive"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/button4"
-            app:layout_constraintTop_toBottomOf="@+id/imageButton3"
-            app:layout_constraintStart_toStartOf="@+id/imageButton3"
-            app:layout_constraintEnd_toEndOf="@+id/imageButton3"/>
+            android:id="@+id/btn_vertical_preventive"
+            app:layout_constraintTop_toBottomOf="@+id/ibtn_vertical_preventive"
+            app:layout_constraintStart_toStartOf="@+id/ibtn_vertical_preventive"
+            app:layout_constraintEnd_toEndOf="@+id/ibtn_vertical_preventive"/>
     <Button
-            android:text="Button"
+            android:text="@string/btn_vertical_regulatory"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/button5"
-            app:layout_constraintTop_toBottomOf="@+id/imageButton4"
-            app:layout_constraintStart_toStartOf="@+id/imageButton4"
-            app:layout_constraintEnd_toEndOf="@+id/imageButton4"/>
+            android:id="@+id/btn_vertical_regulatory"
+            app:layout_constraintTop_toBottomOf="@+id/ibtn_vertical_regulatory"
+            app:layout_constraintStart_toStartOf="@+id/ibtn_vertical_regulatory"
+            app:layout_constraintEnd_toEndOf="@+id/ibtn_vertical_regulatory"/>
     <Button
-            android:text="Button"
+            android:text="@string/btn_vertical_work"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/button6"
-            app:layout_constraintStart_toStartOf="@+id/imageButton5"
-            app:layout_constraintEnd_toEndOf="@+id/imageButton5"
-            app:layout_constraintTop_toBottomOf="@+id/imageButton5"/>
+            android:id="@+id/btn_vertical_work"
+            app:layout_constraintStart_toStartOf="@+id/ibtn_vertical_work"
+            app:layout_constraintEnd_toEndOf="@+id/ibtn_vertical_work"
+            app:layout_constraintTop_toBottomOf="@+id/ibtn_vertical_work"/>
     <Button
-            android:text="Button"
+            android:text="@string/btn_vertical_cycle_route"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/button7"
-            app:layout_constraintStart_toStartOf="@+id/imageButton6"
-            app:layout_constraintEnd_toEndOf="@+id/imageButton6"
-            app:layout_constraintTop_toBottomOf="@+id/imageButton6"/>
+            android:id="@+id/btn_vertical_cycle_route"
+            app:layout_constraintStart_toStartOf="@+id/ibtn_vertical_cycle_route"
+            app:layout_constraintEnd_toEndOf="@+id/ibtn_vertical_cycle_route"
+            app:layout_constraintTop_toBottomOf="@+id/ibtn_vertical_cycle_route"/>
     <ImageButton
             android:src="@mipmap/ic_launcher"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/imageButton3" android:layout_marginTop="16dp"
+            android:id="@+id/ibtn_vertical_preventive" android:layout_marginTop="16dp"
             app:layout_constraintTop_toTopOf="parent" android:layout_marginBottom="16dp"
             app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintStart_toStartOf="parent"
             android:layout_marginStart="16dp" app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginEnd="16dp" app:layout_constraintHorizontal_bias="0.484"
-            app:layout_constraintVertical_bias="0.419"/>
+            app:layout_constraintVertical_bias="0.419" android:contentDescription="@string/btn_vertical_preventive"/>
     <ImageButton
             android:src="@mipmap/ic_launcher"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/imageButton4" android:layout_marginTop="100dp"
+            android:id="@+id/ibtn_vertical_regulatory" android:layout_marginTop="100dp"
             app:layout_constraintTop_toTopOf="parent" app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginEnd="60dp"/>
+            android:layout_marginEnd="60dp" android:contentDescription="@string/btn_vertical_regulatory"/>
     <ImageButton
             android:src="@mipmap/ic_launcher"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/imageButton5" android:layout_marginBottom="200dp"
+            android:id="@+id/ibtn_vertical_work" android:layout_marginBottom="200dp"
             app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintStart_toStartOf="parent"
-            android:layout_marginStart="60dp"/>
+            android:layout_marginStart="60dp" android:contentDescription="@string/btn_vertical_work"/>
     <ImageButton
             android:src="@mipmap/ic_launcher"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/imageButton6" android:layout_marginBottom="200dp"
+            android:id="@+id/ibtn_vertical_cycle_route" android:layout_marginBottom="200dp"
             app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginEnd="60dp"/>
+            android:layout_marginEnd="60dp" android:contentDescription="@string/btn_vertical_cycle_route"/>
+    <TextView
+            android:text="@string/lbl_vertical_type_signal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/lbl_vertical_type_signal" app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginEnd="8dp"
+            app:layout_constraintStart_toStartOf="parent" android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp" app:layout_constraintTop_toTopOf="parent"/>
 </android.support.constraint.ConstraintLayout>
