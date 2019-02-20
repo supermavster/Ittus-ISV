@@ -1,4 +1,4 @@
-package com.cittus.isv.controller;
+package com.cittus.isv.complements.slider;
 
 
 

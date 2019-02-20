@@ -1,7 +1,8 @@
-package com.cittus.isv.controller
+package com.cittus.isv.complements.gps
 
 import android.Manifest
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.content.pm.PackageManager
 import android.location.Location
 import android.location.LocationListener
@@ -34,32 +35,13 @@ class GetUserLocation {
     }
 
     @RequiresApi(Build.VERSION_CODES.M)
-    fun init(app:AppCompatActivity) {
+    fun init(app: Activity) {
 
-        // Permission Check
-        val permissionCheck = ContextCompat.checkSelfPermission(app, Manifest.permission.ACCESS_FINE_LOCATION)
-        if (permissionCheck != PackageManager.PERMISSION_GRANTED) {
-            if (ActivityCompat.shouldShowRequestPermissionRationale(
-                    app,
-                    Manifest.permission.ACCESS_FINE_LOCATION
-                )
-            ) {
-                Toast.makeText(app, "The permission to get BLE location data is required", Toast.LENGTH_SHORT)
-                    .show()
-            } else {
-                app.requestPermissions(
-                    arrayOf(
-                        Manifest.permission.ACCESS_COARSE_LOCATION,
-                        Manifest.permission.ACCESS_FINE_LOCATION
-                    ), 1
-                )
-            }
-        } else {
-            Toast.makeText(app, "Location permissions already granted", Toast.LENGTH_SHORT).show()
-        }
+
 
         // Create persistent LocationManager reference
         locationManager = (app.getSystemService(AppCompatActivity.LOCATION_SERVICE) as LocationManager?)!!;
+
 
     }
 
@@ -102,7 +84,7 @@ class GetUserLocation {
 
         Log.d("myTag", "$network_enabled - $gps_enabled");
 
-        var tempLocation =locationManager!!.getLastKnownLocation(location)
+        var tempLocation = locationManager!!.getLastKnownLocation(location)
 
 //        locationListener.onLocationChanged(tempLocation)
 

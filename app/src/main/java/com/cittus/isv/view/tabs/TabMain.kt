@@ -1,5 +1,7 @@
 package com.cittus.isv.view.tabs
 
+import android.annotation.SuppressLint
+import android.app.Activity
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
@@ -12,85 +14,111 @@ import android.view.ViewGroup
 import android.widget.RadioButton
 import android.widget.RadioGroup
 import com.cittus.isv.R
-import com.cittus.isv.controller.GetUserLocation
+import com.cittus.isv.complements.camera.TakePicture
+import com.cittus.isv.complements.gps.GetUserLocation
 import com.cittus.isv.view.horizontal.ActivityHorizontalMain
 import com.cittus.isv.view.vertical.ActivityVerticalMain
+import kotlinx.android.synthetic.main.tab_main.*
 import kotlinx.android.synthetic.main.tab_main.view.*
 
-class TabMain : Fragment() {
-
+@SuppressLint("ValidFragment")
+class TabMain @SuppressLint("ValidFragment") constructor(mainActivity: Activity) : Fragment() {
+    // Global Variables
+    // Get Main Activity (To show Elements or Call)
+    private var mainActivity  = mainActivity
+    // View Elements from Fragment
     private lateinit var viewOfLayout: View
-    public var locationMain: GetUserLocation? = GetUserLocation();
+    // Get Location Main User
+    private var locationMain: GetUserLocation? = GetUserLocation()
 
-    // Variables Globales Principales
-    var classification: String = "";
-    var radioButtonClicked: Boolean = true;
+    // Camera
+    lateinit var takePicture: TakePicture
 
     @RequiresApi(Build.VERSION_CODES.M)
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Init Location - Permission Check
-
         // Inflate the layout for this fragment
         viewOfLayout = inflater!!.inflate(R.layout.tab_main, container, false)
+        // Init Process (All Actions in the tab MAIN)
+        initProcess()
+        return viewOfLayout
+    }
 
+    // Initialization - Tab Main (Elements and Actions)
+    @RequiresApi(Build.VERSION_CODES.M)
+    private fun initProcess(){
+        // GPS
+        gpsActions()
+        // Photos
+        cameraActions()
+        // Horizontal or Vertical
+        radioGroupHVActions()
+    }
 
-
-
+    @RequiresApi(Build.VERSION_CODES.M)
+    private fun gpsActions() {
+        // Init Location - Permission Check
+        locationMain?.init(mainActivity)
         // Set Actions
-        viewOfLayout.radio_group.setOnCheckedChangeListener(
-
-             //Actions Radio Button Main (Information)
-
-            // TODO: Revisar RADIOGROUP
-            RadioGroup.OnCheckedChangeListener { group, checkedId ->
-
-                Log.d("Information",group.isClickable.toString())
-                Log.d("Information",group.isContextClickable.toString())
-
-                if (radioButtonClicked) {
-                    val radio: RadioButton = viewOfLayout.findViewById(checkedId)
-                    var intent: Intent? = null
-                    classification = radio.text as String
-                    when (classification) {
-                        "Horizontal" -> {
-                            radioButtonClicked = true
-                            // Init New Activity
-                            intent = Intent(this@TabMain.context, ActivityHorizontalMain::class.java)
-                            // Send Variables
-                            intent.putExtra("classification", classification)
-                        }
-                        "Vertical" -> {
-                            radioButtonClicked = true
-                            intent = Intent(this@TabMain.context, ActivityVerticalMain::class.java)
-
-                        }
-                        else->{
-                            radioButtonClicked = false
-                        }
-                    }
-                    // Check if Is Null the new Activity and Start the Activity
-                    if (intent != null)
-                        startActivity(intent)
-                }
-            }
-        )
-
         viewOfLayout.btn_gps.setOnClickListener {
             var location = locationMain?.setButtonGPSActions()
             if (location != null) {
-                viewOfLayout.txt_longitude.setText(location.longitude.toString())
-                viewOfLayout.txt_latitude.setText(location.latitude.toString())
+                viewOfLayout.txt_latitude.setText(location.longitude.toString())
+                viewOfLayout.txt_longitude.setText(location.latitude.toString())
             }
+        }
+    }
 
+    private fun cameraActions(){
+        // Call on Click
+        viewOfLayout.ibtn_front.setOnClickListener{
+            // Init Camera
+            takePicture = TakePicture(mainActivity,viewOfLayout.ibtn_front,viewOfLayout.cb_front)
+            takePicture.initProcess()
+
+        }
+
+        viewOfLayout.ibtn_back.setOnClickListener{
+            // Init Camera
+            takePicture = TakePicture(mainActivity,viewOfLayout.ibtn_back,viewOfLayout.cb_back)
+            takePicture.initProcess()
+
+        }
+
+        viewOfLayout.ibtn_plaque.setOnClickListener{
+            // Init Camera
+            takePicture = TakePicture(mainActivity,viewOfLayout.ibtn_plaque,viewOfLayout.cb_plaque)
+            takePicture.initProcess()
 
         }
 
 
-        return viewOfLayout
     }
 
+    fun getTakePictureMain(): TakePicture {
+        return takePicture
+    }
+
+    public fun processCapturedPhoto(takePicture: TakePicture){
+        takePicture.processCapturedPhoto()
+    }
+
+    fun radioGroupHVActions(){
+        // Set Actions
+        viewOfLayout.radio_group.setOnCheckedChangeListener(
+
+            //Actions Radio Button Main (Information)
+            RadioGroup.OnCheckedChangeListener { group, checkedId ->
+                val radio: RadioButton = viewOfLayout.findViewById(checkedId)
+                when(radio.text){
+                    "Horizontal"->startActivity(Intent(this@TabMain.context, ActivityHorizontalMain::class.java))
+                    "Vertical"->startActivity(Intent(this@TabMain.context, ActivityVerticalMain::class.java))
+                }
+            }
+        )
+
+    }
 
 }

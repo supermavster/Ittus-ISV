@@ -20,8 +20,8 @@
             android:layout_height="wrap_content"
             android:inputType="numberDecimal"
             android:ems="10"
-            android:id="@+id/txt_latitude"
-            android:hint="@string/txt_latitude"
+            android:id="@+id/txt_longitude"
+            android:hint="@string/txt_longitude"
             android:autofillHints=""
             android:layout_marginTop="16dp"
             app:layout_constraintTop_toTopOf="parent" android:layout_marginBottom="16dp"
@@ -29,19 +29,19 @@
             android:layout_marginEnd="52dp" app:layout_constraintEnd_toStartOf="@+id/btn_gps" tools:targetApi="o"
             android:focusable="false"
             android:enabled="false"
-    />
+            app:layout_constraintStart_toEndOf="@+id/txt_latitude" android:layout_marginStart="18dp"/>
     <EditText
             android:layout_width="120dp"
             android:layout_height="wrap_content"
             android:inputType="numberDecimal"
             android:ems="10"
-            android:id="@+id/txt_longitude"
-            android:hint="@string/txt_longitude" android:autofillHints=""
+            android:id="@+id/txt_latitude"
+            android:hint="@string/txt_latitude" android:autofillHints=""
             android:layout_marginStart="28dp"
             app:layout_constraintStart_toStartOf="parent" android:layout_marginTop="16dp"
             app:layout_constraintTop_toTopOf="parent" android:layout_marginBottom="16dp"
             app:layout_constraintBottom_toTopOf="@+id/divider" app:layout_constraintVertical_bias="1.0"
-            android:layout_marginEnd="16dp" app:layout_constraintEnd_toStartOf="@+id/txt_latitude" tools:targetApi="o"
+            android:layout_marginEnd="16dp" app:layout_constraintEnd_toStartOf="@+id/txt_longitude" tools:targetApi="o"
             android:focusable="false"
             android:enabled="false"
     />
@@ -91,7 +91,8 @@
             <ImageButton
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" app:srcCompat="@drawable/ic_launcher_background"
-                    android:id="@+id/ibtn_front" android:layout_weight="1" android:contentDescription="@string/todo"/>
+                    android:id="@+id/ibtn_front" android:layout_weight="1"
+                    android:contentDescription="@string/photo_front"/>
             <CheckBox
                     android:text="@string/photo_front"
                     android:layout_width="match_parent"
@@ -113,7 +114,8 @@
             <ImageButton
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" app:srcCompat="@drawable/ic_launcher_background"
-                    android:id="@+id/ibtn_back" android:layout_weight="1" android:contentDescription="@string/todo"/>
+                    android:id="@+id/ibtn_back" android:layout_weight="1"
+                    android:contentDescription="@string/photo_back"/>
         </LinearLayout>
         <LinearLayout
                 android:orientation="vertical"
@@ -123,7 +125,8 @@
             <ImageButton
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" app:srcCompat="@drawable/ic_launcher_background"
-                    android:id="@+id/ibtn_plaque" android:layout_weight="1" android:contentDescription="@string/todo"/>
+                    android:id="@+id/ibtn_plaque" android:layout_weight="1"
+                    android:contentDescription="@string/photo_plaque"/>
             <CheckBox
                     android:text="@string/photo_plaque"
                     android:layout_width="match_parent"

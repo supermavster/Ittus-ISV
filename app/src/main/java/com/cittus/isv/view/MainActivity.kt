@@ -1,15 +1,10 @@
 package com.cittus.isv.view
 
-import android.Manifest
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.content.Intent
-import android.content.pm.PackageManager
-import android.location.Location
-import android.location.LocationListener
-import android.location.LocationManager
 import android.os.Build
 import android.support.design.widget.TabLayout
-import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity
 
 import android.support.v4.app.Fragment
@@ -17,39 +12,32 @@ import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentPagerAdapter
 import android.os.Bundle
 import android.support.annotation.RequiresApi
-import android.support.v4.app.ActivityCompat
-import android.support.v4.content.ContextCompat
-import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
-import android.widget.Button
-import android.widget.Toast
-import com.android.volley.Request
-import com.android.volley.Response
-import com.android.volley.toolbox.StringRequest
-import com.android.volley.toolbox.Volley
 
 
 import com.cittus.isv.R
-import com.cittus.isv.controller.GetUserLocation
+import com.cittus.isv.complements.gps.GetUserLocation
 import com.cittus.isv.controller.MainImage
+import com.cittus.isv.model.ActionsRequest.Companion.TAKE_PHOTO_REQUEST
 import com.cittus.isv.view.tabs.TabGeneralData
 import com.cittus.isv.view.tabs.TabInformation
 import com.cittus.isv.view.tabs.TabMain
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.tab_main.*
-import org.json.JSONArray
-import org.json.JSONObject
 
 class MainActivity : AppCompatActivity() {
 
     private var mSectionsPagerAdapter: SectionsPagerAdapter? = null
 
-    var locationMain: GetUserLocation? = GetUserLocation();
+    var mainActivity:Activity = this
+
+    // Variables Table
+    private lateinit var tabMain:TabMain
+    private lateinit var tabInformation:TabInformation
+    private lateinit var tabGeneralData:TabGeneralData
 
 
-    @RequiresApi(Build.VERSION_CODES.M)
-    @SuppressLint("WrongViewCast")
+     @SuppressLint("WrongViewCast")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -65,8 +53,12 @@ class MainActivity : AppCompatActivity() {
         container.addOnPageChangeListener(TabLayout.TabLayoutOnPageChangeListener(tabs))
         tabs.addOnTabSelectedListener(TabLayout.ViewPagerOnTabSelectedListener(container))
 
-        // Init Location - Permission Check
-        locationMain?.init(this)
+
+
+        // Init Tabs (Revisar)
+        tabMain = TabMain(mainActivity)
+        tabInformation = TabInformation(mainActivity)
+        tabGeneralData = TabGeneralData(mainActivity)
 
     }
 
@@ -102,10 +94,11 @@ class MainActivity : AppCompatActivity() {
             // getItem is called to instantiate the fragment for the given page.
 
             return when(position) {
-                0 -> TabMain()
-                1 -> TabInformation()
-                2 -> TabGeneralData()
-                else ->Fragment()
+                0 -> {
+                    tabMain = TabMain(mainActivity)
+                    tabMain
+                }
+                else -> Fragment()
             }
         }
 
@@ -116,14 +109,14 @@ class MainActivity : AppCompatActivity() {
     }
 
 
-
-
-    fun buTestUpdateText2 () {
-
-        // Also like this
-
-        val intent = Intent(this@MainActivity,MainImage::class.java)
-        startActivity(intent)
+    // Camera Action
+    override fun onActivityResult(requestCode: Int, resultCode: Int,
+                                  data: Intent?) {
+        if (resultCode == Activity.RESULT_OK
+            && requestCode == TAKE_PHOTO_REQUEST) {
+            tabMain.processCapturedPhoto(tabMain.getTakePictureMain())
+        } else {
+            super.onActivityResult(requestCode, resultCode, data)
+        }
     }
-
 }
