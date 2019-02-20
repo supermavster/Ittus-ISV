@@ -22,7 +22,7 @@ class TabGeneralData @SuppressLint("ValidFragment") constructor(mainActivity: Ac
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        viewOfLayout = inflater!!.inflate(R.layout.tab_main, container, false)
+        viewOfLayout = inflater!!.inflate(R.layout.tab_general_data, container, false)
         // Init Process (All Actions in the tab MAIN)
         initProcess()
         return viewOfLayout
