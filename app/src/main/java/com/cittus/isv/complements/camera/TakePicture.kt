@@ -2,28 +2,16 @@ package com.cittus.isv.complements.camera
 import android.app.Activity
 import android.content.ContentValues
 import android.content.Intent
-import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.Matrix
 import android.net.Uri
-import android.os.Environment
 import android.provider.MediaStore
-import android.support.v4.content.FileProvider
-import android.util.Log
-import android.view.View
-import android.widget.Button
 import android.widget.CheckBox
 import android.widget.ImageView
-import android.widget.Toast
 import com.cittus.isv.complements.Permissions
-import com.cittus.isv.model.ActionsRequest.Companion.PERMISSION_REQUEST_CODE
-import com.cittus.isv.model.ActionsRequest.Companion.REQUEST_IMAGE_CAPTURE
 import com.cittus.isv.model.ActionsRequest.Companion.TAKE_PHOTO_REQUEST
 import java.io.File
-import java.io.IOException
-import java.text.SimpleDateFormat
-import java.util.*
 
 
 class TakePicture (private var context: Activity,private var imageView: ImageView,private var captureButton: CheckBox) {
@@ -56,9 +44,12 @@ class TakePicture (private var context: Activity,private var imageView: ImageVie
 
     }
 
+    fun getPath(): String? {
+        return mCurrentPhotoPath
+    }
 
-    public fun processCapturedPhoto() {
-        val cursor = context.contentResolver.query(Uri.parse(mCurrentPhotoPath),
+    public fun processCapturedPhoto(path: String?) {
+        val cursor = context.contentResolver.query(Uri.parse(path),
             Array(1) {android.provider.MediaStore.Images.ImageColumns.DATA},
             null, null, null)
         cursor.moveToFirst()

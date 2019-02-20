@@ -12,11 +12,14 @@ import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentPagerAdapter
 import android.os.Bundle
 import android.support.annotation.RequiresApi
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
+import com.cittus.isv.DAO.DAOConnection
 
 
 import com.cittus.isv.R
+import com.cittus.isv.complements.Permissions
 import com.cittus.isv.complements.gps.GetUserLocation
 import com.cittus.isv.controller.MainImage
 import com.cittus.isv.model.ActionsRequest.Companion.TAKE_PHOTO_REQUEST
@@ -32,9 +35,9 @@ class MainActivity : AppCompatActivity() {
     var mainActivity:Activity = this
 
     // Variables Table
-    private lateinit var tabMain:TabMain
-    private lateinit var tabInformation:TabInformation
-    private lateinit var tabGeneralData:TabGeneralData
+    private var tabMain: TabMain = TabMain(mainActivity)
+    private var tabInformation:TabInformation = TabInformation(mainActivity)
+    private var tabGeneralData:TabGeneralData = TabGeneralData(mainActivity)
 
 
      @SuppressLint("WrongViewCast")
@@ -53,13 +56,16 @@ class MainActivity : AppCompatActivity() {
         container.addOnPageChangeListener(TabLayout.TabLayoutOnPageChangeListener(tabs))
         tabs.addOnTabSelectedListener(TabLayout.ViewPagerOnTabSelectedListener(container))
 
-
-
-        // Init Tabs (Revisar)
-        tabMain = TabMain(mainActivity)
-        tabInformation = TabInformation(mainActivity)
-        tabGeneralData = TabGeneralData(mainActivity)
-
+         fab.setOnClickListener {
+             val bd = DAOConnection(this, "Ittus", null, 1).writableDatabase
+             /*val registro = ContentValues()
+             registro.put("codigo", et1.getText().toString())
+             registro.put("descripcion", et2.getText().toString())
+             registro.put("precio", et3.getText().toString())
+             bd.insert("articulos", null, registro)*/
+            Log.i("DataBase",bd.isOpen.toString())
+             bd.close()
+         }
     }
 
 
@@ -94,19 +100,9 @@ class MainActivity : AppCompatActivity() {
             // getItem is called to instantiate the fragment for the given page.
 
             return when(position) {
-                0 -> {
-                    tabMain = TabMain(mainActivity)
-                    tabMain
-                }
-                1 -> {
-                    tabInformation = TabInformation(mainActivity)
-                    tabInformation
-                }
-                2 -> {
-                    tabGeneralData = TabGeneralData(mainActivity)
-                    tabGeneralData
-                }
-
+                0 ->tabMain
+                1 ->tabInformation
+                2 ->tabGeneralData
                 else -> Fragment()
             }
         }

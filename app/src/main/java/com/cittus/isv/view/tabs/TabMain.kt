@@ -14,12 +14,14 @@ import android.view.ViewGroup
 import android.widget.RadioButton
 import android.widget.RadioGroup
 import com.cittus.isv.R
+import com.cittus.isv.complements.Permissions
 import com.cittus.isv.complements.camera.TakePicture
 import com.cittus.isv.complements.gps.GetUserLocation
 import com.cittus.isv.view.horizontal.ActivityHorizontalMain
 import com.cittus.isv.view.vertical.ActivityVerticalMain
-import kotlinx.android.synthetic.main.tab_main.*
 import kotlinx.android.synthetic.main.tab_main.view.*
+
+
 
 @SuppressLint("ValidFragment")
 class TabMain @SuppressLint("ValidFragment") constructor(mainActivity: Activity) : Fragment() {
@@ -41,6 +43,8 @@ class TabMain @SuppressLint("ValidFragment") constructor(mainActivity: Activity)
     ): View? {
         // Inflate the layout for this fragment
         viewOfLayout = inflater!!.inflate(R.layout.tab_main, container, false)
+        // Init Permissions
+        Permissions(mainActivity).setPermissions()
         // Init Process (All Actions in the tab MAIN)
         initProcess()
         return viewOfLayout
@@ -101,20 +105,45 @@ class TabMain @SuppressLint("ValidFragment") constructor(mainActivity: Activity)
         return takePicture
     }
 
-    public fun processCapturedPhoto(takePicture: TakePicture){
-        takePicture.processCapturedPhoto()
+    fun processCapturedPhoto(takePicture: TakePicture){
+        takePicture.processCapturedPhoto(takePicture.getPath())
     }
 
-    fun radioGroupHVActions(){
+    private var clickCheckHorizontal: Boolean = false
+    private var clickCheckVertical: Boolean = false
+    private fun radioGroupHVActions(){
         // Set Actions
-        viewOfLayout.radio_group.setOnCheckedChangeListener(
+        viewOfLayout.rbtn_horizontal.setOnClickListener {
+            clickCheckHorizontal = true
+        }
 
+        viewOfLayout.rbtn_vertical.setOnClickListener {
+            clickCheckVertical = true
+        }
+
+        viewOfLayout.radio_group.setOnCheckedChangeListener(
             //Actions Radio Button Main (Information)
             RadioGroup.OnCheckedChangeListener { group, checkedId ->
-                val radio: RadioButton = viewOfLayout.findViewById(checkedId)
-                when(radio.text){
-                    "Horizontal"->startActivity(Intent(this@TabMain.context, ActivityHorizontalMain::class.java))
-                    "Vertical"->startActivity(Intent(this@TabMain.context, ActivityVerticalMain::class.java))
+                var clickCheck:Boolean= (clickCheckHorizontal||clickCheckVertical)
+                Log.i("Info","Main: $clickCheck And ($clickCheckHorizontal||$clickCheckVertical)")
+                if(clickCheck === true) {
+                    val radio: RadioButton = viewOfLayout.findViewById(checkedId)
+                    var intent: Intent? = null
+                    when (radio.text) {
+                        "Horizontal" -> {
+                            if(clickCheckHorizontal)
+                                intent = Intent(this@TabMain.context, ActivityHorizontalMain::class.java)
+                        }
+                        "Vertical" -> {
+                            if(clickCheckVertical)
+                                intent = Intent(this@TabMain.context, ActivityVerticalMain::class.java)
+                        }
+                    }
+                    if(intent!=null)
+                        startActivity(intent)
+
+                    clickCheckVertical = false
+                    clickCheckHorizontal = false
                 }
             }
         )
