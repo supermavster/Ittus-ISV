@@ -98,6 +98,15 @@ class MainActivity : AppCompatActivity() {
                     tabMain = TabMain(mainActivity)
                     tabMain
                 }
+                1 -> {
+                    tabInformation = TabInformation(mainActivity)
+                    tabInformation
+                }
+                2 -> {
+                    tabGeneralData = TabGeneralData(mainActivity)
+                    tabGeneralData
+                }
+
                 else -> Fragment()
             }
         }
