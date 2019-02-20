@@ -26,6 +26,7 @@ import com.cittus.isv.model.ActionsRequest.Companion.TAKE_PHOTO_REQUEST
 import com.cittus.isv.view.tabs.TabGeneralData
 import com.cittus.isv.view.tabs.TabInformation
 import com.cittus.isv.view.tabs.TabMain
+import com.cittus.isv.view.vertical.ActivityVerticalMain
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
@@ -57,14 +58,15 @@ class MainActivity : AppCompatActivity() {
         tabs.addOnTabSelectedListener(TabLayout.ViewPagerOnTabSelectedListener(container))
 
          fab.setOnClickListener {
-             val bd = DAOConnection(this, "Ittus", null, 1).writableDatabase
+             //val bd = DAOConnection(this, "Ittus", null, 1).writableDatabase
              /*val registro = ContentValues()
              registro.put("codigo", et1.getText().toString())
              registro.put("descripcion", et2.getText().toString())
              registro.put("precio", et3.getText().toString())
              bd.insert("articulos", null, registro)*/
-            Log.i("DataBase",bd.isOpen.toString())
-             bd.close()
+             startActivity(Intent(this, MainImage::class.java))
+             //Log.i("DataBase",bd.isOpen.toString())
+             //bd.close()
          }
     }
 

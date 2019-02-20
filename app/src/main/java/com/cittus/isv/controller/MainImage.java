@@ -33,7 +33,7 @@ public class MainImage extends AppCompatActivity {
     List<SliderUtils> sliderImg;
     ViewPagerAdapter viewPagerAdapter;
 
-    String request_url = "http://172.20.1.13/senalesviales/sliderjsonoutput.php?mandeme=turistas";
+    String request_url = "http://172.20.1.13/ittus-senalesviales/queries/sliderjsonoutput.php?signal=turis&code=ST-01";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -55,8 +55,9 @@ class TakePicture (private var context: Activity,private var imageView: ImageVie
         cursor.moveToFirst()
         val photoPath = cursor.getString(0)
         cursor.close()
-        //TODO hacer temporales para obtener despues
+        //TODO hacer temporales para obtener despues 800 x 400
         val file = File(photoPath)
+
         resizeImage(file,125)
         val uri = Uri.fromFile(file)
         imageView.setImageURI(uri)

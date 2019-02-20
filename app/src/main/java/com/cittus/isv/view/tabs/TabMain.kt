@@ -131,11 +131,11 @@ class TabMain @SuppressLint("ValidFragment") constructor(mainActivity: Activity)
                     var intent: Intent? = null
                     when (radio.text) {
                         "Horizontal" -> {
-                            if(clickCheckHorizontal)
+                            if(!clickCheckHorizontal)
                                 intent = Intent(this@TabMain.context, ActivityHorizontalMain::class.java)
                         }
                         "Vertical" -> {
-                            if(clickCheckVertical)
+                            if(!clickCheckVertical)
                                 intent = Intent(this@TabMain.context, ActivityVerticalMain::class.java)
                         }
                     }
