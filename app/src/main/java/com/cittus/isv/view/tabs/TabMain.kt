@@ -22,12 +22,11 @@ import com.cittus.isv.view.vertical.ActivityVerticalMain
 import kotlinx.android.synthetic.main.tab_main.view.*
 
 
-
 @SuppressLint("ValidFragment")
 class TabMain @SuppressLint("ValidFragment") constructor(mainActivity: Activity) : Fragment() {
     // Global Variables
     // Get Main Activity (To show Elements or Call)
-    private var mainActivity  = mainActivity
+    private var mainActivity = mainActivity
     // View Elements from Fragment
     private lateinit var viewOfLayout: View
     // Get Location Main User
@@ -52,7 +51,7 @@ class TabMain @SuppressLint("ValidFragment") constructor(mainActivity: Activity)
 
     // Initialization - Tab Main (Elements and Actions)
     @RequiresApi(Build.VERSION_CODES.M)
-    private fun initProcess(){
+    private fun initProcess() {
         // GPS
         gpsActions()
         // Photos
@@ -75,25 +74,25 @@ class TabMain @SuppressLint("ValidFragment") constructor(mainActivity: Activity)
         }
     }
 
-    private fun cameraActions(){
+    private fun cameraActions() {
         // Call on Click
-        viewOfLayout.ibtn_front.setOnClickListener{
+        viewOfLayout.ibtn_front.setOnClickListener {
             // Init Camera
-            takePicture = TakePicture(mainActivity,viewOfLayout.ibtn_front,viewOfLayout.cb_front)
+            takePicture = TakePicture(mainActivity, viewOfLayout.ibtn_front, viewOfLayout.cb_front)
             takePicture.initProcess()
 
         }
 
-        viewOfLayout.ibtn_back.setOnClickListener{
+        viewOfLayout.ibtn_back.setOnClickListener {
             // Init Camera
-            takePicture = TakePicture(mainActivity,viewOfLayout.ibtn_back,viewOfLayout.cb_back)
+            takePicture = TakePicture(mainActivity, viewOfLayout.ibtn_back, viewOfLayout.cb_back)
             takePicture.initProcess()
 
         }
 
-        viewOfLayout.ibtn_plaque.setOnClickListener{
+        viewOfLayout.ibtn_plaque.setOnClickListener {
             // Init Camera
-            takePicture = TakePicture(mainActivity,viewOfLayout.ibtn_plaque,viewOfLayout.cb_plaque)
+            takePicture = TakePicture(mainActivity, viewOfLayout.ibtn_plaque, viewOfLayout.cb_plaque)
             takePicture.initProcess()
 
         }
@@ -105,46 +104,38 @@ class TabMain @SuppressLint("ValidFragment") constructor(mainActivity: Activity)
         return takePicture
     }
 
-    fun processCapturedPhoto(takePicture: TakePicture){
+    fun processCapturedPhoto(takePicture: TakePicture) {
         takePicture.processCapturedPhoto(takePicture.getPath())
     }
 
     private var clickCheckHorizontal: Boolean = false
     private var clickCheckVertical: Boolean = false
-    private fun radioGroupHVActions(){
-        // Set Actions
-        viewOfLayout.rbtn_horizontal.setOnClickListener {
-            clickCheckHorizontal = true
-        }
+    private fun radioGroupHVActions() {
 
-        viewOfLayout.rbtn_vertical.setOnClickListener {
-            clickCheckVertical = true
-        }
 
         viewOfLayout.radio_group.setOnCheckedChangeListener(
             //Actions Radio Button Main (Information)
             RadioGroup.OnCheckedChangeListener { group, checkedId ->
-                var clickCheck:Boolean= (clickCheckHorizontal||clickCheckVertical)
-                Log.i("Info","Main: $clickCheck And ($clickCheckHorizontal||$clickCheckVertical)")
-                if(clickCheck === true) {
-                    val radio: RadioButton = viewOfLayout.findViewById(checkedId)
+
+                val radio: RadioButton = viewOfLayout.findViewById(checkedId)
+
+                // Set Actions
+                radio.setOnClickListener {
                     var intent: Intent? = null
                     when (radio.text) {
                         "Horizontal" -> {
-                            if(!clickCheckHorizontal)
-                                intent = Intent(this@TabMain.context, ActivityHorizontalMain::class.java)
+                            intent = Intent(this@TabMain.context, ActivityHorizontalMain::class.java)
                         }
                         "Vertical" -> {
-                            if(!clickCheckVertical)
-                                intent = Intent(this@TabMain.context, ActivityVerticalMain::class.java)
+                            intent = Intent(this@TabMain.context, ActivityVerticalMain::class.java)
                         }
                     }
-                    if(intent!=null)
+                    if (intent != null) {
                         startActivity(intent)
-
-                    clickCheckVertical = false
-                    clickCheckHorizontal = false
+                    }
                 }
+
+
             }
         )
 

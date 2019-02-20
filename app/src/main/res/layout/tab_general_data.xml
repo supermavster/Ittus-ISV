@@ -8,11 +8,11 @@
                                              tools:context=".view.MainActivity">
     <LinearLayout
             android:orientation="vertical"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="8dp" android:layout_marginStart="8dp"
-            android:id="@+id/linearLayout3" android:layout_marginTop="16dp" app:layout_constraintTop_toTopOf="parent">
+            android:id="@+id/linearLayout3" android:layout_marginTop="8dp" app:layout_constraintTop_toTopOf="parent">
         <TextView
                 android:text="@string/lbl_location_between_signal"
                 android:layout_width="match_parent"
@@ -20,14 +20,14 @@
                 android:layout_weight="1"/>
         <LinearLayout
                 android:orientation="horizontal"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="match_parent" android:layout_weight="1" android:layout_marginBottom="15dp">
             <Spinner
                     android:id="@+id/spin_location_between_signal"
-                    android:layout_width="280dp"
+                    android:layout_width="200dp"
                     android:layout_height="wrap_content"/>
             <EditText
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:inputType="number"
                     android:ems="10"
@@ -41,18 +41,18 @@
                 android:layout_weight="1"/>
         <LinearLayout
                 android:orientation="horizontal"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="match_parent" android:layout_weight="1" android:layout_marginBottom="15dp">
             <Spinner
                     android:id="@+id/spin_location_and_signal"
-                    android:layout_width="280dp"
+                    android:layout_width="200dp"
                     android:layout_height="wrap_content"/>
             <EditText
-                    android:layout_width="wrap_content"
+                    android:layout_width="125dp"
                     android:layout_height="wrap_content"
                     android:inputType="number"
                     android:ems="10"
-                    android:id="@+id/txt_location_and_signal" android:layout_weight="1"
+                    android:id="@+id/txt_location_and_signal"
                     android:hint="@string/lbl_number" android:autofillHints="" tools:targetApi="o"/>
         </LinearLayout>
         <TextView
@@ -62,18 +62,18 @@
                 android:layout_weight="1"/>
         <LinearLayout
                 android:orientation="horizontal"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="match_parent" android:layout_weight="1" android:layout_marginBottom="15dp">
             <Spinner
                     android:id="@+id/spin_location_with_signal"
-                    android:layout_width="280dp"
+                    android:layout_width="200dp"
                     android:layout_height="wrap_content"/>
             <EditText
-                    android:layout_width="wrap_content"
+                    android:layout_width="125dp"
                     android:layout_height="wrap_content"
                     android:inputType="number"
                     android:ems="10"
-                    android:id="@+id/txt_location_with_signal" android:layout_weight="1"
+                    android:id="@+id/txt_location_with_signal"
                     android:hint="@string/lbl_number" android:autofillHints="" tools:targetApi="o"/>
         </LinearLayout>
     </LinearLayout>
