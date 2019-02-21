@@ -23,6 +23,7 @@ import com.cittus.isv.complements.Permissions
 import com.cittus.isv.complements.gps.GetUserLocation
 import com.cittus.isv.controller.MainImage
 import com.cittus.isv.model.ActionsRequest.Companion.TAKE_PHOTO_REQUEST
+import com.cittus.isv.model.EndPoints
 import com.cittus.isv.view.tabs.TabGeneralData
 import com.cittus.isv.view.tabs.TabInformation
 import com.cittus.isv.view.tabs.TabMain
@@ -64,7 +65,7 @@ class MainActivity : AppCompatActivity() {
              registro.put("descripcion", et2.getText().toString())
              registro.put("precio", et3.getText().toString())
              bd.insert("articulos", null, registro)*/
-             startActivity(Intent(this, MainImage::class.java))
+
              //Log.i("DataBase",bd.isOpen.toString())
              //bd.close()
          }

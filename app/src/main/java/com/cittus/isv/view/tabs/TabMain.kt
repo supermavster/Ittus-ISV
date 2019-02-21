@@ -17,8 +17,10 @@ import com.cittus.isv.R
 import com.cittus.isv.complements.Permissions
 import com.cittus.isv.complements.camera.TakePicture
 import com.cittus.isv.complements.gps.GetUserLocation
+import com.cittus.isv.controller.MainImage
 import com.cittus.isv.view.horizontal.ActivityHorizontalMain
 import com.cittus.isv.view.vertical.ActivityVerticalMain
+import kotlinx.android.synthetic.main.activity_horizontal_main.view.*
 import kotlinx.android.synthetic.main.tab_main.view.*
 
 
@@ -58,6 +60,7 @@ class TabMain @SuppressLint("ValidFragment") constructor(mainActivity: Activity)
         cameraActions()
         // Horizontal or Vertical
         radioGroupHVActions()
+
     }
 
     @RequiresApi(Build.VERSION_CODES.M)
@@ -108,8 +111,6 @@ class TabMain @SuppressLint("ValidFragment") constructor(mainActivity: Activity)
         takePicture.processCapturedPhoto(takePicture.getPath())
     }
 
-    private var clickCheckHorizontal: Boolean = false
-    private var clickCheckVertical: Boolean = false
     private fun radioGroupHVActions() {
 
 
