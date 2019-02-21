@@ -65,8 +65,9 @@ class MainActivity : AppCompatActivity() {
              registro.put("descripcion", et2.getText().toString())
              registro.put("precio", et3.getText().toString())
              bd.insert("articulos", null, registro)*/
+             //var sortedList: ArrayList<String> = DAOConnection(this).getElementsJSON("http://192.168.0.3/ittus-senalesviales/queries/sliderjsonoutput.php?signal=turis","code")
 
-             //Log.i("DataBase",bd.isOpen.toString())
+             //Log.i("DataBase",sortedList.toString())
              //bd.close()
          }
     }

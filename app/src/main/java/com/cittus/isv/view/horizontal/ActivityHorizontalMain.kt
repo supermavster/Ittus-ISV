@@ -40,7 +40,7 @@ class ActivityHorizontalMain : AppCompatActivity() {
         btn_stretch.setOnClickListener {
             btn_intersection.isClickable = !btn_stretch.isClickable
 
-            makeActivityImages(R.string.title_horizontal_stretch,EndPoints.URL_GET_TOURIST)
+            makeActivityImages(R.string.title_horizontal_stretch,"http://172.20.1.18/ittus-senalesviales/queries/sliderjsonoutput.php?signal=turis")
         }
     }
 
@@ -50,13 +50,6 @@ class ActivityHorizontalMain : AppCompatActivity() {
         intent.putExtra("url_img",url_img)
         intent.putExtra("code",code)
         intent.putExtra("description",description)
-
-        var codeList: ArrayList<String> = DAOConnection(this).getElementsJSON(url_img,"code")
-        intent.putExtra("codeList",codeList)
-
-        //var descriptionList: ArrayList<String> = DAOConnection(this).getElementsJSON(url_img,"code")
-        //intent.putExtra("descriptionList",descriptionList)
-
         startActivity(intent)
     }
 }

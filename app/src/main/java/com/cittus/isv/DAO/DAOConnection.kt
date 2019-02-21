@@ -1,6 +1,8 @@
 package com.cittus.isv.DAO
 
     import android.app.Activity
+    import android.util.Log
+    import android.widget.ListView
     import com.android.volley.AuthFailureError
     import com.android.volley.Request
     import com.android.volley.Response
@@ -16,28 +18,28 @@ class DAOConnection (mainActivity: Activity) {
     // Global Variables
     // Get Main Activity (To show Elements or Call)
     private var mainActivity  = mainActivity
+    private var arrayTemp:ArrayList<String> = ArrayList()
 
-    public fun getElementsJSON(url: String, sql: String) :ArrayList<String>{
-        var arrayTemp:ArrayList<String> = ArrayList<String>()
+
+    public fun getElementsJSON(url: String, sql: String) {
+        arrayTemp = ArrayList()
         // Instantiate the RequestQueue.
-        val queue = Volley.newRequestQueue(mainActivity)
         // Request a string response from the provided URL.
         val stringRequest = JsonArrayRequest(Request.Method.GET, url, null, Response.Listener { response ->
-            for (i in 0 until response.length()) {
-                try {
+            try {for (i in 0 until response.length()) {
                     val jsonObject = response.getJSONObject(i)
                     arrayTemp.add(jsonObject.getString(sql))
-                } catch (e: JSONException) {
-                    e.printStackTrace()
-                }
-
             }
-        }, Response.ErrorListener { })
+            } catch (e: JSONException) {
+                e.printStackTrace()
+            }
 
+        }, Response.ErrorListener { })
         // Add the request to the RequestQueue.
+        val queue = Volley.newRequestQueue(mainActivity)
         queue.add(stringRequest)
-        return arrayTemp
     }
+
 
         //adding a new record to database
         private fun addArtist() {
