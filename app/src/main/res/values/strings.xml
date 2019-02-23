@@ -15,6 +15,7 @@
     <string name="btn_gps">Set GPS (Lat, Lon)</string>
 
     <string name="lbl_photos_signal">Fotos de la señal</string>
+    <string name="photo_only">Foto</string>
     <string name="photo_front">Frontal</string>
     <string name="photo_back">Dorsal</string>
     <string name="photo_plaque">Placa</string>
@@ -30,11 +31,11 @@
     <string name="tab_text_2">Información</string>
 
     <string name="lbl_location_signal">Ubicación de la Señal en la Via</string>
-    <string name="btn_left">Izquierda</string>
-    <string name="btn_arrow_left">⇐</string>
+    <string name="btn_left">Norte - Sur</string>
+    <string name="btn_arrow_left">N-S</string>
 
-    <string name="btn_right">Derecha</string>
-    <string name="btn_arrow_right">⇒</string>
+    <string name="btn_right">Oeste - Este</string>
+    <string name="btn_arrow_right">O-E</string>
 
     <string name="lbl_size_signal">Tamaño de la Señal</string>
     <string name="btn_60">60 x 60</string>
@@ -91,8 +92,8 @@
     <string name="btn_intersection">Intersección</string>
 
     <string name="lbl_location_lane">Ubicación en Carril</string>
-    <string name="txt_location_signal">¿En qué carril esta úbicada la señal?</string>
-    <string name="txt_percentage_coverage">Porcentaje de Cobertura (%)</string>
+    <string name="txt_location_signal">Carril de la señal</string>
+    <string name="txt_percentage_coverage">Porcentaje de Cobertura</string>
 
 
     // Labels Activities Images

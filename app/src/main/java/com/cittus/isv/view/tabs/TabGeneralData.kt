@@ -8,6 +8,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.cittus.isv.R
+import kotlinx.android.synthetic.main.tab_general_data.*
+import kotlinx.android.synthetic.main.tab_general_data.view.*
 
 @SuppressLint("ValidFragment")
 class TabGeneralData @SuppressLint("ValidFragment") constructor(mainActivity: Activity) : Fragment() {
@@ -31,5 +33,20 @@ class TabGeneralData @SuppressLint("ValidFragment") constructor(mainActivity: Ac
     // Initialization - Tab Main (Elements and Actions)
     private fun initProcess() {
 
+    }
+
+    fun getData():ArrayList<String>{
+        var tempArray: ArrayList<String> = ArrayList<String>()
+        //tempArray.add("LocationBetween:" + viewOfLayout.spin_location_between_signal.selectedItem.toString())
+        tempArray.add("LocationBetween:" + viewOfLayout.txt_location_between_signal.text.toString())
+
+        //tempArray.add("LocationBetween:" + viewOfLayout.spin_location_and_signal.selectedItem.toString())
+        tempArray.add("LocationBetween:" + viewOfLayout.txt_location_and_signal.text.toString())
+
+        //tempArray.add("LocationBetween:" + viewOfLayout.spin_location_with_signal.selectedItem.toString())
+        tempArray.add("LocationBetween:" + viewOfLayout.txt_location_with_signal.text.toString())
+
+        tempArray.add("Starts2:" + viewOfLayout.rb_state_signal.getRating())
+        return tempArray
     }
 }

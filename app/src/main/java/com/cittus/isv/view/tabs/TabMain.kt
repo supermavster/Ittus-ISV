@@ -7,7 +7,6 @@ import android.os.Build
 import android.os.Bundle
 import android.support.annotation.RequiresApi
 import android.support.v4.app.Fragment
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -17,10 +16,10 @@ import com.cittus.isv.R
 import com.cittus.isv.complements.Permissions
 import com.cittus.isv.complements.camera.TakePicture
 import com.cittus.isv.complements.gps.GetUserLocation
-import com.cittus.isv.controller.MainImage
+import com.cittus.isv.model.ActionsRequest
 import com.cittus.isv.view.horizontal.ActivityHorizontalMain
 import com.cittus.isv.view.vertical.ActivityVerticalMain
-import kotlinx.android.synthetic.main.activity_horizontal_main.view.*
+import kotlinx.android.synthetic.main.tab_main.*
 import kotlinx.android.synthetic.main.tab_main.view.*
 
 
@@ -29,6 +28,7 @@ class TabMain @SuppressLint("ValidFragment") constructor(mainActivity: Activity)
     // Global Variables
     // Get Main Activity (To show Elements or Call)
     private var mainActivity = mainActivity
+    var intent: Intent? = null
     // View Elements from Fragment
     private lateinit var viewOfLayout: View
     // Get Location Main User
@@ -111,35 +111,68 @@ class TabMain @SuppressLint("ValidFragment") constructor(mainActivity: Activity)
         takePicture.processCapturedPhoto(takePicture.getPath())
     }
 
+    var photo = false
     private fun radioGroupHVActions() {
-
-
         viewOfLayout.radio_group.setOnCheckedChangeListener(
             //Actions Radio Button Main (Information)
             RadioGroup.OnCheckedChangeListener { group, checkedId ->
-
                 val radio: RadioButton = viewOfLayout.findViewById(checkedId)
 
+                linear_horizontal_one.visibility = View.VISIBLE;
+                lbl_photos_signal.visibility = View.VISIBLE;
+                when (radio.text) {
+                    "Horizontal" -> {
+                        cb_front.text = getString(R.string.photo_only)
+                        linear_vertical_two.visibility = View.GONE
+                        linear_vertical_three.visibility = View.GONE
+                    }
+                    "Vertical" -> {
+                        cb_front.text = getString(R.string.photo_front)
+                        linear_vertical_two.visibility = View.VISIBLE
+                        linear_vertical_three.visibility = View.VISIBLE
+                    }
+                }
                 // Set Actions
                 radio.setOnClickListener {
-                    var intent: Intent? = null
                     when (radio.text) {
                         "Horizontal" -> {
-                            intent = Intent(this@TabMain.context, ActivityHorizontalMain::class.java)
+                            // Init New Activity
+                                intent = Intent(mainActivity, ActivityHorizontalMain::class.java)
                         }
                         "Vertical" -> {
-                            intent = Intent(this@TabMain.context, ActivityVerticalMain::class.java)
+                            // Init New Activity
+                                intent = Intent(mainActivity, ActivityVerticalMain::class.java)
                         }
                     }
                     if (intent != null) {
-                        startActivity(intent)
+                        mainActivity.startActivityForResult(intent, ActionsRequest.GET_HORIZONTAL_VALUES)
                     }
+
                 }
-
-
             }
         )
 
+    }
+
+
+    fun getData(): ArrayList<String> {
+        var tempArray: ArrayList<String> = ArrayList<String>()
+        // Latitude and Longitude
+
+        tempArray.add("lat:" + viewOfLayout.txt_latitude.text)
+        tempArray.add("lon:" + viewOfLayout.txt_longitude.text)
+
+        // Get CLasification
+        val radio: RadioButton = viewOfLayout.findViewById(viewOfLayout.radio_group.checkedRadioButtonId)
+        tempArray.add("Clarification:" + radio.text)
+
+        // Get Imagen
+        var imgFront = viewOfLayout.ibtn_front.drawable
+        tempArray.add("imgFront:$imgFront")
+
+        // Get Data - HV
+        tempArray.addAll(intent!!.getStringArrayListExtra("getData"))
+        return tempArray
     }
 
 }

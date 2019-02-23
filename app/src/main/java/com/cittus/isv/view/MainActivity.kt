@@ -1,53 +1,46 @@
 package com.cittus.isv.view
 
+
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
-import android.os.Build
+import android.os.Bundle
+import android.support.design.widget.Snackbar
 import android.support.design.widget.TabLayout
-import android.support.v7.app.AppCompatActivity
-
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentPagerAdapter
-import android.os.Bundle
-import android.support.annotation.RequiresApi
+import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
-import com.cittus.isv.DAO.DAOConnection
-
-
 import com.cittus.isv.R
-import com.cittus.isv.complements.Permissions
-import com.cittus.isv.complements.gps.GetUserLocation
-import com.cittus.isv.controller.MainImage
+import com.cittus.isv.model.ActionsRequest
+import com.cittus.isv.model.ActionsRequest.Companion.GET_HORIZONTAL_VALUES
 import com.cittus.isv.model.ActionsRequest.Companion.TAKE_PHOTO_REQUEST
-import com.cittus.isv.model.EndPoints
 import com.cittus.isv.view.tabs.TabGeneralData
 import com.cittus.isv.view.tabs.TabInformation
 import com.cittus.isv.view.tabs.TabMain
-import com.cittus.isv.view.vertical.ActivityVerticalMain
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
 
     private var mSectionsPagerAdapter: SectionsPagerAdapter? = null
 
-    var mainActivity:Activity = this
+    var mainActivity: Activity = this
 
     // Variables Table
     private var tabMain: TabMain = TabMain(mainActivity)
-    private var tabInformation:TabInformation = TabInformation(mainActivity)
-    private var tabGeneralData:TabGeneralData = TabGeneralData(mainActivity)
+    private var tabInformation: TabInformation = TabInformation(mainActivity)
+    private var tabGeneralData: TabGeneralData = TabGeneralData(mainActivity)
 
 
-     @SuppressLint("WrongViewCast")
+    @SuppressLint("WrongViewCast")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
         setSupportActionBar(toolbar)
+
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
         mSectionsPagerAdapter = SectionsPagerAdapter(supportFragmentManager)
@@ -58,25 +51,45 @@ class MainActivity : AppCompatActivity() {
         container.addOnPageChangeListener(TabLayout.TabLayoutOnPageChangeListener(tabs))
         tabs.addOnTabSelectedListener(TabLayout.ViewPagerOnTabSelectedListener(container))
 
-         fab.setOnClickListener {
-             //val bd = DAOConnection(this, "Ittus", null, 1).writableDatabase
-             /*val registro = ContentValues()
-             registro.put("codigo", et1.getText().toString())
-             registro.put("descripcion", et2.getText().toString())
-             registro.put("precio", et3.getText().toString())
-             bd.insert("articulos", null, registro)*/
-             //var sortedList: ArrayList<String> = DAOConnection(this).getElementsJSON("http://192.168.0.3/ittus-senalesviales/queries/sliderjsonoutput.php?signal=turis","code")
+        fab.setOnClickListener { view ->
+            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                .setAction("Action", null).show()
+            //val bd = DAOConnection(this, "Ittus", null, 1).writableDatabase
+            /*val registro = ContentValues()
+            registro.put("codigo", et1.getText().toString())
+            registro.put("descripcion", et2.getText().toString())
+            registro.put("precio", et3.getText().toString())
+            bd.insert("articulos", null, registro)*/
+            //var sortedList: ArrayList<String> = DAOConnection(this).getElementsJSON("http://192.168.0.3/ittus-senalesviales/queries/sliderjsonoutput.php?signal=turis","code")
+            try {
+                val intent = intent
 
-             //Log.i("DataBase",sortedList.toString())
-             //bd.close()
-         }
+                // Set Template New Activity
+                Log.i("testx", intent.getStringExtra("hola"))
+
+
+                var tempArray: ArrayList<String> = ArrayList<String>()
+                // ISV
+                tempArray.addAll(tabMain.getData())
+
+                // INFORMATION
+                tempArray.addAll(tabInformation.getData())
+
+                // General Data
+                tempArray.addAll(tabGeneralData.getData())
+
+
+                if(tempArray!=null)
+                Log.i("DataBase", tempArray.toString())
+
+
+            } catch (exc: Exception) {
+                Log.e("ERROR", exc.message)
+            }
+
+            //bd.close()
+        }
     }
-
-
-
-
-
-
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -103,10 +116,10 @@ class MainActivity : AppCompatActivity() {
         override fun getItem(position: Int): Fragment {
             // getItem is called to instantiate the fragment for the given page.
 
-            return when(position) {
-                0 ->tabMain
-                1 ->tabInformation
-                2 ->tabGeneralData
+            return when (position) {
+                0 -> tabMain
+                1 -> tabInformation
+                2 -> tabGeneralData
                 else -> Fragment()
             }
         }
@@ -118,14 +131,26 @@ class MainActivity : AppCompatActivity() {
     }
 
 
-    // Camera Action
-    override fun onActivityResult(requestCode: Int, resultCode: Int,
-                                  data: Intent?) {
-        if (resultCode == Activity.RESULT_OK
-            && requestCode == TAKE_PHOTO_REQUEST) {
-            tabMain.processCapturedPhoto(tabMain.getTakePictureMain())
-        } else {
-            super.onActivityResult(requestCode, resultCode, data)
+    // Camera Action // Return Intend Action
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+
+        Log.i("Main Activity",requestCode.toString()+"->"+resultCode+"->"+data.toString())
+        when (requestCode) {
+            ActionsRequest.TAKE_PHOTO_REQUEST and RESULT_OK-> tabMain.processCapturedPhoto(tabMain.getTakePictureMain())
+            ActionsRequest.GET_HORIZONTAL_VALUES or ActionsRequest.GET_IMAGES -> {
+                if (data != null){
+                    val extras = data!!.extras ?: return
+                    val myString = extras.getStringArrayList("getData")
+                    Log.i("getData", "getData:" + myString.toString())
+                }
+            }
+
+            else->{
+                    super.onActivityResult(requestCode, resultCode, data)
+            }
         }
     }
+
+
+
 }

@@ -1,7 +1,4 @@
 package com.cittus.isv.complements.slider;
-
-
-
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.util.LruCache;
@@ -14,7 +11,6 @@ import com.android.volley.toolbox.BasicNetwork;
 import com.android.volley.toolbox.DiskBasedCache;
 import com.android.volley.toolbox.HurlStack;
 import com.android.volley.toolbox.ImageLoader;
-
 
 public class CustomVolleyRequest {
 
