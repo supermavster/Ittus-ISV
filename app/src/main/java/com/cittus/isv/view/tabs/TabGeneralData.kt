@@ -52,13 +52,13 @@ class TabGeneralData @SuppressLint("ValidFragment") constructor(mainActivity: Ac
         // 2 -> LocationBetween 3
         // 3 -> Starts 2 - State Signal
         var tempArray: ArrayList<String> = ArrayList<String>()
-        tempLocationSignal = viewOfLayout.spin_location_between_signal.selectedItem.toString()+ "# "+viewOfLayout.txt_location_between_signal.text.toString()
+        tempLocationSignal = viewOfLayout.spin_location_between_signal.selectedItem.toString()+ " # "+viewOfLayout.txt_location_between_signal.text.toString()
         tempArray.add(0, tempLocationSignal)
 
-        tempLocationSignal= viewOfLayout.spin_location_and_signal.selectedItem.toString()+"# "+viewOfLayout.txt_location_and_signal.text.toString()
+        tempLocationSignal= viewOfLayout.spin_location_and_signal.selectedItem.toString()+" # "+viewOfLayout.txt_location_and_signal.text.toString()
         tempArray.add(1, tempLocationSignal)
 
-        tempLocationSignal = viewOfLayout.spin_location_with_signal.selectedItem.toString()+"# "+viewOfLayout.txt_location_with_signal.text.toString()
+        tempLocationSignal = viewOfLayout.spin_location_with_signal.selectedItem.toString()+" # "+viewOfLayout.txt_location_with_signal.text.toString()
         tempArray.add(2, tempLocationSignal)
 
         tempArray.add(3, viewOfLayout.rb_state_signal.rating.toString())

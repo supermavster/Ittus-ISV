@@ -84,28 +84,34 @@ class TabMain @SuppressLint("ValidFragment") constructor(mainActivity: Activity)
         viewOfLayout.ibtn_front.setOnClickListener {
             // Init Camera
             takePictureFront = TakePicture(mainActivity, viewOfLayout.ibtn_front, viewOfLayout.cb_front)
-            takePictureFront.initProcess()
+            takePictureFront.initProcess(ActionsRequest.TAKE_PHOTO_REQUEST_FRONT)
 
         }
 
         viewOfLayout.ibtn_back.setOnClickListener {
             // Init Camera
             takePictureBack = TakePicture(mainActivity, viewOfLayout.ibtn_back, viewOfLayout.cb_back)
-            takePictureBack.initProcess()
+            takePictureBack.initProcess(ActionsRequest.TAKE_PHOTO_REQUEST_BACK)
 
         }
 
         viewOfLayout.ibtn_plaque.setOnClickListener {
             // Init Camera
             takePicturePlaque = TakePicture(mainActivity, viewOfLayout.ibtn_plaque, viewOfLayout.cb_plaque)
-            takePicturePlaque.initProcess()
+            takePicturePlaque.initProcess(ActionsRequest.TAKE_PHOTO_REQUEST_PLAQUE)
 
         }
 
 
     }
 
-    fun getTakePictureMain(): TakePicture {
+    fun getTakePictureMainFront(): TakePicture {
+        return takePictureFront
+    }
+    fun getTakePictureMainBack(): TakePicture {
+        return takePictureFront
+    }
+    fun getTakePictureMainPlaque(): TakePicture {
         return takePictureFront
     }
 
@@ -205,7 +211,7 @@ class TabMain @SuppressLint("ValidFragment") constructor(mainActivity: Activity)
         return tempArray
     }
 
-    fun getDataHorizonta(): ArrayList<String> {
+    fun getDataHorizontal(): ArrayList<String> {
         // Get Data - HV
         var tempArray: ArrayList<String> = ArrayList<String>()
         // TODO: ISV Horizontal DATA MAIN

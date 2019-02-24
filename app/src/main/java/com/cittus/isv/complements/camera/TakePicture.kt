@@ -21,11 +21,11 @@ class TakePicture (private var context: Activity,private var imageView: ImageVie
     private var mCurrentPhoto: String = "";
     private var permissions:Permissions = Permissions(context)
 
-    fun initProcess() {
-        if (permissions.checkPermissionsCamera()) launchCamera() else permissions.requestPermission()
+    fun initProcess(request: Int) {
+        if (permissions.checkPermissionsCamera()) launchCamera(request) else permissions.requestPermission()
     }
 
-    private fun launchCamera() {
+    private fun launchCamera(request:Int) {
         val values = ContentValues(1)
         values.put(MediaStore.Images.Media.MIME_TYPE, "image/png")
         val fileUri = context.contentResolver
@@ -37,7 +37,7 @@ class TakePicture (private var context: Activity,private var imageView: ImageVie
             intent.putExtra(MediaStore.EXTRA_OUTPUT, fileUri)
             intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION
                     or Intent.FLAG_GRANT_WRITE_URI_PERMISSION)
-            context.startActivityForResult(intent, TAKE_PHOTO_REQUEST)
+            context.startActivityForResult(intent, request)
 
 
         }

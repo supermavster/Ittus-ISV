@@ -109,18 +109,21 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-
+var horizontalItems = ArrayList<String>()
     // Camera Action // Return Intend Action
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
 
         Log.i("Main Activity", requestCode.toString() + "->" + resultCode + "->" + data.toString())
         when (requestCode) {
-            ActionsRequest.TAKE_PHOTO_REQUEST and RESULT_OK -> tabMain.processCapturedPhoto(tabMain.getTakePictureMain())
-            ActionsRequest.GET_HORIZONTAL_VALUES or ActionsRequest.GET_IMAGES -> {
+            ActionsRequest.TAKE_PHOTO_REQUEST_FRONT and RESULT_OK -> tabMain.processCapturedPhoto(tabMain.getTakePictureMainFront())
+            ActionsRequest.TAKE_PHOTO_REQUEST_BACK and RESULT_OK -> tabMain.processCapturedPhoto(tabMain.getTakePictureMainBack())
+            ActionsRequest.TAKE_PHOTO_REQUEST_PLAQUE and RESULT_OK -> tabMain.processCapturedPhoto(tabMain.getTakePictureMainPlaque())
+            ActionsRequest.GET_HORIZONTAL_VALUES -> {
                 if (data != null) {
                     val extras = data!!.extras ?: return
-                    val myString = extras.getStringArrayList("getData")
-                    Log.i("getData", "getData:$myString")
+                    val myData = extras.getStringArrayList("getData")
+                    horizontalItems = myData
+                    Log.e("getData", "getData:$myData")
                 }
             }
 
@@ -185,25 +188,27 @@ class MainActivity : AppCompatActivity() {
             signalMain!!.Longitud = isvMain[1].toFloat() // 1 -> Longitud
             signalMain!!.TypeSignal = isvMain[2] // 2 -> Clasificacion
             signalMain!!.PhotoFront = isvMain[3] // 3 -> Img Front
-            Log.e("TYPE",isvMain[2])
+            // Type
             when (isvMain[2]) {
                 "Horizontal" -> {
-/*
-    // Get Data - HV
-    // TODO: ISV Horizontal DATA MAIN
-    // 1-0 -> Direccion
-    // 1-1 -> Location Trayecto
-    // 1-2 -> Carril
-    // 1-3 -> Porcentaje
-    signalMain!!.Direccion = isvMain[10] // 10 -> Direccion
-    signalMain!!.Location = isvMain[11] // 11 -> Location Trayect
-    signalMain!!.Carril = isvMain[12] // 12 -> Carril
-    signalMain!!.Porcentaje = isvMain[13] // 13 -> Porcentaje
-    */
+                // Get Data - HV
+                // TODO: ISV Horizontal DATA MAIN
+                // 1-0 -> Direccion
+                // 1-1 -> Location Trayecto
+                // 1-2 -> Carril
+                // 1-3 -> Porcentaje
+                var horizontalData = tabMain.getDataHorizontal()
+                    if(horizontalData == null || horizontalData.size==0 || horizontalData.isEmpty()) {
+                        horizontalData = horizontalItems
+                    }
+                    signalMain!!.Direccion = horizontalData[0] // 1-0 -> Direccion
+                    signalMain!!.Location = horizontalData[1] // 1-1 -> Location Trayect
+                    signalMain!!.Carril = horizontalData[2] // 1-2 -> Carril
+                    signalMain!!.Porcentaje = horizontalData[3] // 1-3 -> Porcentaje
                 }
                 "Vertical" -> {
-                    //signalMain!!.PhotoBack = isvMain[4] // 3 -> Img Back
-                    //signalMain!!.PhotoPlaque = isvMain[5] // 3 -> Img Plaque
+                    signalMain!!.PhotoBack = isvMain[4] // 3 -> Img Back
+                    signalMain!!.PhotoPlaque = isvMain[5] // 3 -> Img Plaque
                 }
                 else->{
                     exceptionMain = true
@@ -268,20 +273,6 @@ class MainActivity : AppCompatActivity() {
             if (bd.addSignal(signalMain!!) === true) {
                 message = "Datos añadidos con exito."
                 // Reset Views
-                tabMain = TabMain(mainActivity)
-                tabInformation = TabInformation(mainActivity)
-                tabGeneralData = TabGeneralData(mainActivity)
-                setContentView(R.layout.activity_main)
-                // Create the adapter that will return a fragment for each of the three
-                // primary sections of the activity.
-                mSectionsPagerAdapter = SectionsPagerAdapter(supportFragmentManager)
-
-                // Set up the ViewPager with the sections adapter.
-                container.adapter = mSectionsPagerAdapter
-
-                container.addOnPageChangeListener(TabLayout.TabLayoutOnPageChangeListener(tabs))
-                tabs.addOnTabSelectedListener(TabLayout.ViewPagerOnTabSelectedListener(container))
-
 
             } else {
                 message = "No se han podido subir los datos, reviselos por favor."
