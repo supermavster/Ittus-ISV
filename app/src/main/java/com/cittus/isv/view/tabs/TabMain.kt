@@ -156,21 +156,30 @@ class TabMain @SuppressLint("ValidFragment") constructor(mainActivity: Activity)
 
 
     fun getData(): ArrayList<String> {
+        // TODO: ISV DATA MAIN (1)
+        // 0 -> Latitud
+        // 1 -> Longitud
+        // 2 -> Clasification
+        // 3 -> Img Front
         var tempArray: ArrayList<String> = ArrayList<String>()
         // Latitude and Longitude
-
-        tempArray.add("lat:" + viewOfLayout.txt_latitude.text)
-        tempArray.add("lon:" + viewOfLayout.txt_longitude.text)
+        tempArray.add(0, viewOfLayout.txt_latitude.text.toString()) // 0 -> Latitud
+        tempArray.add(1, viewOfLayout.txt_longitude.text.toString()) // 1 -> Longitud
 
         // Get CLasification
         val radio: RadioButton = viewOfLayout.findViewById(viewOfLayout.radio_group.checkedRadioButtonId)
-        tempArray.add("Clarification:" + radio.text)
+        tempArray.add(2, radio.text.toString()) // 2 -> Clasification
 
         // Get Imagen
         var imgFront = viewOfLayout.ibtn_front.drawable
-        tempArray.add("imgFront:$imgFront")
+        tempArray.add(3,imgFront.toString()) // 3 -> Img Front
 
         // Get Data - HV
+        // TODO: ISV Horizontal DATA MAIN
+        // 10 -> Direccion
+        // 11 -> Location Trayecto
+        // 12 -> Carril
+        // 13 -> Porcentaje
         tempArray.addAll(intent!!.getStringArrayListExtra("getData"))
         return tempArray
     }

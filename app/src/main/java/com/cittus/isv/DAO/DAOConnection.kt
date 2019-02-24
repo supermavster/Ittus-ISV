@@ -10,6 +10,7 @@ import com.android.volley.VolleyError
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
 import com.cittus.isv.complements.slider.CustomVolleyRequest
+import com.cittus.isv.model.CittusSignal
 import com.cittus.isv.model.EndPoints
 import org.json.JSONArray
 import org.json.JSONException
@@ -41,12 +42,26 @@ class DAOConnection(mainActivity: Activity) {
         requestQueue.add<String>(stringRequest)
         return elements;
     }
+    var elements = ""
+    fun loadElement(url:String):String {
+        val stringRequest = StringRequest(Request.Method.GET,
+            url,
+            Response.Listener<String> { s ->
+                if(s.isNotEmpty())elements = s.toString()
+            }, Response.ErrorListener { volleyError -> Toast.makeText(mainActivity, volleyError.message, Toast.LENGTH_LONG).show() })
+
+        val requestQueue = Volley.newRequestQueue(mainActivity)
+        requestQueue.add<String>(stringRequest)
+        return elements
+    }
+    var check = false;
 
     //adding a new record to database
-        public fun addArtist() {
+        public fun addSignal(signalMain: CittusSignal):Boolean {
+        check = false
         //getting the record values
-        val name = "Miguel"
-        val genre = "Hombre"
+        val name = signalMain.Latitud.toString()
+        val genre = signalMain.Longitud.toString()
 
         Log.e("INIT",EndPoints.URL_ADD_SIGNAL)
         //creating volley string request
@@ -56,15 +71,18 @@ class DAOConnection(mainActivity: Activity) {
                     val obj = JSONObject(response)
                     Toast.makeText(mainActivity, obj.getString("message"), Toast.LENGTH_LONG).show()
                     Log.e("Result","DONE")
+                    check = true
                 } catch (e: JSONException) {
                     e.printStackTrace()
                     Log.e("Error",e.message)
+                    check = false
                 }
             },
             object : Response.ErrorListener {
                 override fun onErrorResponse(volleyError: VolleyError) {
                     Log.e("Error_2",volleyError.message)
                     Toast.makeText(mainActivity, volleyError.message, Toast.LENGTH_LONG).show()
+                    check = false
                 }
             }) {
             @Throws(AuthFailureError::class)
@@ -80,6 +98,6 @@ class DAOConnection(mainActivity: Activity) {
         //adding request to queue
         VolleySingleton.instance?.addToRequestQueue(stringRequest)
         CustomVolleyRequest.getInstance(mainActivity).addToRequestQueue(stringRequest);
-
+        return check
     }
 }

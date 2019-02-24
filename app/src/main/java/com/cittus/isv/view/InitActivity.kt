@@ -18,6 +18,8 @@ import kotlinx.android.synthetic.main.activity_init.*
 class InitActivity : AppCompatActivity() {
 
     var connection : DAOConnection = DAOConnection(this)
+    var maxIDInventario = ""
+    var maxIDListSignal = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,11 +31,14 @@ class InitActivity : AppCompatActivity() {
     private fun init() {
         auto_complete_municipio.isEnabled = false
         buttonMain.isEnabled = false
+
+        // MAx ID Inventario - maxIDListSignal
+        maxIDInventario = connection.loadElement(EndPoints.URL_GET_MAX_ID+"inventario")
+        maxIDListSignal = connection.loadElement(EndPoints.URL_GET_MAX_ID+"lista")
+
         // Departamento
         var array = connection.loadElements(EndPoints.URL_GET_DEPARTAMENTOS)
         makeAutocomplete(array,auto_complete_departamento)
-
-        // Municipio array = connection.loadElements(EndPoints.URL_GET_MUNICIPIOS) makeAutocomplete(array,auto_complete_municipio)
 
         // Set Actions
         auto_complete_departamento.onItemClickListener = AdapterView.OnItemClickListener{
@@ -48,14 +53,30 @@ class InitActivity : AppCompatActivity() {
         }
 
         buttonMain.setOnClickListener {
-            var intentTemp: Intent = Intent(this,MainActivity::class.java)
+            var intentTemp = Intent(this,MainActivity::class.java)
             var data =ArrayList<String>()
+                // TODO: Location DATA MAIN (1)
+                // 0 -> Id Inventario
+                // 1 -> Id Lista Senal
+                // 2 -> Municipio
+                // 3 -> Departamento
+
+                // Get Max Inventario
+                if(maxIDInventario.isEmpty()){
+                    maxIDInventario = connection.loadElement(EndPoints.URL_GET_MAX_ID+"inventario")
+                }
+                data.add(0,maxIDInventario) // 0 -> Id Inventario
+                // Get Max Signal
+                if(maxIDListSignal.isEmpty()){
+                    maxIDListSignal = connection.loadElement(EndPoints.URL_GET_MAX_ID+"lista")
+                }
+                data.add(1,maxIDListSignal) // 1 -> Id Lista Senal
 
                 // Get Municipio
-                data.add(auto_complete_municipio.text.toString())
+                data.add(2,auto_complete_municipio.text.toString()) // 2 -> Municipio
 
                 // Get Municipio
-                data.add(auto_complete_departamento.text.toString())
+                data.add(3,auto_complete_departamento.text.toString()) // 3 -> Departamento
                 intentTemp.putExtra("getData", data)
                 startActivityForResult(intentTemp,ActionsRequest.GET_INIT)
 
@@ -84,13 +105,13 @@ class InitActivity : AppCompatActivity() {
                 parent,view,position,id->
             val selectedItem = parent.getItemAtPosition(position).toString()
             // Display the clicked item using toast
-            Toast.makeText(applicationContext,"Selected : $selectedItem", Toast.LENGTH_SHORT).show()
+            //Toast.makeText(applicationContext,"Selected : $selectedItem", Toast.LENGTH_SHORT).show()
         }
 
 
         // Set a dismiss listener for auto complete text view
         auto_complete_text_view.setOnDismissListener {
-            Toast.makeText(applicationContext,"Suggestion closed.", Toast.LENGTH_SHORT).show()
+            //Toast.makeText(applicationContext,"Suggestion closed.", Toast.LENGTH_SHORT).show()
         }
 
 

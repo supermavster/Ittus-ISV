@@ -27,6 +27,8 @@ object EndPoints {
 
     // Set Data
     private const val URL_ADD_MAIN = "$URL_ROOT?add="
-
     const val URL_ADD_SIGNAL = URL_ADD_MAIN + "signal"
+
+    // Get Max ID
+    const val URL_GET_MAX_ID = "$URL_ROOT?maxID="
 }

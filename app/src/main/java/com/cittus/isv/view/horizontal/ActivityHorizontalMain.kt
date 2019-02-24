@@ -133,11 +133,15 @@ class ActivityHorizontalMain : AppCompatActivity() {
 
     fun getData(): ArrayList<String> {
         var tempValues = ArrayList<String>();
-
+        // TODO: ISV Horizontal DATA MAIN
+        // 10 -> Direccion
+        // 11 -> Location Trayecto
+        // 12 -> Carril
+        // 13 -> Porcentaje
         try {
             // Direccion
             var rb: RadioButton = findViewById(rg_directional.checkedRadioButtonId)
-            tempValues.add("Direccion:" + rb.text)
+            tempValues.add(10,rb.text.toString()) // 10 -> Direccion
 
             // Location in the Trayect
             var btnLocationMain: String = ""
@@ -147,7 +151,7 @@ class ActivityHorizontalMain : AppCompatActivity() {
                 btnLocationMain = btn_intersection.textOn.toString()
             }
             if (btnLocationMain.isNotEmpty()) {
-                tempValues.add("LocationTrayect:" + btnLocationMain)
+                tempValues.add(11,btnLocationMain)// 11 -> Location Trayecto
             } else {
                 throw Exception("Location was not Select")
             }
@@ -170,9 +174,9 @@ class ActivityHorizontalMain : AppCompatActivity() {
         }
 
         // Carriles
-        tempValues.add("Carril:" + carril)
+        tempValues.add(12, carril) // 12 -> Carril
 
-        tempValues.add("Porcentaje:" + porcentaje)
+        tempValues.add(13, porcentaje) // 13 -> Porcentaje
 
         return tempValues;
     }
