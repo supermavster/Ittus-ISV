@@ -78,7 +78,6 @@
     <string name="btn_vts_informative_turist">Inf. de Turismo</string>
 
 
-
     # HORIZONTALES
 
     // Horizontal - Tipo de Señal Horizontal
@@ -99,11 +98,11 @@
     // Labels Activities Images
     <string name="title_horizontal_stretch">Horizontal Tramo</string>
     <string name="title_horizontal_intersection">Horizontal Intersección</string>
-    
+
     <string name="title_vertical_info_localization">Información de Localización</string>
     <string name="title_vertical_info_services">Información de Servicios</string>
     <string name="title_vertical_info_turistic">Información de Turismo</string>
-    
+
     <string name="title_vertical_regulatory">Señales Reglamentarias</string>
     <string name="title_vertical_preventives">Señales Preventivas</string>
     <string name="title_vertical_work">Señales de Obra</string>
@@ -120,6 +119,11 @@
         <item name="spinner_zip_5">Avenida</item>
     </string-array>
 
+    // Init Activity
+    <string name="lbl_isv">Inventario de Señales Viales</string>
+    <string name="txt_departamento">Digite el Departamento</string>
+    <string name="txt_municipio">Digite el Municipio</string>
+    <string name="init_process">Comenzar</string>
     // Extra LBLS
     <string name="select">Seleccione</string>
     <string name="save">Guardar</string>

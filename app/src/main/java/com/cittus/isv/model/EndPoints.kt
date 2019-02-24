@@ -2,7 +2,7 @@ package com.cittus.isv.model
 
 object EndPoints {
     // Server
-    private const val SERVER_MAIN =  "192.168.43.44"//"192.168.43.137"//"172.20.1.13"
+    private const val SERVER_MAIN =  "192.168.1.12"//"192.168.43.137"//"172.20.1.13"
 
     // Main Get
     private const val URL_ROOT = "http://$SERVER_MAIN/ittus-senalesviales/queries/sliderjsonoutput.php"
@@ -18,6 +18,12 @@ object EndPoints {
     const val URL_GET_VERTICAL_CYCLE_ROUTE = URL_GET_MAIN + "cicl"
     const val URL_GET_HORIZONTAL_STRETCH = URL_GET_MAIN + "tramo"
     const val URL_GET_HORIZONTAL_INTERSECTION = URL_GET_MAIN + "inter"
+
+    // Get Main Init
+    const val URL_GET_DEPARTAMENTOS = "$URL_ROOT?departamentos=true"
+    const val URL_GET_MUNICIPIOS = "$URL_ROOT?municipio"
+    const val URL_GET_SEARCH_MUNICIPIOS = "$URL_ROOT?municipio="
+
 
     // Set Data
     private const val URL_ADD_MAIN = "$URL_ROOT?add="

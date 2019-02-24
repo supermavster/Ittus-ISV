@@ -42,6 +42,11 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)
 
+        val intent = intent
+
+        val msg = intent.getStringArrayListExtra("getData")
+        Log.e("Data",msg.toString())
+
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
         mSectionsPagerAdapter = SectionsPagerAdapter(supportFragmentManager)
@@ -139,14 +144,13 @@ class MainActivity : AppCompatActivity() {
         Log.i("Main Activity",requestCode.toString()+"->"+resultCode+"->"+data.toString())
         when (requestCode) {
             ActionsRequest.TAKE_PHOTO_REQUEST and RESULT_OK-> tabMain.processCapturedPhoto(tabMain.getTakePictureMain())
-            ActionsRequest.GET_HORIZONTAL_VALUES or ActionsRequest.GET_IMAGES -> {
+            ActionsRequest.GET_INIT-> {
                 if (data != null){
                     val extras = data!!.extras ?: return
                     val myString = extras.getStringArrayList("getData")
                     Log.i("getData", "getData:" + myString.toString())
                 }
             }
-
             else->{
                     super.onActivityResult(requestCode, resultCode, data)
             }

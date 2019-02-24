@@ -8,8 +8,10 @@ import com.android.volley.Request
 import com.android.volley.Response
 import com.android.volley.VolleyError
 import com.android.volley.toolbox.StringRequest
+import com.android.volley.toolbox.Volley
 import com.cittus.isv.complements.slider.CustomVolleyRequest
 import com.cittus.isv.model.EndPoints
+import org.json.JSONArray
 import org.json.JSONException
 import org.json.JSONObject
 
@@ -18,6 +20,27 @@ class DAOConnection(mainActivity: Activity) {
     // Get Main Activity (To show Elements or Call)
     private var mainActivity = mainActivity
     private var arrayTemp: ArrayList<String> = ArrayList()
+
+    fun loadElements(url:String):ArrayList<String> {
+        var elements = ArrayList<String>();
+        val stringRequest = StringRequest(Request.Method.GET,
+            url,
+            Response.Listener<String> { s ->
+                try {
+                    var elementsJSON = JSONArray(s);
+                    Log.e("JSON", elementsJSON.toString())
+                    for (i in 0 until elementsJSON.length()) {
+                        elements.add(elementsJSON.get(i).toString())
+                    }
+                } catch (e: JSONException) {
+                    e.printStackTrace()
+                }
+            }, Response.ErrorListener { volleyError -> Toast.makeText(mainActivity, volleyError.message, Toast.LENGTH_LONG).show() })
+
+        val requestQueue = Volley.newRequestQueue(mainActivity)
+        requestQueue.add<String>(stringRequest)
+        return elements;
+    }
 
     //adding a new record to database
         public fun addArtist() {
