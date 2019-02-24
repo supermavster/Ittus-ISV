@@ -57,7 +57,7 @@
     <string name="lbl_location_and_signal">Y la:</string>
     <string name="lbl_location_with_signal">Con:</string>
 
-    <string name="lbl_number">Número (#):</string>
+    <string name="lbl_number">#</string>
 
     <string name="lbl_state_signal">Estado de la Señal:</string>
 
@@ -108,6 +108,17 @@
     <string name="title_vertical_preventives">Señales Preventivas</string>
     <string name="title_vertical_work">Señales de Obra</string>
     <string name="title_vertical_cycle_route"></string>
+
+
+    // Spinners
+    <string-array name="spinner_zip">
+        <item name="select">Seleccione</item>
+        <item name="spinner_zip_1">Carrera</item>
+        <item name="spinner_zip_2">Calle</item>
+        <item name="spinner_zip_3">Diagonal</item>
+        <item name="spinner_zip_4">Transversal</item>
+        <item name="spinner_zip_5">Avenida</item>
+    </string-array>
 
     // Extra LBLS
     <string name="select">Seleccione</string>

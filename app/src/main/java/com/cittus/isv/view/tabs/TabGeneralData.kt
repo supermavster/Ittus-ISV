@@ -3,10 +3,12 @@ package com.cittus.isv.view.tabs
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.os.Bundle
+import android.support.constraint.solver.widgets.WidgetContainer
 import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Spinner
 import com.cittus.isv.R
 import kotlinx.android.synthetic.main.tab_general_data.*
 import kotlinx.android.synthetic.main.tab_general_data.view.*
@@ -32,6 +34,13 @@ class TabGeneralData @SuppressLint("ValidFragment") constructor(mainActivity: Ac
 
     // Initialization - Tab Main (Elements and Actions)
     private fun initProcess() {
+
+    }
+
+    private fun setSpinnerData(spinner: Spinner, arrayCodes:Array<String>){
+        // Application of the Array to the Spinner
+        //val spinnerArrayAdapter = ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, arrayCodes)
+        //spinnerArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item) // The drop down view
 
     }
 

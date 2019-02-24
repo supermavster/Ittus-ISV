@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="utf-8"?>
 <resources>
     // Main Labels
     <string name="app_name">ISV - Registro</string>
@@ -16,6 +15,7 @@
     <string name="btn_gps">Set GPS (Lat, Lon)</string>
 
     <string name="lbl_photos_signal">Fotos de la señal</string>
+    <string name="photo_only">Foto</string>
     <string name="photo_front">Frontal</string>
     <string name="photo_back">Dorsal</string>
     <string name="photo_plaque">Placa</string>
@@ -31,11 +31,11 @@
     <string name="tab_text_2">Información</string>
 
     <string name="lbl_location_signal">Ubicación de la Señal en la Via</string>
-    <string name="btn_left">Izquierda</string>
-    <string name="btn_arrow_left">⇐</string>
+    <string name="btn_left">Norte - Sur</string>
+    <string name="btn_arrow_left">N-S</string>
 
-    <string name="btn_right">Derecha</string>
-    <string name="btn_arrow_right">⇒</string>
+    <string name="btn_right">Oeste - Este</string>
+    <string name="btn_arrow_right">O-E</string>
 
     <string name="lbl_size_signal">Tamaño de la Señal</string>
     <string name="btn_60">60 x 60</string>
@@ -57,9 +57,57 @@
     <string name="lbl_location_and_signal">Y la:</string>
     <string name="lbl_location_with_signal">Con:</string>
 
-    <string name="lbl_number">Número (#):</string>
+    <string name="lbl_number">#</string>
 
     <string name="lbl_state_signal">Estado de la Señal:</string>
+
+
+    // TODO: Arreglar Sintaxis
+    // Vertical - Tipo Señal Vertical
+    <string name="lbl_vertical_type_signal">Tipo de Señal Vertical</string>
+    <string name="btn_vertical_informative">Informativa</string>
+    <string name="btn_vertical_regulatory">Reglamentaria</string>
+    <string name="btn_vertical_preventive">Preventiva</string>
+    <string name="btn_vertical_work">Obra</string>
+    <string name="btn_vertical_cycle_route">Ciclo Ruta</string>
+
+    // Vertical - Tipo Señal Vertical - Señal Informativa
+    <string name="lbl_vts_informative">Señal Informativa</string>
+    <string name="btn_vts_informative_location">Inf. de Localización</string>
+    <string name="btn_vts_informative_services">Inf. de Servicios</string>
+    <string name="btn_vts_informative_turist">Inf. de Turismo</string>
+
+
+
+    # HORIZONTALES
+
+    // Horizontal - Tipo de Señal Horizontal
+    <string name="lbl_type_horizontal_signal">Tipo de Señal Horizontal</string>
+    <string name="lbl_sense_traffic">Sentido del Trafico</string>
+    <string name="rbtn_unidirectional">Unidireccional</string>
+    <string name="rbtn_bidirectional">Bidireccional</string>
+
+    <string name="lbl_location_way">Ubicación en el Trayecto</string>
+    <string name="btn_stretch">Tramo</string>
+    <string name="btn_intersection">Intersección</string>
+
+    <string name="lbl_location_lane">Ubicación en Carril</string>
+    <string name="txt_location_signal">Carril de la señal</string>
+    <string name="txt_percentage_coverage">Porcentaje de Cobertura</string>
+
+
+    // Labels Activities Images
+    <string name="title_horizontal_stretch">Horizontal Tramo</string>
+    <string name="title_horizontal_intersection">Horizontal Intersección</string>
+
+    <string name="title_vertical_info_localization">Información de Localización</string>
+    <string name="title_vertical_info_services">Información de Servicios</string>
+    <string name="title_vertical_info_turistic">Información de Turismo</string>
+
+    <string name="title_vertical_regulatory">Señales Reglamentarias</string>
+    <string name="title_vertical_preventives">Señales Preventivas</string>
+    <string name="title_vertical_work">Señales de Obra</string>
+    <string name="title_vertical_cycle_route"></string>
 
     // Extra LBLS
     <string name="select">Seleccione</string>

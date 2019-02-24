@@ -96,7 +96,7 @@ public class MainImage extends AppCompatActivity {
 
         // Active Select
         findViewById(R.id.codeMain).setVisibility(intent.getBooleanExtra("code", true) ? View.VISIBLE : View.GONE);
-        findViewById(R.id.descriptionMain).setVisibility(intent.getBooleanExtra("description", true) ? View.VISIBLE : View.GONE);
+        //findViewById(R.id.descriptionMain).setVisibility(intent.getBooleanExtra("description", true) ? View.VISIBLE : View.GONE);
 
         // Url Main Base - Imgs
         request_url = intent.getStringExtra("url_img");

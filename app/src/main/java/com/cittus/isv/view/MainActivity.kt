@@ -14,6 +14,7 @@ import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
+import com.cittus.isv.DAO.DAOConnection
 import com.cittus.isv.R
 import com.cittus.isv.model.ActionsRequest
 import com.cittus.isv.model.ActionsRequest.Companion.GET_HORIZONTAL_VALUES
@@ -54,14 +55,15 @@ class MainActivity : AppCompatActivity() {
         fab.setOnClickListener { view ->
             Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                 .setAction("Action", null).show()
-            //val bd = DAOConnection(this, "Ittus", null, 1).writableDatabase
+            val bd = DAOConnection(this)
+            bd.addArtist()
             /*val registro = ContentValues()
             registro.put("codigo", et1.getText().toString())
             registro.put("descripcion", et2.getText().toString())
             registro.put("precio", et3.getText().toString())
             bd.insert("articulos", null, registro)*/
             //var sortedList: ArrayList<String> = DAOConnection(this).getElementsJSON("http://192.168.0.3/ittus-senalesviales/queries/sliderjsonoutput.php?signal=turis","code")
-            try {
+            /*try {
                 val intent = intent
 
                 // Set Template New Activity
@@ -86,7 +88,7 @@ class MainActivity : AppCompatActivity() {
             } catch (exc: Exception) {
                 Log.e("ERROR", exc.message)
             }
-
+*/
             //bd.close()
         }
     }

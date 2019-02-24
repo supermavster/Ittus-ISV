@@ -10,24 +10,27 @@
     <Button
             android:text="@string/btn_vertical_informative"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/btn_vertical_informative" app:layout_constraintStart_toStartOf="@+id/ibtn_vertical_informative"
+            android:layout_height="48dp"
+            android:id="@+id/btn_vertical_informative"
+            app:layout_constraintStart_toStartOf="@+id/ibtn_vertical_informative"
             app:layout_constraintEnd_toEndOf="@+id/ibtn_vertical_informative"
             app:layout_constraintTop_toBottomOf="@+id/ibtn_vertical_informative"/>
     <ImageButton
-            android:src="@mipmap/ic_launcher"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/ibtn_vertical_informative" android:layout_marginTop="50dp"
-            app:layout_constraintTop_toTopOf="parent" app:layout_constraintStart_toStartOf="parent"
+            android:src="@drawable/informativa"
+            android:layout_width="100dp"
+            android:layout_height="99dp"
+            android:id="@+id/ibtn_vertical_informative"
+            app:layout_constraintStart_toStartOf="parent"
             android:layout_marginStart="30dp" android:contentDescription="@string/btn_vertical_informative"
             android:layout_marginEnd="8dp" app:layout_constraintEnd_toStartOf="@+id/ibtn_vertical_regulatory"
             android:layout_marginBottom="8dp" app:layout_constraintBottom_toTopOf="@+id/ibtn_vertical_work"
+            android:scaleType="centerInside" android:layout_marginTop="8dp"
+            app:layout_constraintTop_toBottomOf="@+id/lbl_vertical_type_signal"
             app:layout_constraintVertical_bias="0.0"/>
     <Button
             android:text="@string/btn_vertical_preventive"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="48dp"
             android:id="@+id/btn_vertical_preventive"
             app:layout_constraintTop_toBottomOf="@+id/ibtn_vertical_preventive"
             app:layout_constraintStart_toStartOf="@+id/ibtn_vertical_preventive"
@@ -35,7 +38,7 @@
     <Button
             android:text="@string/btn_vertical_regulatory"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="48dp"
             android:id="@+id/btn_vertical_regulatory"
             app:layout_constraintTop_toBottomOf="@+id/ibtn_vertical_regulatory"
             app:layout_constraintStart_toStartOf="@+id/ibtn_vertical_regulatory"
@@ -43,7 +46,7 @@
     <Button
             android:text="@string/btn_vertical_work"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="48dp"
             android:id="@+id/btn_vertical_work"
             app:layout_constraintStart_toStartOf="@+id/ibtn_vertical_work"
             app:layout_constraintEnd_toEndOf="@+id/ibtn_vertical_work"
@@ -51,51 +54,56 @@
     <Button
             android:text="@string/btn_vertical_cycle_route"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="48dp"
             android:id="@+id/btn_vertical_cycle_route"
             app:layout_constraintStart_toStartOf="@+id/ibtn_vertical_cycle_route"
             app:layout_constraintEnd_toEndOf="@+id/ibtn_vertical_cycle_route"
             app:layout_constraintTop_toBottomOf="@+id/ibtn_vertical_cycle_route"/>
     <ImageButton
-            android:src="@mipmap/ic_launcher"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/ibtn_vertical_preventive" android:layout_marginTop="16dp"
-            app:layout_constraintTop_toTopOf="parent" android:layout_marginBottom="16dp"
+            android:src="@drawable/preventiva"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:id="@+id/ibtn_vertical_preventive"
+            android:layout_marginBottom="16dp"
             app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintStart_toStartOf="parent"
             android:layout_marginStart="16dp" app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginEnd="16dp" app:layout_constraintHorizontal_bias="0.498"
-            app:layout_constraintVertical_bias="0.43" android:contentDescription="@string/btn_vertical_preventive"/>
+            android:layout_marginEnd="16dp"
+            android:contentDescription="@string/btn_vertical_preventive"
+            android:scaleType="centerInside" android:layout_marginTop="8dp"
+            app:layout_constraintTop_toBottomOf="@+id/lbl_vertical_type_signal"
+            app:layout_constraintVertical_bias="0.43"/>
     <ImageButton
-            android:src="@mipmap/ic_launcher"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/ibtn_vertical_regulatory" android:layout_marginTop="50dp"
-            app:layout_constraintTop_toTopOf="parent" app:layout_constraintEnd_toEndOf="parent"
+            android:src="@drawable/reglamentaria"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:id="@+id/ibtn_vertical_regulatory"
+            app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginEnd="30dp" android:contentDescription="@string/btn_vertical_regulatory"
             app:layout_constraintStart_toEndOf="@+id/ibtn_vertical_informative" android:layout_marginStart="54dp"
             android:layout_marginBottom="8dp" app:layout_constraintBottom_toTopOf="@+id/ibtn_vertical_cycle_route"
+            android:scaleType="centerInside" android:layout_marginTop="8dp"
+            app:layout_constraintTop_toBottomOf="@+id/lbl_vertical_type_signal"
             app:layout_constraintVertical_bias="0.0"/>
     <ImageButton
-            android:src="@mipmap/ic_launcher"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:src="@drawable/obra"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
             android:id="@+id/ibtn_vertical_work" android:layout_marginBottom="50dp"
             app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintStart_toStartOf="parent"
             android:layout_marginStart="30dp" android:contentDescription="@string/btn_vertical_work"
             android:layout_marginEnd="8dp" app:layout_constraintEnd_toStartOf="@+id/ibtn_vertical_cycle_route"
             android:layout_marginTop="80dp" app:layout_constraintTop_toBottomOf="@+id/btn_vertical_informative"
-            app:layout_constraintVertical_bias="0.8"/>
+            app:layout_constraintVertical_bias="0.8" android:scaleType="centerInside"/>
     <ImageButton
-            android:src="@mipmap/ic_launcher"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:src="@drawable/ciclo"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
             android:id="@+id/ibtn_vertical_cycle_route" android:layout_marginBottom="50dp"
             app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginEnd="30dp" android:contentDescription="@string/btn_vertical_cycle_route"
             app:layout_constraintStart_toEndOf="@+id/ibtn_vertical_work" android:layout_marginStart="54dp"
             android:layout_marginTop="80dp" app:layout_constraintTop_toBottomOf="@+id/btn_vertical_regulatory"
-            app:layout_constraintVertical_bias="0.8"/>
+            app:layout_constraintVertical_bias="0.8" android:scaleType="centerInside"/>
     <TextView
             android:text="@string/lbl_vertical_type_signal"
             android:layout_width="wrap_content"
@@ -103,5 +111,5 @@
             android:id="@+id/lbl_vertical_type_signal" app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginEnd="8dp"
             app:layout_constraintStart_toStartOf="parent" android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp" app:layout_constraintTop_toTopOf="parent"/>
+            android:layout_marginTop="8dp" app:layout_constraintTop_toTopOf="parent" android:textAlignment="center"/>
 </android.support.constraint.ConstraintLayout>
