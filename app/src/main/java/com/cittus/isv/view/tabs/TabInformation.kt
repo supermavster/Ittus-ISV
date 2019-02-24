@@ -105,9 +105,9 @@ class TabInformation @SuppressLint("ValidFragment") constructor(mainActivity: Ac
         var tempArray: ArrayList<String> = ArrayList<String>()
         var btnLocationMain: String = ""
         if (viewOfLayout.btn_left.isChecked) {
-            btnLocationMain = viewOfLayout.btn_left.textOn.toString()
+            btnLocationMain = viewOfLayout.btn_left.textOff.toString()
         } else if (viewOfLayout.btn_right.isChecked) {
-            btnLocationMain = viewOfLayout.btn_right.textOn.toString()
+            btnLocationMain = viewOfLayout.btn_right.textOff.toString()
         }
 
         tempArray.add(0,btnLocationMain)

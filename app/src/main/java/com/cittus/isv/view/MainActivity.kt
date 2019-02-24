@@ -18,7 +18,10 @@ import android.view.View
 import android.widget.Toast
 import com.cittus.isv.DAO.DAOConnection
 import com.cittus.isv.R
-import com.cittus.isv.model.*
+import com.cittus.isv.model.ActionsRequest
+import com.cittus.isv.model.CittusInventario
+import com.cittus.isv.model.CittusListSignal
+import com.cittus.isv.model.CittusSignal
 import com.cittus.isv.view.tabs.TabGeneralData
 import com.cittus.isv.view.tabs.TabInformation
 import com.cittus.isv.view.tabs.TabMain
@@ -110,27 +113,27 @@ class MainActivity : AppCompatActivity() {
     // Camera Action // Return Intend Action
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
 
-        Log.i("Main Activity",requestCode.toString()+"->"+resultCode+"->"+data.toString())
+        Log.i("Main Activity", requestCode.toString() + "->" + resultCode + "->" + data.toString())
         when (requestCode) {
-            ActionsRequest.TAKE_PHOTO_REQUEST and RESULT_OK-> tabMain.processCapturedPhoto(tabMain.getTakePictureMain())
+            ActionsRequest.TAKE_PHOTO_REQUEST and RESULT_OK -> tabMain.processCapturedPhoto(tabMain.getTakePictureMain())
             ActionsRequest.GET_HORIZONTAL_VALUES or ActionsRequest.GET_IMAGES -> {
-                if (data != null){
+                if (data != null) {
                     val extras = data!!.extras ?: return
                     val myString = extras.getStringArrayList("getData")
                     Log.i("getData", "getData:$myString")
                 }
             }
 
-            else->{
-                    super.onActivityResult(requestCode, resultCode, data)
+            else -> {
+                super.onActivityResult(requestCode, resultCode, data)
             }
         }
     }
 
-    private fun getAndSetDataMain(){
+    private fun getAndSetDataMain() {
         val data = intent.getStringArrayListExtra("getData")
         // Init Inventario
-        if(data!=null && inventario == null){
+        if (data != null && inventario == null) {
             // TODO: Location DATA MAIN (2)
             // 0 -> Id Inventario
             // 1 -> Id Lista Senal
@@ -139,10 +142,10 @@ class MainActivity : AppCompatActivity() {
             inventario = CittusInventario()
             inventario!!.IdInventario = data[0].toInt()
             inventario!!.IdMunicipio = data[2]
-            Log.e("INVENTARIO",inventario.toString())
+            Log.e("INVENTARIO", inventario.toString())
         }
         // Make Item of list
-        if(inventario != null && listSignal == null) {
+        if (inventario != null && listSignal == null) {
             // Init List
             listSignal = CittusListSignal()
             listSignal!!.IdInventario = inventario!!.getInventarioID()
@@ -151,22 +154,22 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private  fun saveAllElements(view: View) {
-        if(inventario!=null && listSignal != null) {
+    private fun saveAllElements(view: View) {
+        if (inventario != null && listSignal != null) {
             // Make Object Main
             signalMain = CittusSignal()
             // Get All Data
             getAllData()
             // Upload to Data Base
             uploadDataBase()
-        }else{
+        } else {
             message = "Error faltal, no se pudo crear el inventario"
         }
         Snackbar.make(view, message, Snackbar.LENGTH_LONG)
             .setAction("Action", null).show()
     }
 
-    private fun getAllData(){
+    private fun getAllData() {
         try {
             // Get Data Main
             // TODO: ISV DATA MAIN (1)
@@ -182,10 +185,10 @@ class MainActivity : AppCompatActivity() {
             signalMain!!.Longitud = isvMain[1].toFloat() // 1 -> Longitud
             signalMain!!.TypeSignal = isvMain[2] // 2 -> Clasificacion
             signalMain!!.PhotoFront = isvMain[3] // 3 -> Img Front
-
-            if(isvMain[2].equals("Horizontal",true)) {
-
-/*            if(isvMain[2].equals("Horizontal",true)) {
+            Log.e("TYPE",isvMain[2])
+            when (isvMain[2]) {
+                "Horizontal" -> {
+/*
     // Get Data - HV
     // TODO: ISV Horizontal DATA MAIN
     // 1-0 -> Direccion
@@ -197,86 +200,96 @@ class MainActivity : AppCompatActivity() {
     signalMain!!.Carril = isvMain[12] // 12 -> Carril
     signalMain!!.Porcentaje = isvMain[13] // 13 -> Porcentaje
     */
-}else if(isvMain[2].equals("Vertical",true)) {
-                signalMain!!.PhotoBack = isvMain[4] // 3 -> Img Back
-                signalMain!!.PhotoPlaque = isvMain[5] // 3 -> Img Plaque
+                }
+                "Vertical" -> {
+                    //signalMain!!.PhotoBack = isvMain[4] // 3 -> Img Back
+                    //signalMain!!.PhotoPlaque = isvMain[5] // 3 -> Img Plaque
+                }
+                else->{
+                    exceptionMain = true
+                }
+            }
 
-}
-            /*
-// INFORMATION
-// TODO: Get Data Main - Information
-// 0 -> LocationMain
-// 1 -> Size
-// 2 -> Signal
-// 3 -> Starts - State Post
-var tempArrayInformation: ArrayList<String> = tabInformation.getData()
-signalMain!!.LocationMain = tempArrayInformation[0] // 0 -> Norte - Sur, Este - Oeste
-signalMain!!.Size = tempArrayInformation[1] // 1 -> 90 x 90
-signalMain!!.TipoFijacion = isvMain[2] // 2 -> Signal:Poste de Luz
-signalMain!!.EstadoFijacion = isvMain[3] // 3 -> Starts
+            // INFORMATION
+            // TODO: Get Data Main - Information
+            // 0 -> LocationMain
+            // 1 -> Size
+            // 2 -> Signal
+            // 3 -> Starts - State Post
+            var tempArrayInformation: ArrayList<String> = tabInformation.getData()
+            signalMain!!.LocationMain = tempArrayInformation[0] // 0 -> Norte - Sur, Este - Oeste
+            signalMain!!.Size = tempArrayInformation[1] // 1 -> 90 x 90
+            signalMain!!.TipoFijacion = tempArrayInformation[2] // 2 -> Signal:Poste de Luz
+            signalMain!!.EstadoFijacion = tempArrayInformation[3] // 3 -> Starts
 
-// GENERAL DATA
-// TODO: Get Data Main - General Data
-// 0 -> LocationBetween 1
-// 1 -> LocationBetween 2
-// 2 -> LocationBetween 3
-// 3 -> Starts 2 - State Signal
-var tempArrayGeneralData: ArrayList<String> =tabGeneralData.getData()
-signalMain!!.LocationBetween_1 = tempArrayInformation[0] // 3 -> Starts 2 - State Signal
-signalMain!!.LocationBetween_2 = tempArrayInformation[1] // 3 -> Starts 2 - State Signal
-signalMain!!.LocationBetween_3 = tempArrayInformation[2] // 3 -> Starts 2 - State Signal
-signalMain!!.Estado = tempArrayInformation[3] // 3 -> Starts 2 - State Signal
-*/
-// Show Data
-if(signalMain!=null) {
-    Log.i("DataBase", signalMain.toString())
-    exceptionMain = false
-}
+            // GENERAL DATA
+            // TODO: Get Data Main - General Data
+            // 0 -> LocationBetween 1
+            // 1 -> LocationBetween 2
+            // 2 -> LocationBetween 3
+            // 3 -> Starts 2 - State Signal
+            var tempArrayGeneralData: ArrayList<String> =tabGeneralData.getData()
+            signalMain!!.LocationBetween_1 = tempArrayGeneralData[0] // 3 -> Starts 2 - State Signal
+            signalMain!!.LocationBetween_2 = tempArrayGeneralData[1] // 3 -> Starts 2 - State Signal
+            signalMain!!.LocationBetween_3 = tempArrayGeneralData[2] // 3 -> Starts 2 - State Signal
+            signalMain!!.Estado = tempArrayGeneralData[3] // 3 -> Starts 2 - State Signal
 
-} catch (e: Exception) {
-Log.e("NULL", e.message)
-var errorMain = when {
-    e.message.equals(
-        "lateinit property takePictureFront has not been initialized",
-        true
-    )
-    -> "NO ha tomado una fotografia Principal de la señal"
-    else ->e.message
-}
-Toast.makeText(this, "$errorMain  para poder continuar", Toast.LENGTH_SHORT).show()
-exceptionMain = true
+            // Show Data
+            if (signalMain != null) {
+                Log.i("DataBase", signalMain.toString())
+                exceptionMain = false
+            }
 
-}
-}
+        } catch (e: Exception) {
+            var errorMain = when {
+                e.message.equals(
+                    "lateinit property takePictureFront has not been initialized",
+                    true
+                ) -> "NO ha tomado una fotografia Principal de la señal"
+                e.message.equals(
+                    "lateinit property takePictureBack has not been initialized",
+                    true
+                ) -> "NO ha tomado una fotografia Posterior(Atras) de la señal"
+                e.message.equals(
+                    "lateinit property takePicturePlaque has not been initialized",
+                    true
+                ) -> "NO ha tomado una fotografia de la Placa en la señal"
+                else -> e.message
+            }
+            Toast.makeText(this, "$errorMain", Toast.LENGTH_SHORT).show()
+            exceptionMain = true
 
-private fun uploadDataBase() {
-if(signalMain!=null && exceptionMain === false) {
-    val bd = DAOConnection(this)
-    if(bd.addSignal(signalMain!!)===true) {
-        message = "Datos añadidos con exito."
-        // Reset Views
-        tabMain = TabMain(mainActivity)
-        tabInformation = TabInformation(mainActivity)
-        tabGeneralData = TabGeneralData(mainActivity)
-        setContentView(R.layout.activity_main)
-        // Create the adapter that will return a fragment for each of the three
-        // primary sections of the activity.
-        mSectionsPagerAdapter = SectionsPagerAdapter(supportFragmentManager)
-
-        // Set up the ViewPager with the sections adapter.
-        container.adapter = mSectionsPagerAdapter
-
-        container.addOnPageChangeListener(TabLayout.TabLayoutOnPageChangeListener(tabs))
-        tabs.addOnTabSelectedListener(TabLayout.ViewPagerOnTabSelectedListener(container))
-
-
-    }else{
-        message = "No se han podido subir los datos, reviselos por favor."
+        }
     }
-}else{
-    message = "No se puede crear la señal, revise los datos por favor."
-}
-}
+
+    private fun uploadDataBase() {
+        if (signalMain != null && exceptionMain === false) {
+            val bd = DAOConnection(this)
+            if (bd.addSignal(signalMain!!) === true) {
+                message = "Datos añadidos con exito."
+                // Reset Views
+                tabMain = TabMain(mainActivity)
+                tabInformation = TabInformation(mainActivity)
+                tabGeneralData = TabGeneralData(mainActivity)
+                setContentView(R.layout.activity_main)
+                // Create the adapter that will return a fragment for each of the three
+                // primary sections of the activity.
+                mSectionsPagerAdapter = SectionsPagerAdapter(supportFragmentManager)
+
+                // Set up the ViewPager with the sections adapter.
+                container.adapter = mSectionsPagerAdapter
+
+                container.addOnPageChangeListener(TabLayout.TabLayoutOnPageChangeListener(tabs))
+                tabs.addOnTabSelectedListener(TabLayout.ViewPagerOnTabSelectedListener(container))
+
+
+            } else {
+                message = "No se han podido subir los datos, reviselos por favor."
+            }
+        } else {
+            message = "No se puede crear la señal, revise los datos por favor."
+        }
+    }
 
 
 }

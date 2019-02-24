@@ -190,14 +190,14 @@ class TabMain @SuppressLint("ValidFragment") constructor(mainActivity: Activity)
             tempArray.add(3,"NONE")
         }
 
-        if(viewOfLayout.ibtn_back.isClickable){
-            tempArray.add(4,takePictureFront.getPathPhoto().toString()) // 4 -> Img Back
+        if(viewOfLayout.ibtn_back.isClickable && vertical){
+            tempArray.add(4,takePictureBack.getPathPhoto().toString()) // 4 -> Img Back
         }else{
             tempArray.add(4,"NONE")
         }
 
-        if(viewOfLayout.ibtn_plaque.isClickable) {
-            tempArray.add(5, takePictureFront.getPathPhoto().toString()) // 5 -> Img Plaque
+        if(viewOfLayout.ibtn_plaque.isClickable && vertical){
+            tempArray.add(5, takePicturePlaque.getPathPhoto().toString()) // 5 -> Img Plaque
         }else{
             tempArray.add(5,"NONE")
         }

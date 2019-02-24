@@ -80,16 +80,16 @@ class CittusSignal {
 
 
     constructor(){
-        ++IdSIgnal
+        ++IdSignal
     }
 
     companion object {
         // Signal
-        var IdSIgnal = 0
+        var IdSignal = 0
     }
 
     override fun toString(): String {
-        return "CittusSignal(Latitud=$Latitud, Longitud=$Longitud, PhotoFront='$PhotoFront', PhotoBack='$PhotoBack', PhotoPlaque='$PhotoPlaque', Simbolo='$Simbolo', Codigo='$Codigo', Lado='$Lado', TypeSignal='$TypeSignal', Direccion='$Direccion', Location='$Location', Carril='$Carril', Porcentaje='$Porcentaje', LocationMain='$LocationMain', Size='$Size', TipoFijacion='$TipoFijacion', EstadoFijacion='$EstadoFijacion', LocationBetween_1='$LocationBetween_1', LocationBetween_2='$LocationBetween_2', LocationBetween_3='$LocationBetween_3', Estado='$Estado')"
+        return "CittusSignal(IdSIgnal=$IdSignal, Latitud=$Latitud, Longitud=$Longitud, PhotoFront='$PhotoFront', PhotoBack='$PhotoBack', PhotoPlaque='$PhotoPlaque', Simbolo='$Simbolo', Codigo='$Codigo', Lado='$Lado', TypeSignal='$TypeSignal', Direccion='$Direccion', Location='$Location', Carril='$Carril', Porcentaje='$Porcentaje', LocationMain='$LocationMain', Size='$Size', TipoFijacion='$TipoFijacion', EstadoFijacion='$EstadoFijacion', LocationBetween_1='$LocationBetween_1', LocationBetween_2='$LocationBetween_2', LocationBetween_3='$LocationBetween_3', Estado='$Estado')"
     }
 
 

@@ -19,6 +19,7 @@ class TabGeneralData @SuppressLint("ValidFragment") constructor(mainActivity: Ac
     // Get Main Activity (To show Elements or Call)
     private var mainActivity  = mainActivity
     // View Elements from Fragment
+    private var tempLocationSignal = ""
     private lateinit var viewOfLayout: View
 
     override fun onCreateView(
@@ -51,14 +52,14 @@ class TabGeneralData @SuppressLint("ValidFragment") constructor(mainActivity: Ac
         // 2 -> LocationBetween 3
         // 3 -> Starts 2 - State Signal
         var tempArray: ArrayList<String> = ArrayList<String>()
-        //tempArray.add("LocationBetween:" + viewOfLayout.spin_location_between_signal.selectedItem.toString())
-        tempArray.add(0, viewOfLayout.txt_location_between_signal.text.toString())
+        tempLocationSignal = viewOfLayout.spin_location_between_signal.selectedItem.toString()+ "# "+viewOfLayout.txt_location_between_signal.text.toString()
+        tempArray.add(0, tempLocationSignal)
 
-        //tempArray.add("LocationBetween:" + viewOfLayout.spin_location_and_signal.selectedItem.toString())
-        tempArray.add(1, viewOfLayout.txt_location_and_signal.text.toString())
+        tempLocationSignal= viewOfLayout.spin_location_and_signal.selectedItem.toString()+"# "+viewOfLayout.txt_location_and_signal.text.toString()
+        tempArray.add(1, tempLocationSignal)
 
-        //tempArray.add("LocationBetween:" + viewOfLayout.spin_location_with_signal.selectedItem.toString())
-        tempArray.add(2, viewOfLayout.txt_location_with_signal.text.toString())
+        tempLocationSignal = viewOfLayout.spin_location_with_signal.selectedItem.toString()+"# "+viewOfLayout.txt_location_with_signal.text.toString()
+        tempArray.add(2, tempLocationSignal)
 
         tempArray.add(3, viewOfLayout.rb_state_signal.rating.toString())
         return tempArray
