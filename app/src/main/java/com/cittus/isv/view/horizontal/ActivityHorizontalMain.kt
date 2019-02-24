@@ -27,8 +27,27 @@ class ActivityHorizontalMain : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_horizontal_main)
+        if (savedInstanceState != null) {
+            val value = savedInstanceState.getStringArrayList("getDataMain")
+            var rb: RadioButton = findViewById(rg_directional.checkedRadioButtonId)
+            rb.text = value[0] // 1-0 -> Direccion
 
-        initProcess()
+            // Location in the Trayect
+            if (value[1].equals(btn_stretch.textOn.toString(), true)) {
+                btn_stretch.isPressed = true
+                btn_intersection.isPressed = false
+            } else if (value[1].equals(btn_intersection.textOn.toString(), true)) {
+                btn_intersection.isPressed = true
+                btn_stretch.isPressed = false
+            }
+        } else {
+            initProcess()
+        }
+
+    }
+    public override fun onSaveInstanceState(savedInstanceState: Bundle) {
+        savedInstanceState.putStringArrayList("getDataMain", getData())
+        super.onSaveInstanceState(savedInstanceState)
     }
 
 
@@ -54,7 +73,7 @@ class ActivityHorizontalMain : AppCompatActivity() {
 
             // Make Images
             if (!btn_stretch.isClickable)
-                makeActivityImages(R.string.title_horizontal_intersection,EndPoints.URL_GET_HORIZONTAL_INTERSECTION)
+                makeActivityImages(R.string.title_horizontal_intersection, EndPoints.URL_GET_HORIZONTAL_INTERSECTION)
             main = !main
         }
         btn_stretch.setOnClickListener {
@@ -134,14 +153,14 @@ class ActivityHorizontalMain : AppCompatActivity() {
     fun getData(): ArrayList<String> {
         var tempValues = ArrayList<String>();
         // TODO: ISV Horizontal DATA MAIN
-        // 10 -> Direccion
-        // 11 -> Location Trayecto
-        // 12 -> Carril
-        // 13 -> Porcentaje
+        // 1-0 -> Direccion
+        // 1-1 -> Location Trayecto
+        // 1-2 -> Carril
+        // 1-3 -> Porcentaje
         try {
             // Direccion
             var rb: RadioButton = findViewById(rg_directional.checkedRadioButtonId)
-            tempValues.add(10,rb.text.toString()) // 10 -> Direccion
+            tempValues.add(0, rb.text.toString()) // 1-0 -> Direccion
 
             // Location in the Trayect
             var btnLocationMain: String = ""
@@ -151,10 +170,16 @@ class ActivityHorizontalMain : AppCompatActivity() {
                 btnLocationMain = btn_intersection.textOn.toString()
             }
             if (btnLocationMain.isNotEmpty()) {
-                tempValues.add(11,btnLocationMain)// 11 -> Location Trayecto
+                tempValues.add(1, btnLocationMain)// 1-1 -> Location Trayecto
             } else {
                 throw Exception("Location was not Select")
             }
+
+            // Carriles
+            tempValues.add(2, carril) // 1-2 -> Carril
+
+            tempValues.add(3, porcentaje) // 1-3 -> Porcentaje
+
             exceptionMain = false
         } catch (e: Exception) {
             Log.e("NULL", e.message)
@@ -172,11 +197,6 @@ class ActivityHorizontalMain : AppCompatActivity() {
             Toast.makeText(this, "$errorMain  para poder continuar", Toast.LENGTH_SHORT).show()
             exceptionMain = true
         }
-
-        // Carriles
-        tempValues.add(12, carril) // 12 -> Carril
-
-        tempValues.add(13, porcentaje) // 13 -> Porcentaje
 
         return tempValues;
     }

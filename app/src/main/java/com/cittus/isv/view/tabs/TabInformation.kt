@@ -97,6 +97,11 @@ class TabInformation @SuppressLint("ValidFragment") constructor(mainActivity: Ac
     }
 
     fun getData():ArrayList<String>{
+        // TODO: Get Data Main - Information
+        // 0 -> LocationMain
+        // 1 -> Size
+        // 2 -> Signal
+        // 3 -> Starts - State Post
         var tempArray: ArrayList<String> = ArrayList<String>()
         var btnLocationMain: String = ""
         if (viewOfLayout.btn_left.isChecked) {
@@ -105,15 +110,15 @@ class TabInformation @SuppressLint("ValidFragment") constructor(mainActivity: Ac
             btnLocationMain = viewOfLayout.btn_right.textOn.toString()
         }
 
-        tempArray.add("btnLocationMain:$btnLocationMain")
+        tempArray.add(0,btnLocationMain)
 
         var rb: RadioButton = viewOfLayout.findViewById(viewOfLayout.rg_size.checkedRadioButtonId)
-        tempArray.add("Size:" + rb.text)
+        tempArray.add(1, rb.text.toString())
 
         rb = viewOfLayout.findViewById(viewOfLayout.rg_signal.checkedRadioButtonId)
-        tempArray.add("Signal:" + rb.text)
+        tempArray.add(2, rb.text.toString())
 
-        tempArray.add("Starts:" + viewOfLayout.ratingBar.getRating())
+        tempArray.add(3, viewOfLayout.ratingBar.rating.toString())
         return tempArray
     }
 }

@@ -35,7 +35,9 @@ class TabMain @SuppressLint("ValidFragment") constructor(mainActivity: Activity)
     private var locationMain: GetUserLocation? = GetUserLocation()
 
     // Camera
-    lateinit var takePicture: TakePicture
+    lateinit var takePictureFront: TakePicture
+    lateinit var takePictureBack: TakePicture
+    lateinit var takePicturePlaque: TakePicture
 
     @RequiresApi(Build.VERSION_CODES.M)
     override fun onCreateView(
@@ -81,22 +83,22 @@ class TabMain @SuppressLint("ValidFragment") constructor(mainActivity: Activity)
         // Call on Click
         viewOfLayout.ibtn_front.setOnClickListener {
             // Init Camera
-            takePicture = TakePicture(mainActivity, viewOfLayout.ibtn_front, viewOfLayout.cb_front)
-            takePicture.initProcess()
+            takePictureFront = TakePicture(mainActivity, viewOfLayout.ibtn_front, viewOfLayout.cb_front)
+            takePictureFront.initProcess()
 
         }
 
         viewOfLayout.ibtn_back.setOnClickListener {
             // Init Camera
-            takePicture = TakePicture(mainActivity, viewOfLayout.ibtn_back, viewOfLayout.cb_back)
-            takePicture.initProcess()
+            takePictureBack = TakePicture(mainActivity, viewOfLayout.ibtn_back, viewOfLayout.cb_back)
+            takePictureBack.initProcess()
 
         }
 
         viewOfLayout.ibtn_plaque.setOnClickListener {
             // Init Camera
-            takePicture = TakePicture(mainActivity, viewOfLayout.ibtn_plaque, viewOfLayout.cb_plaque)
-            takePicture.initProcess()
+            takePicturePlaque = TakePicture(mainActivity, viewOfLayout.ibtn_plaque, viewOfLayout.cb_plaque)
+            takePicturePlaque.initProcess()
 
         }
 
@@ -104,14 +106,15 @@ class TabMain @SuppressLint("ValidFragment") constructor(mainActivity: Activity)
     }
 
     fun getTakePictureMain(): TakePicture {
-        return takePicture
+        return takePictureFront
     }
 
     fun processCapturedPhoto(takePicture: TakePicture) {
         takePicture.processCapturedPhoto(takePicture.getPath())
     }
 
-    var photo = false
+    var horizontal = false
+    var vertical = false
     private fun radioGroupHVActions() {
         viewOfLayout.radio_group.setOnCheckedChangeListener(
             //Actions Radio Button Main (Information)
@@ -137,11 +140,19 @@ class TabMain @SuppressLint("ValidFragment") constructor(mainActivity: Activity)
                     when (radio.text) {
                         "Horizontal" -> {
                             // Init New Activity
-                                intent = Intent(mainActivity, ActivityHorizontalMain::class.java)
+                                if(horizontal===false) {
+                                    intent = Intent(mainActivity, ActivityHorizontalMain::class.java)
+                                    horizontal = true
+                                    vertical = false
+                                }
                         }
                         "Vertical" -> {
                             // Init New Activity
+                            if(vertical===false) {
                                 intent = Intent(mainActivity, ActivityVerticalMain::class.java)
+                                vertical = true
+                                horizontal = false
+                            }
                         }
                     }
                     if (intent != null) {
@@ -161,6 +172,8 @@ class TabMain @SuppressLint("ValidFragment") constructor(mainActivity: Activity)
         // 1 -> Longitud
         // 2 -> Clasification
         // 3 -> Img Front
+        // 4 -> Img Back
+        // 5 -> Img Plaque
         var tempArray: ArrayList<String> = ArrayList<String>()
         // Latitude and Longitude
         tempArray.add(0, viewOfLayout.txt_latitude.text.toString()) // 0 -> Latitud
@@ -171,17 +184,39 @@ class TabMain @SuppressLint("ValidFragment") constructor(mainActivity: Activity)
         tempArray.add(2, radio.text.toString()) // 2 -> Clasification
 
         // Get Imagen
-        var imgFront = viewOfLayout.ibtn_front.drawable
-        tempArray.add(3,imgFront.toString()) // 3 -> Img Front
+        if(viewOfLayout.ibtn_front.isClickable) {
+            tempArray.add(3, takePictureFront.getPathPhoto().toString()) // 3 -> Img Front
+        }else{
+            tempArray.add(3,"NONE")
+        }
 
-        // Get Data - HV
-        // TODO: ISV Horizontal DATA MAIN
-        // 10 -> Direccion
-        // 11 -> Location Trayecto
-        // 12 -> Carril
-        // 13 -> Porcentaje
-        tempArray.addAll(intent!!.getStringArrayListExtra("getData"))
+        if(viewOfLayout.ibtn_back.isClickable){
+            tempArray.add(4,takePictureFront.getPathPhoto().toString()) // 4 -> Img Back
+        }else{
+            tempArray.add(4,"NONE")
+        }
+
+        if(viewOfLayout.ibtn_plaque.isClickable) {
+            tempArray.add(5, takePictureFront.getPathPhoto().toString()) // 5 -> Img Plaque
+        }else{
+            tempArray.add(5,"NONE")
+        }
+
         return tempArray
     }
+
+    fun getDataHorizonta(): ArrayList<String> {
+        // Get Data - HV
+        var tempArray: ArrayList<String> = ArrayList<String>()
+        // TODO: ISV Horizontal DATA MAIN
+        // 1-0 -> Direccion
+        // 1-1 -> Location Trayecto
+        // 1-2 -> Carril
+        // 1-3 -> Porcentaje
+        if(intent!=null) tempArray.addAll(intent!!.getStringArrayListExtra("getData"))
+        return tempArray
+    }
+
+
 
 }

@@ -2,7 +2,7 @@ package com.cittus.isv.model
 
 object EndPoints {
     // Server
-    private const val SERVER_MAIN =  "192.168.1.12"//"192.168.43.137"//"172.20.1.13"
+    private const val SERVER_MAIN =  "192.168.43.44"//"192.168.43.137"//"172.20.1.13"
 
     // Main Get
     private const val URL_ROOT = "http://$SERVER_MAIN/ittus-senalesviales/queries/sliderjsonoutput.php"

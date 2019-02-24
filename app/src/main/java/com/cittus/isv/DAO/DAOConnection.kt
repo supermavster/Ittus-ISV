@@ -91,6 +91,8 @@ class DAOConnection(mainActivity: Activity) {
                 params.put("name", name)
                 params.put("genre", genre)
                 Log.e("Parametes",params.toString())
+                check = true
+
                 return params
             }
         }

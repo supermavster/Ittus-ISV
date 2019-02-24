@@ -11,6 +11,14 @@ class CittusInventario{
         this.IdMunicipio = IdMunicipio
     }
 
+    fun getInventarioID(): Int {
+        return this.IdInventario
+    }
+
+    fun getMunicipioID(): String {
+        return this.IdMunicipio
+    }
+
     override fun toString(): String {
         return "CittusInventario(IdInventario=$IdInventario, IdMunicipio='$IdMunicipio')"
     }
@@ -37,46 +45,51 @@ class CittusListSignal{
 
 class CittusSignal {
 
-    // Signal
-    var IdSIgnal = 0
     var Latitud:Float = 0.0f
     var Longitud:Float = 0.0f
+
+    // Fotos
+    var PhotoFront:String = ""
+    var PhotoBack:String = ""
+    var PhotoPlaque:String = ""
+
+    // Images
+    var Simbolo:String = ""
+    var Codigo:String = ""
+    var Lado:String = ""
+
+    // Horizontal
     var TypeSignal = ""
     var Direccion = ""
     var Location = ""
-    var Codigo:String = ""
-    var Lado:String = ""
-    var Estado:String = ""
+    var Carril = ""
+    var Porcentaje = ""
+
+    // Information
+    var LocationMain = ""
+    var Size = ""
     var TipoFijacion:String = ""
     var EstadoFijacion:String = ""
-    var Simbolo:String = ""
 
-    constructor()
+    // General Data
+    var LocationBetween_1 = ""
+    var LocationBetween_2 = ""
+    var LocationBetween_3 = ""
+    var Estado:String = ""
 
-    constructor(
-        IdSIgnal: Int,
-        Latitud: Float,
-        Longitud: Float,
-        Codigo: String,
-        Lado: String,
-        Estado: String,
-        TipoFijacion: String,
-        EstadoFijacion: String,
-        Simbolo: String
-    ) {
-        this.IdSIgnal = IdSIgnal
-        this.Latitud = Latitud
-        this.Longitud = Longitud
-        this.Codigo = Codigo
-        this.Lado = Lado
-        this.Estado = Estado
-        this.TipoFijacion = TipoFijacion
-        this.EstadoFijacion = EstadoFijacion
-        this.Simbolo = Simbolo
+
+
+    constructor(){
+        ++IdSIgnal
+    }
+
+    companion object {
+        // Signal
+        var IdSIgnal = 0
     }
 
     override fun toString(): String {
-        return "CittusSignal(IdSIgnal=$IdSIgnal, Latitud=$Latitud, Longitud=$Longitud, Codigo='$Codigo', Lado='$Lado', Estado='$Estado', TipoFijacion='$TipoFijacion', EstadoFijacion='$EstadoFijacion', Simbolo='$Simbolo')"
+        return "CittusSignal(Latitud=$Latitud, Longitud=$Longitud, PhotoFront='$PhotoFront', PhotoBack='$PhotoBack', PhotoPlaque='$PhotoPlaque', Simbolo='$Simbolo', Codigo='$Codigo', Lado='$Lado', TypeSignal='$TypeSignal', Direccion='$Direccion', Location='$Location', Carril='$Carril', Porcentaje='$Porcentaje', LocationMain='$LocationMain', Size='$Size', TipoFijacion='$TipoFijacion', EstadoFijacion='$EstadoFijacion', LocationBetween_1='$LocationBetween_1', LocationBetween_2='$LocationBetween_2', LocationBetween_3='$LocationBetween_3', Estado='$Estado')"
     }
 
 

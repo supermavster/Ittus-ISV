@@ -18,6 +18,7 @@ class TakePicture (private var context: Activity,private var imageView: ImageVie
 
     // Variable Main - Path
     private var mCurrentPhotoPath: String? = null;
+    private var mCurrentPhoto: String = "";
     private var permissions:Permissions = Permissions(context)
 
     fun initProcess() {
@@ -26,7 +27,7 @@ class TakePicture (private var context: Activity,private var imageView: ImageVie
 
     private fun launchCamera() {
         val values = ContentValues(1)
-        values.put(MediaStore.Images.Media.MIME_TYPE, "image/jpg")
+        values.put(MediaStore.Images.Media.MIME_TYPE, "image/png")
         val fileUri = context.contentResolver
             .insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
                 values)
@@ -48,6 +49,11 @@ class TakePicture (private var context: Activity,private var imageView: ImageVie
         return mCurrentPhotoPath
     }
 
+    fun getPathPhoto(): String? {
+        return mCurrentPhoto
+    }
+
+
     public fun processCapturedPhoto(path: String?) {
         val cursor = context.contentResolver.query(Uri.parse(path),
             Array(1) {android.provider.MediaStore.Images.ImageColumns.DATA},
@@ -57,10 +63,10 @@ class TakePicture (private var context: Activity,private var imageView: ImageVie
         cursor.close()
         //TODO hacer temporales para obtener despues 800 x 400
         val file = File(photoPath)
-
-        resizeImage(file,125)
+        resizeImage(file,400)
         val uri = Uri.fromFile(file)
         imageView.setImageURI(uri)
+        mCurrentPhoto = file.absoluteFile.toString()
         captureButton.isChecked = true
     }
 
