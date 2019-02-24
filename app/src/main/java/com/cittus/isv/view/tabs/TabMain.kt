@@ -109,10 +109,10 @@ class TabMain @SuppressLint("ValidFragment") constructor(mainActivity: Activity)
         return takePictureFront
     }
     fun getTakePictureMainBack(): TakePicture {
-        return takePictureFront
+        return takePictureBack
     }
     fun getTakePictureMainPlaque(): TakePicture {
-        return takePictureFront
+        return takePicturePlaque
     }
 
     fun processCapturedPhoto(takePicture: TakePicture) {
