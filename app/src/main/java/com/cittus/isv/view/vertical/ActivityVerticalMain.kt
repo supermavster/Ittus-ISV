@@ -46,30 +46,30 @@ class ActivityVerticalMain : AppCompatActivity() {
     private fun btnRegulatory(){
         var intent = makeActivityImages(R.string.title_vertical_regulatory,EndPoints.URL_GET_VERTICAL_REGULATORY)
         ibtn_vertical_regulatory.setOnClickListener {
-            startActivityForResult(intent, ActionsRequest.GET_IMAGES)
+            startActivityForResult(intent, ActionsRequest.GET_VERTICAL_IMAGES_VALUES)
         }
         btn_vertical_regulatory.setOnClickListener {
-            startActivityForResult(intent, ActionsRequest.GET_IMAGES)
+            startActivityForResult(intent, ActionsRequest.GET_VERTICAL_IMAGES_VALUES)
         }
     }
 
     private fun btnPreventive(){
         var intent = makeActivityImages(R.string.title_vertical_preventives,EndPoints.URL_GET_VERTICAL_PREVENTIVES)
         ibtn_vertical_preventive.setOnClickListener {
-            startActivityForResult(intent, ActionsRequest.GET_IMAGES)
+            startActivityForResult(intent, ActionsRequest.GET_VERTICAL_IMAGES_VALUES)
         }
         btn_vertical_preventive.setOnClickListener {
-            startActivityForResult(intent, ActionsRequest.GET_IMAGES)
+            startActivityForResult(intent, ActionsRequest.GET_VERTICAL_IMAGES_VALUES)
         }
     }
 
     private fun btnWork(){
         var intent = makeActivityImages(R.string.title_vertical_work,EndPoints.URL_GET_VERTICAL_WORK)
         ibtn_vertical_work.setOnClickListener {
-            startActivityForResult(intent, ActionsRequest.GET_IMAGES)
+            startActivityForResult(intent, ActionsRequest.GET_VERTICAL_IMAGES_VALUES)
         }
         btn_vertical_work.setOnClickListener {
-            startActivityForResult(intent, ActionsRequest.GET_IMAGES)
+            startActivityForResult(intent, ActionsRequest.GET_VERTICAL_IMAGES_VALUES)
         }
     }
 
@@ -77,10 +77,10 @@ class ActivityVerticalMain : AppCompatActivity() {
 
         var intent = makeActivityImages(R.string.title_vertical_cycle_route,EndPoints.URL_GET_VERTICAL_CYCLE_ROUTE)
         ibtn_vertical_cycle_route.setOnClickListener {
-            startActivityForResult(intent, ActionsRequest.GET_IMAGES)
+            startActivityForResult(intent, ActionsRequest.GET_VERTICAL_IMAGES_VALUES)
         }
         btn_vertical_cycle_route.setOnClickListener {
-            startActivityForResult(intent, ActionsRequest.GET_IMAGES)
+            startActivityForResult(intent, ActionsRequest.GET_VERTICAL_IMAGES_VALUES)
         }
     }
 
@@ -91,29 +91,46 @@ class ActivityVerticalMain : AppCompatActivity() {
         intent.putExtra("url_img",url_img)
         intent.putExtra("code",code)
         intent.putExtra("description",description)
+        intent.putExtra("Action",ActionsRequest.GET_VERTICAL_IMAGES_VALUES)
         return(intent)
     }
 
-    // Camera Action // Return Intend Action
+    var exceptionMain: Boolean = false
+    private fun getData(): ArrayList<String> {
+
+        return ArrayList<String>()
+    }
+
+    // Actions To Return
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
 
-        Log.i("IMAGES",requestCode.toString()+"->"+resultCode+"->"+data.toString())
+        Log.i("Vertical Activity", requestCode.toString() + "->" + resultCode + "->" + data.toString())
         when (requestCode) {
-            ActionsRequest.GET_IMAGES -> {
-                if (data != null){
+            ActionsRequest.GET_VERTICAL_IMAGES_VALUES -> {
+                // TODO: Get Data Images
+                // 0 -> Number
+                // 1 -> Code
+                // 2 -> Img Select
+                if (data != null) {
                     val extras = data!!.extras ?: return
-                    val arrayListMain = extras.getStringArrayList("getData")
-
-                    // Get TO the MAIN ACTIVITY
-                    var intentTemp: Intent = Intent()
-                    intentTemp.putExtra("getData", arrayListMain)
-                    setResult(ActionsRequest.GET_IMAGES, intentTemp)
-                    Log.i("getData", "getData:" + arrayListMain.toString())
-                    // End Activity
-                    finish()
+                    val titleTemp = extras.getString("getTitle")
+                    val elementsBaseImage = extras.getStringArrayList("getDataImages")
+                    Log.e("getData", "getDataImages:$elementsBaseImage")
+                    // Get Data of this Activity
+                    var data = getData();
+                    // Check Errors
+                    if (exceptionMain === false) {
+                        // Init Process TO send  MAIN ACTIVIVTY
+                        var intentTemp: Intent = Intent()
+                        intentTemp.putExtra("getTitle", titleTemp)
+                        intentTemp.putExtra("getDataImages", elementsBaseImage)
+                        setResult(ActionsRequest.GET_VERTICAL_VALUES, intentTemp)
+                        finish()
+                    }
                 }
             }
-            else->{
+
+            else -> {
                 super.onActivityResult(requestCode, resultCode, data)
             }
         }

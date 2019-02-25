@@ -110,6 +110,7 @@ class MainActivity : AppCompatActivity() {
     }
 
 var horizontalItems = ArrayList<String>()
+    var verticalItems:String=""
     var dataImagenes = ArrayList<String>()
 
     // Camera Action // Return Intend Action
@@ -125,7 +126,15 @@ var horizontalItems = ArrayList<String>()
                     val extras = data!!.extras ?: return
                     horizontalItems = extras.getStringArrayList("getData")
                     dataImagenes = extras.getStringArrayList("getDataImages")
-                    Log.e("getData", "getData:$horizontalItems  Images:$dataImagenes")
+                    Log.e("getData Horizontal", "getData:$horizontalItems  Images:$dataImagenes")
+                }
+            }
+            ActionsRequest.GET_VERTICAL_VALUES or ActionsRequest.GET_VERTICAL_IMAGES_VALUES->{
+                if (data != null) {
+                    val extras = data!!.extras ?: return
+                    verticalItems = extras.getString("getTitle")
+                    dataImagenes = extras.getStringArrayList("getDataImages")
+                    Log.e("getData Vertical", "getData:$verticalItems  Images:$dataImagenes")
                 }
             }
             else -> {

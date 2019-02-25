@@ -121,6 +121,7 @@ class TabMain @SuppressLint("ValidFragment") constructor(mainActivity: Activity)
 
     var horizontal = false
     var vertical = false
+    var actionRequest = 0
     private fun radioGroupHVActions() {
         viewOfLayout.radio_group.setOnCheckedChangeListener(
             //Actions Radio Button Main (Information)
@@ -150,6 +151,7 @@ class TabMain @SuppressLint("ValidFragment") constructor(mainActivity: Activity)
                                     intent = Intent(mainActivity, ActivityHorizontalMain::class.java)
                                     horizontal = true
                                     vertical = false
+                                    actionRequest = ActionsRequest.GET_HORIZONTAL_VALUES
                                 }
                         }
                         "Vertical" -> {
@@ -158,11 +160,12 @@ class TabMain @SuppressLint("ValidFragment") constructor(mainActivity: Activity)
                                 intent = Intent(mainActivity, ActivityVerticalMain::class.java)
                                 vertical = true
                                 horizontal = false
+                                actionRequest = ActionsRequest.GET_VERTICAL_IMAGES_VALUES
                             }
                         }
                     }
                     if (intent != null) {
-                        mainActivity.startActivityForResult(intent, ActionsRequest.GET_HORIZONTAL_VALUES)
+                        mainActivity.startActivityForResult(intent, actionRequest )
                     }
 
                 }
@@ -208,19 +211,6 @@ class TabMain @SuppressLint("ValidFragment") constructor(mainActivity: Activity)
             tempArray.add(5,"NONE")
         }
 
-        return tempArray
-    }
-
-
-    fun getDataHorizontal(): ArrayList<String> {
-        // Get Data - HV
-        var tempArray: ArrayList<String> = ArrayList<String>()
-        // TODO: ISV Horizontal DATA MAIN
-        // 1-0 -> Direccion
-        // 1-1 -> Location Trayecto
-        // 1-2 -> Carril
-        // 1-3 -> Porcentaje
-        if(intent!=null) tempArray.addAll(intent!!.getStringArrayListExtra("getData"))
         return tempArray
     }
 

@@ -219,7 +219,6 @@ class ActivityHorizontalMain : AppCompatActivity() {
             intentImage.putExtra("Action",ActionsRequest.GET_HORIZONTAL_IMAGES_VALUES)
             startActivityForResult(intentImage, ActionsRequest.GET_HORIZONTAL_IMAGES_VALUES)
         }
-
     }
 
     // Actions To Return

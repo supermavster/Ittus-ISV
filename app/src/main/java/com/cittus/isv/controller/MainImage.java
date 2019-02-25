@@ -84,19 +84,23 @@ public class MainImage extends AppCompatActivity {
         spinner = (Spinner) findViewById(R.id.spin_code_images);
     }
 
-    int actionImages = 0;
+    int actionImages = 5;
+    String titleMain = "";
     private void getValuesMain() {
         // Intent Variable
         Intent intent = getIntent();
 
         // Set Template New Activity
         TextView title = findViewById(R.id.lbl_title_images);
-        title.setText(intent.getStringExtra("title"));
+        titleMain = intent.getStringExtra("title");
+        title.setText(titleMain);
 
         // Url Main Base - Imgs
         request_url = intent.getStringExtra("url_img");
 
-        actionImages = (int) intent.getIntExtra("Action",5);
+        actionImages = intent.getIntExtra("Action",5);
+
+        //actionImages =  (int) intent.getStringExtra("Action");
         // Active Select
         findViewById(R.id.codeMain).setVisibility(intent.getBooleanExtra("code", true) ? View.VISIBLE : View.GONE);
         //findViewById(R.id.descriptionMain).setVisibility(intent.getBooleanExtra("description", true) ? View.VISIBLE : View.GONE);
@@ -264,9 +268,7 @@ public class MainImage extends AppCompatActivity {
                     // Array
                     Intent intent = getIntent();
                     intent.putExtra("getDataImages", elementsBase);
-                    if(actionImages == 0){
-                        actionImages = 5;
-                    }
+                    intent.putExtra("getTitle", titleMain);
                     setResult(actionImages, intent);// GET_IMAGES
                     finish();
                 }

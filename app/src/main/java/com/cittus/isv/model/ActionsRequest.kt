@@ -17,8 +17,14 @@ class ActionsRequest {
 
         val GET_HORIZONTAL_VALUES = 4
         val GET_HORIZONTAL_IMAGES_VALUES = 41
+
+
+
         val GET_IMAGES:Int = 5
 
         val GET_INIT = 6
+
+        val GET_VERTICAL_VALUES = 7
+        val GET_VERTICAL_IMAGES_VALUES = 71
     }
 }
