@@ -17,6 +17,7 @@ import com.android.volley.toolbox.JsonArrayRequest;
 import com.cittus.isv.R;
 import com.cittus.isv.complements.slider.CustomVolleyRequest;
 import com.cittus.isv.complements.slider.ViewPagerAdapter;
+import com.cittus.isv.model.ActionsRequest;
 import com.cittus.isv.model.SliderUtils;
 import com.cittus.isv.view.MainActivity;
 import org.json.JSONArray;
@@ -83,6 +84,7 @@ public class MainImage extends AppCompatActivity {
         spinner = (Spinner) findViewById(R.id.spin_code_images);
     }
 
+    int actionImages = 0;
     private void getValuesMain() {
         // Intent Variable
         Intent intent = getIntent();
@@ -94,6 +96,7 @@ public class MainImage extends AppCompatActivity {
         // Url Main Base - Imgs
         request_url = intent.getStringExtra("url_img");
 
+        actionImages = (int) intent.getIntExtra("Action",5);
         // Active Select
         findViewById(R.id.codeMain).setVisibility(intent.getBooleanExtra("code", true) ? View.VISIBLE : View.GONE);
         //findViewById(R.id.descriptionMain).setVisibility(intent.getBooleanExtra("description", true) ? View.VISIBLE : View.GONE);
@@ -240,27 +243,31 @@ public class MainImage extends AppCompatActivity {
         }
     }
 
+    ArrayList elementsBase = new ArrayList<String>();
     private void saveElements() {
         findViewById(R.id.btn_save_image).setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-                ArrayList elementsBase = new ArrayList<String>();
+                // TODO: Get Data Images
+                // 0 -> Number
+                // 1 -> Code
+                // 2 -> Img Select
                 if (spinner != null) {
                     String ss = spinner.getSelectedItem().toString();
-
                     for (int i = 0; i < arrayCodes.length; i++) {
                         if (arrayCodes[i] == ss) {
-                            elementsBase.add("'Number':'" + i + "'");
-                            elementsBase.add("'Code':'" + arrayCodes[i] + "'");
-                            elementsBase.add("'ImgSelected':'" + arrayImages[i] + "'");
+                            elementsBase.add(0,i);
+                            elementsBase.add(1,arrayCodes[i]);
+                            elementsBase.add(2, arrayImages[i]);
                         }
                     }
-
-
                     // Array
                     Intent intent = getIntent();
-                    intent.putExtra("getData", elementsBase);
-                    setResult(5, intent);
+                    intent.putExtra("getDataImages", elementsBase);
+                    if(actionImages == 0){
+                        actionImages = 5;
+                    }
+                    setResult(actionImages, intent);// GET_IMAGES
                     finish();
                 }
                 return true;

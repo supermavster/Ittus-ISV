@@ -23,6 +23,8 @@ class ActivityHorizontalMain : AppCompatActivity() {
     var porcentaje = "";
     // Exception
     var exceptionMain: Boolean = false
+    var elementsBaseImage = java.util.ArrayList<String>()
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -118,7 +120,7 @@ class ActivityHorizontalMain : AppCompatActivity() {
         //Populate NumberPicker values from String array values
         var valTemp: ArrayList<String> = ArrayList<String>()
         for (i in 100 downTo 0 step 10) {
-            valTemp.add("${i} %")
+            valTemp.add("${i}%")
         }
 
         textPicker = findViewById(R.id.txt_percentage_coverage)
@@ -144,6 +146,7 @@ class ActivityHorizontalMain : AppCompatActivity() {
                 // Init Process TO send  MAIN ACTIVIVTY
                 var intentTemp: Intent = Intent()
                 intentTemp.putExtra("getData", data)
+                intentTemp.putExtra("getDataImages", elementsBaseImage)
                 setResult(ActionsRequest.GET_HORIZONTAL_VALUES, intentTemp)
                 finish()
             }
@@ -201,12 +204,44 @@ class ActivityHorizontalMain : AppCompatActivity() {
         return tempValues;
     }
 
+    fun getDataImagenSelected(): ArrayList<String>{
+        return elementsBaseImage
+    }
+
+    lateinit var intentImage: Intent
     private fun makeActivityImages(title: Int, url_img: String, code: Boolean = true, description: Boolean = true) {
-        var intent = Intent(this, MainImage::class.java)
-        intent.putExtra("title", resources.getString(title))
-        intent.putExtra("url_img", url_img)
-        intent.putExtra("code", code)
-        intent.putExtra("description", description)
-        startActivity(intent)
+        intentImage = Intent(this, MainImage::class.java)
+        if (intentImage != null) {
+            intentImage.putExtra("title", resources.getString(title))
+            intentImage.putExtra("url_img", url_img)
+            intentImage.putExtra("code", code)
+            intentImage.putExtra("description", description)
+            intentImage.putExtra("Action",ActionsRequest.GET_HORIZONTAL_IMAGES_VALUES)
+            startActivityForResult(intentImage, ActionsRequest.GET_HORIZONTAL_IMAGES_VALUES)
+        }
+
+    }
+
+    // Actions To Return
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+
+        Log.i("Main Activity", requestCode.toString() + "->" + resultCode + "->" + data.toString())
+        when (requestCode) {
+            ActionsRequest.GET_HORIZONTAL_IMAGES_VALUES->{
+                // TODO: Get Data Images
+                // 0 -> Number
+                // 1 -> Code
+                // 2 -> Img Select
+                if (data != null) {
+                    val extras = data!!.extras ?: return
+                    elementsBaseImage = extras.getStringArrayList("getDataImages")
+                    Log.e("getData", "getDataImages:$elementsBaseImage")
+                }
+            }
+
+            else -> {
+                super.onActivityResult(requestCode, resultCode, data)
+            }
+        }
     }
 }

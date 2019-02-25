@@ -110,6 +110,8 @@ class MainActivity : AppCompatActivity() {
     }
 
 var horizontalItems = ArrayList<String>()
+    var dataImagenes = ArrayList<String>()
+
     // Camera Action // Return Intend Action
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
 
@@ -121,12 +123,11 @@ var horizontalItems = ArrayList<String>()
             ActionsRequest.GET_HORIZONTAL_VALUES -> {
                 if (data != null) {
                     val extras = data!!.extras ?: return
-                    val myData = extras.getStringArrayList("getData")
-                    horizontalItems = myData
-                    Log.e("getData", "getData:$myData")
+                    horizontalItems = extras.getStringArrayList("getData")
+                    dataImagenes = extras.getStringArrayList("getDataImages")
+                    Log.e("getData", "getData:$horizontalItems  Images:$dataImagenes")
                 }
             }
-
             else -> {
                 super.onActivityResult(requestCode, resultCode, data)
             }
@@ -197,14 +198,29 @@ var horizontalItems = ArrayList<String>()
                 // 1-1 -> Location Trayecto
                 // 1-2 -> Carril
                 // 1-3 -> Porcentaje
-                var horizontalData = tabMain.getDataHorizontal()
-                    if(horizontalData == null || horizontalData.size==0 || horizontalData.isEmpty()) {
-                        horizontalData = horizontalItems
+                var horizontalData = ArrayList<String>()//= tabMain.getDataHorizontal()
+                    //if(horizontalData == null || horizontalData.size==0 || horizontalData.isEmpty()) { }
+                    horizontalData = horizontalItems
+                    if(horizontalData!=null) {
+                        signalMain!!.Direccion = horizontalData[0] // 1-0 -> Direccion
+                        signalMain!!.Location = horizontalData[1] // 1-1 -> Location Trayect
+                        signalMain!!.Carril = horizontalData[2] // 1-2 -> Carril
+                        signalMain!!.Porcentaje = horizontalData[3] // 1-3 -> Porcentaje
+
+                        dataImagenes
+                        // Get Info Imagen Select
+                        var dataImagen = dataImagenes
+                        // TODO: Get Data Images
+                        // 0 -> Number
+                        // 1 -> Code
+                        // 2 -> Img Select
+                        if(dataImagen!=null){
+                            //signalMain!!.Codigo = dataImagen[0] // 1 - 1 - 0 -> Number
+                            signalMain!!.Codigo = dataImagen[1] // 1 - 1 - 0 -> Code
+                            signalMain!!.Simbolo = dataImagen[2] // 1 - 1 - 0 -> Img - Symbol
+                        }
                     }
-                    signalMain!!.Direccion = horizontalData[0] // 1-0 -> Direccion
-                    signalMain!!.Location = horizontalData[1] // 1-1 -> Location Trayect
-                    signalMain!!.Carril = horizontalData[2] // 1-2 -> Carril
-                    signalMain!!.Porcentaje = horizontalData[3] // 1-3 -> Porcentaje
+
                 }
                 "Vertical" -> {
                     signalMain!!.PhotoBack = isvMain[4] // 3 -> Img Back

@@ -211,6 +211,7 @@ class TabMain @SuppressLint("ValidFragment") constructor(mainActivity: Activity)
         return tempArray
     }
 
+
     fun getDataHorizontal(): ArrayList<String> {
         // Get Data - HV
         var tempArray: ArrayList<String> = ArrayList<String>()

@@ -16,6 +16,7 @@ class ActionsRequest {
         val TAKE_PHOTO_REQUEST_PLAQUE = 32
 
         val GET_HORIZONTAL_VALUES = 4
+        val GET_HORIZONTAL_IMAGES_VALUES = 41
         val GET_IMAGES:Int = 5
 
         val GET_INIT = 6

@@ -1,9 +1,7 @@
 package com.cittus.isv.complements.gps
 
-import android.Manifest
 import android.annotation.SuppressLint
 import android.app.Activity
-import android.content.pm.PackageManager
 import android.location.Location
 import android.location.LocationListener
 import android.location.LocationManager
@@ -11,10 +9,7 @@ import android.os.Build
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.annotation.RequiresApi
-import android.support.v4.app.ActivityCompat
-import android.support.v4.content.ContextCompat
 import android.util.Log
-import android.widget.Toast
 
 
 class GetUserLocation {
@@ -36,9 +31,6 @@ class GetUserLocation {
 
     @RequiresApi(Build.VERSION_CODES.M)
     fun init(app: Activity) {
-
-
-
         // Create persistent LocationManager reference
         locationManager = (app.getSystemService(AppCompatActivity.LOCATION_SERVICE) as LocationManager?)!!;
 
@@ -72,7 +64,6 @@ class GetUserLocation {
             if(network_enabled === true) {
                 locationManager?.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0L, 0f, locationListener);
                 location = LocationManager.NETWORK_PROVIDER
-
             }
 
 
@@ -84,12 +75,9 @@ class GetUserLocation {
 
         Log.d("myTag", "$network_enabled - $gps_enabled");
 
-        var tempLocation = locationManager!!.getLastKnownLocation(location)
+        //        locationListener.onLocationChanged(tempLocation)
 
-//        locationListener.onLocationChanged(tempLocation)
-
-
-        return tempLocation;
+        return locationManager!!.getLastKnownLocation(location);
 
 
     }
