@@ -20,7 +20,7 @@ class CittusInventario{
     }
 
     override fun toString(): String {
-        return "CittusInventario(IdInventario=$IdInventario, IdMunicipio='$IdMunicipio')"
+        return "{\"IdInventario\":$IdInventario, \"IdMunicipio\":\"$IdMunicipio\"}"
     }
 
 }
@@ -29,6 +29,9 @@ class CittusListSignal{
     var IdInventario = 0;
     var IdSignal = 0;
 
+    var signal: ArrayList<CittusSignal>? = null
+    var inventarioMain: CittusInventario? = null
+
     constructor()
 
     constructor(IdInventario: Int, IdSignal: Int) {
@@ -36,8 +39,16 @@ class CittusListSignal{
         this.IdSignal = IdSignal
     }
 
+    fun setSignalMain(signal: ArrayList<CittusSignal>){
+        this.signal = signal
+    }
+
+    fun setInventario(inventarioMain: CittusInventario){
+        this.inventarioMain = inventarioMain
+    }
+
     override fun toString(): String {
-        return "CittusListSignal(IdInventario=$IdInventario, IdSignal=$IdSignal)"
+        return "CittusListSignal(IdInventario=$IdInventario, IdSignal=$IdSignal, signal=$signal, inventarioMain=$inventarioMain)"
     }
 
 
@@ -88,7 +99,7 @@ class CittusSignal {
     }
 
     override fun toString(): String {
-        return "CittusSignal(IdSIgnal=$IdSignal, Latitud=$Latitud, Longitud=$Longitud, PhotoFront='$PhotoFront', PhotoBack='$PhotoBack', PhotoPlaque='$PhotoPlaque', Simbolo='$Simbolo', Codigo='$Codigo', TypeSignal='$TypeSignal', Direccion='$Direccion', Location='$Location', Carril='$Carril', Porcentaje='$Porcentaje', LocationMain='$LocationMain', Size='$Size', TipoFijacion='$TipoFijacion', EstadoFijacion='$EstadoFijacion', LocationBetween_1='$LocationBetween_1', LocationBetween_2='$LocationBetween_2', LocationBetween_3='$LocationBetween_3', Estado='$Estado')"
+        return "{\"IdSIgnal\":\"$IdSignal\",\"Latitud\":\"$Latitud\", \"Longitud\":\"$Longitud\", \"PhotoFront\":\"$PhotoFront\", \"PhotoBack\":\"$PhotoBack\", \"PhotoPlaque\":\"$PhotoPlaque\", \"Simbolo\":\"$Simbolo\", \"Codigo\":\"$Codigo\", \"TypeSignal\":\"$TypeSignal\", \"Direccion\":\"$Direccion\", \"Location\":\"$Location\", \"Carril\":\"$Carril\", \"Porcentaje\":\"$Porcentaje\", \"LocationMain\":\"$LocationMain\", \"Size\":\"$Size\", \"TipoFijacion\":\"$TipoFijacion\", \"EstadoFijacion\":\"$EstadoFijacion\", \"LocationBetween_1\":\"$LocationBetween_1\", \"LocationBetween_2\":\"$LocationBetween_2\", \"LocationBetween_3\":\"$LocationBetween_3\", \"Estado\":\"$Estado\"}"
     }
 
 

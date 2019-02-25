@@ -10,6 +10,7 @@ import com.android.volley.VolleyError
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
 import com.cittus.isv.complements.slider.CustomVolleyRequest
+import com.cittus.isv.model.CittusListSignal
 import com.cittus.isv.model.CittusSignal
 import com.cittus.isv.model.EndPoints
 import org.json.JSONArray
@@ -54,19 +55,22 @@ class DAOConnection(mainActivity: Activity) {
         requestQueue.add<String>(stringRequest)
         return elements
     }
-    var check = false;
+    var check = true;
 
     //adding a new record to database
-        public fun addSignal(signalMain: CittusSignal):Boolean {
-        check = false
-        //getting the record values
-        val name = signalMain.Latitud.toString()
-        val genre = signalMain.Longitud.toString()
+        public fun addSignal(signalMain: CittusListSignal):Boolean {
+         //getting the record values
+        var IdInventario = signalMain.IdInventario
+        var IdSignal = signalMain.IdSignal
+        val signal = signalMain.signal
+        val inventarioMain = signalMain.inventarioMain
 
         Log.e("INIT",EndPoints.URL_ADD_SIGNAL)
         //creating volley string request
         val stringRequest = object : StringRequest(Request.Method.POST, EndPoints.URL_ADD_SIGNAL,
             Response.Listener<String> { response ->
+                Log.e("Error JSON",response)
+                check = true
                 try {
                     val obj = JSONObject(response)
                     Toast.makeText(mainActivity, obj.getString("message"), Toast.LENGTH_LONG).show()
@@ -88,8 +92,11 @@ class DAOConnection(mainActivity: Activity) {
             @Throws(AuthFailureError::class)
             override fun getParams(): Map<String, String> {
                 val params = HashMap<String, String>()
-                params.put("name", name)
-                params.put("genre", genre)
+
+                params.put("IdInventario", IdInventario.toString())
+                params.put("IdSignal", IdSignal.toString())
+                params.put("signal", signal.toString())
+                params.put("inventarioMain", inventarioMain.toString())
                 Log.e("Parametes",params.toString())
                 check = true
 

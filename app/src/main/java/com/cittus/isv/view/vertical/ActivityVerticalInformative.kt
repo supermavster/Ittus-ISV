@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.util.Log
 import com.cittus.isv.R
 import com.cittus.isv.controller.MainImage
+import com.cittus.isv.model.ActionsRequest
 import com.cittus.isv.model.EndPoints
 import kotlinx.android.synthetic.main.activity_vertical_informative.*
 import java.util.*
@@ -32,10 +33,10 @@ class ActivityVerticalInformative : AppCompatActivity() {
 
         var intent = makeActivityImages(R.string.title_vertical_info_services,EndPoints.URL_GET_VERTICAL_INFO_SERVICES)
         ibtn_vts_informative_services.setOnClickListener {
-            startActivity(intent)
+            startActivityForResult(intent, ActionsRequest.GET_VERTICAL_IMAGES_VALUES)
         }
         btn_vts_informative_services.setOnClickListener {
-            startActivity(intent)
+            startActivityForResult(intent, ActionsRequest.GET_VERTICAL_IMAGES_VALUES)
         }
     }
 
@@ -43,10 +44,10 @@ class ActivityVerticalInformative : AppCompatActivity() {
 
         var intent = makeActivityImages(R.string.title_vertical_info_turistic,EndPoints.URL_GET_VERTICAL_INFO_TOURIST)
         ibtn_vts_informative_turist.setOnClickListener {
-            startActivity(intent)
+            startActivityForResult(intent, ActionsRequest.GET_VERTICAL_IMAGES_VALUES)
         }
         btn_vts_informative_turist.setOnClickListener {
-            startActivity(intent)
+            startActivityForResult(intent, ActionsRequest.GET_VERTICAL_IMAGES_VALUES)
         }
     }
 
@@ -54,10 +55,10 @@ class ActivityVerticalInformative : AppCompatActivity() {
 
         var intent = makeActivityImages(R.string.title_vertical_info_localization,EndPoints.URL_GET_VERTICAL_INFO_LOCATION)
         ibtn_vts_informative_location.setOnClickListener {
-            startActivity(intent)
+            startActivityForResult(intent, ActionsRequest.GET_VERTICAL_IMAGES_VALUES)
         }
         btn_vts_informative_location.setOnClickListener {
-            startActivity(intent)
+            startActivityForResult(intent, ActionsRequest.GET_VERTICAL_IMAGES_VALUES)
         }
     }
 
@@ -70,5 +71,46 @@ class ActivityVerticalInformative : AppCompatActivity() {
         intent.putExtra("code",code)
         intent.putExtra("description",description)
         return(intent)
+    }
+
+    var exceptionMain: Boolean = false
+    private fun getData(): ArrayList<String> {
+
+        return ArrayList<String>()
+    }
+
+    // Actions To Return
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+
+        Log.i("Vertical Information", requestCode.toString() + "->" + resultCode + "->" + data.toString())
+        when (requestCode) {
+            ActionsRequest.GET_VERTICAL_IMAGES_VALUES -> {
+                // TODO: Get Data Images
+                // 0 -> Number
+                // 1 -> Code
+                // 2 -> Img Select
+                if (data != null) {
+                    val extras = data!!.extras ?: return
+                    val titleTemp = extras.getString("getTitle")
+                    val elementsBaseImage = extras.getStringArrayList("getDataImages")
+                    Log.e("getData", "getDataImages:$elementsBaseImage")
+                    // Get Data of this Activity
+                    var data = getData();
+                    // Check Errors
+                    if (exceptionMain === false) {
+                        // Init Process TO send  MAIN ACTIVIVTY
+                        var intentTemp: Intent = Intent()
+                        intentTemp.putExtra("getTitle", titleTemp)
+                        intentTemp.putExtra("getDataImages", elementsBaseImage)
+                        setResult(ActionsRequest.GET_VERTICAL_IMAGES_VALUES and ActionsRequest.GET_VERTICAL_VALUES, intentTemp)
+                        finish()
+                    }
+                }
+            }
+
+            else -> {
+                super.onActivityResult(requestCode, resultCode, data)
+            }
+        }
     }
 }

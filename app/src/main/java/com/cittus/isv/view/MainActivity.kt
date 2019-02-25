@@ -36,6 +36,8 @@ class MainActivity : AppCompatActivity() {
     private var listSignal: CittusListSignal? = null
     private var signalMain: CittusSignal? = null
     var message = "";
+    private var signalMainArray: ArrayList<CittusSignal> = ArrayList<CittusSignal>()
+
 
     // Variables Table
     private var tabMain: TabMain = TabMain(mainActivity)
@@ -162,6 +164,7 @@ var horizontalItems = ArrayList<String>()
             // Init List
             listSignal = CittusListSignal()
             listSignal!!.IdInventario = inventario!!.getInventarioID()
+            listSignal!!.setInventario(inventario!!)
             listSignal!!.IdSignal = data[1].toInt()
             Log.e("ListaSenal", listSignal.toString())
         }
@@ -196,7 +199,6 @@ var horizontalItems = ArrayList<String>()
             var isvMain = tabMain.getData()
             signalMain!!.Latitud = isvMain[0].toFloat() // 0 -> Latitud
             signalMain!!.Longitud = isvMain[1].toFloat() // 1 -> Longitud
-            signalMain!!.TypeSignal = isvMain[2] // 2 -> Clasificacion
             signalMain!!.PhotoFront = isvMain[3] // 3 -> Img Front
             // Type
             when (isvMain[2]) {
@@ -216,30 +218,35 @@ var horizontalItems = ArrayList<String>()
                         signalMain!!.Carril = horizontalData[2] // 1-2 -> Carril
                         signalMain!!.Porcentaje = horizontalData[3] // 1-3 -> Porcentaje
 
-                        dataImagenes
-                        // Get Info Imagen Select
-                        var dataImagen = dataImagenes
-                        // TODO: Get Data Images
-                        // 0 -> Number
-                        // 1 -> Code
-                        // 2 -> Img Select
-                        if(dataImagen!=null){
-                            //signalMain!!.Codigo = dataImagen[0] // 1 - 1 - 0 -> Number
-                            signalMain!!.Codigo = dataImagen[1] // 1 - 1 - 0 -> Code
-                            signalMain!!.Simbolo = dataImagen[2] // 1 - 1 - 0 -> Img - Symbol
-                        }
+                        // Clasification or Name
+                        signalMain!!.TypeSignal = isvMain[2] // 2 -> Clasificacion
+
+
                     }
 
                 }
                 "Vertical" -> {
                     signalMain!!.PhotoBack = isvMain[4] // 3 -> Img Back
                     signalMain!!.PhotoPlaque = isvMain[5] // 3 -> Img Plaque
+
+                    // Clasificacion or Name
+                    signalMain!!.TypeSignal = verticalItems // ? -> Clasificacion
                 }
                 else->{
                     exceptionMain = true
                 }
             }
-
+            // Get Info Imagen Select
+            var dataImagen = dataImagenes
+            // TODO: Get Data Images
+            // 0 -> Number
+            // 1 -> Code
+            // 2 -> Img Select
+            if(dataImagen!=null){
+                //signalMain!!.Codigo = dataImagen[0] // 1 - 1 - 0 -> Number
+                signalMain!!.Codigo = dataImagen[1] // 1 - 1 - 0 -> Code
+                signalMain!!.Simbolo = dataImagen[2] // 1 - 1 - 0 -> Img - Symbol
+            }
             // INFORMATION
             // TODO: Get Data Main - Information
             // 0 -> LocationMain
@@ -294,8 +301,12 @@ var horizontalItems = ArrayList<String>()
 
     private fun uploadDataBase() {
         if (signalMain != null && exceptionMain === false) {
+            // Set Dates
+            signalMainArray.add(signalMain!!)
+            listSignal!!.setSignalMain(signalMainArray!!)
+
             val bd = DAOConnection(this)
-            if (bd.addSignal(signalMain!!) === true) {
+            if (bd.addSignal(listSignal!!) === true) {
                 message = "Datos añadidos con exito."
                 // Reset Views
 

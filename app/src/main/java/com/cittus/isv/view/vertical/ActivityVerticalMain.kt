@@ -36,10 +36,10 @@ class ActivityVerticalMain : AppCompatActivity() {
     private fun btnInformation(){
         var intent = Intent(this, ActivityVerticalInformative::class.java);
         ibtn_vertical_informative.setOnClickListener {
-            startActivity(intent)
+            startActivityForResult(intent, ActionsRequest.GET_VERTICAL_IMAGES_VALUES and ActionsRequest.GET_VERTICAL_VALUES)
         }
         btn_vertical_informative.setOnClickListener {
-            startActivity(intent)
+            startActivityForResult(intent, ActionsRequest.GET_VERTICAL_IMAGES_VALUES and ActionsRequest.GET_VERTICAL_VALUES)
         }
     }
 
@@ -129,7 +129,23 @@ class ActivityVerticalMain : AppCompatActivity() {
                     }
                 }
             }
-
+            ActionsRequest.GET_VERTICAL_IMAGES_VALUES and ActionsRequest.GET_VERTICAL_VALUES->{
+                if (data != null) {
+                    val extras = data!!.extras ?: return
+                    val titleTemp = extras.getString("getTitle")
+                    val elementsBaseImage = extras.getStringArrayList("getDataImages")
+                    Log.e("getData", "getDataImages:$elementsBaseImage")
+                    // Check Errors
+                    if (exceptionMain === false) {
+                        // Init Process TO send  MAIN ACTIVIVTY
+                        var intentTemp: Intent = Intent()
+                        intentTemp.putExtra("getTitle", titleTemp)
+                        intentTemp.putExtra("getDataImages", elementsBaseImage)
+                        setResult(ActionsRequest.GET_VERTICAL_VALUES, intentTemp)
+                        finish()
+                    }
+                }
+            }
             else -> {
                 super.onActivityResult(requestCode, resultCode, data)
             }
