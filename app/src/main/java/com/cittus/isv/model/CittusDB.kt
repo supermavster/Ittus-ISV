@@ -1,5 +1,7 @@
 package com.cittus.isv.model
 
+import android.net.Uri
+
 class CittusInventario{
     var IdInventario = 0;
     var IdMunicipio = "";
@@ -60,7 +62,7 @@ class CittusSignal {
     var Longitud:Float = 0.0f
 
     // Fotos
-    var PhotoFront:String = ""
+    var PhotoFront: Uri? = null
     var PhotoBack:String = ""
     var PhotoPlaque:String = ""
 

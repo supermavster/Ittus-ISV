@@ -4,6 +4,7 @@ package com.cittus.isv.view
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.design.widget.TabLayout
@@ -18,6 +19,7 @@ import android.view.View
 import android.widget.Toast
 import com.cittus.isv.DAO.DAOConnection
 import com.cittus.isv.R
+import com.cittus.isv.complements.uploadFiles.MakeToUpoad
 import com.cittus.isv.model.ActionsRequest
 import com.cittus.isv.model.CittusInventario
 import com.cittus.isv.model.CittusListSignal
@@ -40,9 +42,9 @@ class MainActivity : AppCompatActivity() {
 
 
     // Variables Table
-    private var tabMain: TabMain = TabMain(mainActivity)
-    private var tabInformation: TabInformation = TabInformation(mainActivity)
-    private var tabGeneralData: TabGeneralData = TabGeneralData(mainActivity)
+    var tabMain: TabMain = TabMain(mainActivity)
+    var tabInformation: TabInformation = TabInformation(mainActivity)
+    var tabGeneralData: TabGeneralData = TabGeneralData(mainActivity)
 
     // Exception
     var exceptionMain: Boolean = false
@@ -52,7 +54,9 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)
+        // Init Data
 
+        resetData()
         //TODO: Get Main DATA - INVENTARIO
         getAndSetDataMain()
 
@@ -65,6 +69,16 @@ class MainActivity : AppCompatActivity() {
 
         container.addOnPageChangeListener(TabLayout.TabLayoutOnPageChangeListener(tabs))
         tabs.addOnTabSelectedListener(TabLayout.ViewPagerOnTabSelectedListener(container))
+
+        // Hide Elements container.getChildAt(0)).getChildAt(0).setVisibility(View.GONE);
+
+        //mSectionsPagerAdapter.getItem(0).view.visibility = View.GONE
+        //tab_data_general!!.visibility = View.GONE
+
+  //      tabs.removeTab(tabs.getTabAt(2));
+//        tabs.removeTab(tabs.getTabAt(3));
+
+
 
         fab.setOnClickListener { view ->
             // Save
@@ -96,7 +110,6 @@ class MainActivity : AppCompatActivity() {
 
         override fun getItem(position: Int): Fragment {
             // getItem is called to instantiate the fragment for the given page.
-
             return when (position) {
                 0 -> tabMain
                 1 -> tabInformation
@@ -137,6 +150,12 @@ var horizontalItems = ArrayList<String>()
                     verticalItems = extras.getString("getTitle")
                     dataImagenes = extras.getStringArrayList("getDataImages")
                     Log.e("getData Vertical", "getData:$verticalItems  Images:$dataImagenes")
+                }
+            }
+            Activity.RESULT_OK and ActionsRequest.PICK_FILE_REQUEST->{
+                if (data == null) {
+                    //no data present
+                    return
                 }
             }
             else -> {
@@ -199,7 +218,7 @@ var horizontalItems = ArrayList<String>()
             var isvMain = tabMain.getData()
             signalMain!!.Latitud = isvMain[0].toFloat() // 0 -> Latitud
             signalMain!!.Longitud = isvMain[1].toFloat() // 1 -> Longitud
-            signalMain!!.PhotoFront = isvMain[3] // 3 -> Img Front
+            signalMain!!.PhotoFront = Uri.parse(isvMain[3]) // 3 -> Img Front
             // Type
             when (isvMain[2]) {
                 "Horizontal" -> {
@@ -220,8 +239,6 @@ var horizontalItems = ArrayList<String>()
 
                         // Clasification or Name
                         signalMain!!.TypeSignal = isvMain[2] // 2 -> Clasificacion
-
-
                     }
 
                 }
@@ -231,6 +248,18 @@ var horizontalItems = ArrayList<String>()
 
                     // Clasificacion or Name
                     signalMain!!.TypeSignal = verticalItems // ? -> Clasificacion
+
+                    // INFORMATION
+                    // TODO: Get Data Main - Information
+                    // 0 -> LocationMain
+                    // 1 -> Size
+                    // 2 -> Signal
+                    // 3 -> Starts - State Post
+                    var tempArrayInformation: ArrayList<String> = tabInformation.getData()
+                    signalMain!!.LocationMain = tempArrayInformation[0] // 0 -> Norte - Sur, Este - Oeste
+                    signalMain!!.Size = tempArrayInformation[1] // 1 -> 90 x 90
+                    signalMain!!.TipoFijacion = tempArrayInformation[2] // 2 -> Signal:Poste de Luz
+                    signalMain!!.EstadoFijacion = tempArrayInformation[3] // 3 -> Starts
                 }
                 else->{
                     exceptionMain = true
@@ -247,17 +276,6 @@ var horizontalItems = ArrayList<String>()
                 signalMain!!.Codigo = dataImagen[1] // 1 - 1 - 0 -> Code
                 signalMain!!.Simbolo = dataImagen[2] // 1 - 1 - 0 -> Img - Symbol
             }
-            // INFORMATION
-            // TODO: Get Data Main - Information
-            // 0 -> LocationMain
-            // 1 -> Size
-            // 2 -> Signal
-            // 3 -> Starts - State Post
-            var tempArrayInformation: ArrayList<String> = tabInformation.getData()
-            signalMain!!.LocationMain = tempArrayInformation[0] // 0 -> Norte - Sur, Este - Oeste
-            signalMain!!.Size = tempArrayInformation[1] // 1 -> 90 x 90
-            signalMain!!.TipoFijacion = tempArrayInformation[2] // 2 -> Signal:Poste de Luz
-            signalMain!!.EstadoFijacion = tempArrayInformation[3] // 3 -> Starts
 
             // GENERAL DATA
             // TODO: Get Data Main - General Data
@@ -308,8 +326,10 @@ var horizontalItems = ArrayList<String>()
             val bd = DAOConnection(this)
             if (bd.addSignal(listSignal!!) === true) {
                 message = "Datos añadidos con exito."
+                // Upload Images
+                uploadImages()
                 // Reset Views
-
+                resetData()
             } else {
                 message = "No se han podido subir los datos, reviselos por favor."
             }
@@ -318,5 +338,17 @@ var horizontalItems = ArrayList<String>()
         }
     }
 
+    private fun uploadImages(){
+        var makeToUpoad:MakeToUpoad = MakeToUpoad(this);
+
+        makeToUpoad.showFileChooser(signalMain!!.PhotoFront)
+
+    }
+
+    private fun resetData(){
+        tabMain = TabMain(mainActivity)
+        tabInformation = TabInformation(mainActivity)
+        tabGeneralData = TabGeneralData(mainActivity)
+    }
 
 }

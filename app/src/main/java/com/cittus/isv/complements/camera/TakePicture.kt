@@ -20,6 +20,7 @@ class TakePicture (private var context: Activity,private var imageView: ImageVie
     private var mCurrentPhotoPath: String? = null;
     private var mCurrentPhoto: String = "";
     private var permissions:Permissions = Permissions(context)
+    var fileUri:Uri? = null
 
     fun initProcess(request: Int) {
         if (permissions.checkPermissionsCamera()) launchCamera(request) else permissions.requestPermission()
@@ -33,6 +34,7 @@ class TakePicture (private var context: Activity,private var imageView: ImageVie
                 values)
         val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
         if(intent.resolveActivity(context.packageManager) != null) {
+            this.fileUri = fileUri
             mCurrentPhotoPath = fileUri.toString()
             intent.putExtra(MediaStore.EXTRA_OUTPUT, fileUri)
             intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION
@@ -43,6 +45,10 @@ class TakePicture (private var context: Activity,private var imageView: ImageVie
         }
 
 
+    }
+
+    fun getFileUriMain(): Uri? {
+        return this.fileUri
     }
 
     fun getPath(): String? {

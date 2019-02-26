@@ -19,6 +19,7 @@ import com.cittus.isv.complements.gps.GetUserLocation
 import com.cittus.isv.model.ActionsRequest
 import com.cittus.isv.view.horizontal.ActivityHorizontalMain
 import com.cittus.isv.view.vertical.ActivityVerticalMain
+import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.tab_main.*
 import kotlinx.android.synthetic.main.tab_main.view.*
 
@@ -106,13 +107,22 @@ class TabMain @SuppressLint("ValidFragment") constructor(mainActivity: Activity)
     }
 
     fun getTakePictureMainFront(): TakePicture {
+        if(takePictureFront==null){
+            takePictureFront = TakePicture(mainActivity, viewOfLayout.ibtn_front, viewOfLayout.cb_front)
+        }
         return takePictureFront
     }
     fun getTakePictureMainBack(): TakePicture {
+        if(takePictureBack==null){
+            takePictureBack = TakePicture(mainActivity, viewOfLayout.ibtn_back, viewOfLayout.cb_back)
+        }
         return takePictureBack
     }
     fun getTakePictureMainPlaque(): TakePicture {
-        return takePicturePlaque
+        if(takePicturePlaque==null){
+            takePicturePlaque = TakePicture(mainActivity, viewOfLayout.ibtn_plaque, viewOfLayout.cb_plaque)
+        }
+            return takePicturePlaque
     }
 
     fun processCapturedPhoto(takePicture: TakePicture) {
@@ -130,18 +140,25 @@ class TabMain @SuppressLint("ValidFragment") constructor(mainActivity: Activity)
 
                 linear_horizontal_one.visibility = View.VISIBLE;
                 lbl_photos_signal.visibility = View.VISIBLE;
+
                 when (radio.text) {
                     "Horizontal" -> {
                         cb_front.text = getString(R.string.photo_only)
                         linear_vertical_two.visibility = View.GONE
                         linear_vertical_three.visibility = View.GONE
+                        //mainActivity.tab_information!!.visibility = View.GONE
                     }
                     "Vertical" -> {
                         cb_front.text = getString(R.string.photo_front)
                         linear_vertical_two.visibility = View.VISIBLE
                         linear_vertical_three.visibility = View.VISIBLE
+                        //mainActivity.tab_information!!.visibility = View.VISIBLE
+                        //&mainActivity.tabs.addTab(,1);
+                        // mainActivity.tabs.removeTab(tabs.getTabAt(3));
                     }
                 }
+                // Show Data General
+                //mainActivity.tab_data_general!!.visibility = View.VISIBLE
                 // Set Actions
                 radio.setOnClickListener {
                     when (radio.text) {
@@ -194,19 +211,19 @@ class TabMain @SuppressLint("ValidFragment") constructor(mainActivity: Activity)
 
         // Get Imagen
         if(viewOfLayout.ibtn_front.isClickable) {
-            tempArray.add(3, takePictureFront.getPathPhoto().toString()) // 3 -> Img Front
+            tempArray.add(3, takePictureFront.getFileUriMain().toString()!!) // 3 -> Img Front
         }else{
             tempArray.add(3,"NONE")
         }
 
         if(viewOfLayout.ibtn_back.isClickable && vertical){
-            tempArray.add(4,takePictureBack.getPathPhoto().toString()) // 4 -> Img Back
+            tempArray.add(4,takePictureBack.getFileUriMain().toString()!!) // 4 -> Img Back
         }else{
             tempArray.add(4,"NONE")
         }
 
         if(viewOfLayout.ibtn_plaque.isClickable && vertical){
-            tempArray.add(5, takePicturePlaque.getPathPhoto().toString()) // 5 -> Img Plaque
+            tempArray.add(5, takePicturePlaque.getFileUriMain().toString()!!) // 5 -> Img Plaque
         }else{
             tempArray.add(5,"NONE")
         }

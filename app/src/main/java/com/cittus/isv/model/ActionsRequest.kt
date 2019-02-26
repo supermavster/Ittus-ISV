@@ -27,5 +27,8 @@ class ActionsRequest {
         val GET_VERTICAL_VALUES = 7
         val GET_VERTICAL_IMAGES_VALUES = 71
         val GET_VERTICAL_INFORMATIVE_IMAGES_VALUES = 72
+
+
+        var PICK_FILE_REQUEST: Int = 8;
     }
 }
