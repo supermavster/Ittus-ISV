@@ -53,6 +53,7 @@ class DAOConnection(mainActivity: Activity) {
 
         val requestQueue = Volley.newRequestQueue(mainActivity)
         requestQueue.add<String>(stringRequest)
+
         return elements
     }
     var check = true;

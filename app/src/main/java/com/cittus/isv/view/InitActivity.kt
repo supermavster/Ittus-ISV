@@ -60,7 +60,7 @@ class InitActivity : AppCompatActivity() {
                 // 1 -> Id Lista Senal
                 // 2 -> Municipio
                 // 3 -> Departamento
-
+                // 4 -> Id Max Signal
                 // Get Max Inventario
                 if(maxIDInventario.isEmpty()){
                     maxIDInventario = connection.loadElement(EndPoints.URL_GET_MAX_ID+"inventario")
@@ -77,6 +77,10 @@ class InitActivity : AppCompatActivity() {
 
                 // Get Municipio
                 data.add(3,auto_complete_departamento.text.toString()) // 3 -> Departamento
+
+                // Get Max Id Singal
+                data.add(4,maxIDListSignal);//connection.loadElement(EndPoints.URL_GET_MAX_ID+"senal"))
+
                 intentTemp.putExtra("getData", data)
                 startActivityForResult(intentTemp,ActionsRequest.GET_INIT)
 

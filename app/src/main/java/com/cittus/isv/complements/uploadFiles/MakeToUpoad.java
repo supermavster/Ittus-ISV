@@ -1,9 +1,9 @@
 package com.cittus.isv.complements.uploadFiles;
 
-import android.content.Context;
 import android.net.Uri;
 import android.util.Log;
 import android.widget.Toast;
+import com.cittus.isv.model.EndPoints;
 import com.cittus.isv.view.MainActivity;
 
 import java.io.*;
@@ -11,15 +11,19 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 
+
 public class MakeToUpoad {
 
     private MainActivity mainActivity;
     private static final String TAG = MainActivity.class.getSimpleName();
     private String selectedFilePath;
-    private String SERVER_URL = "http://172.20.1.13 /ittus-senalesviales/queries/UploadFiles.php";
+
+    private String serverUrl = "";
 
     public MakeToUpoad(MainActivity mainActivity){
         this.mainActivity = mainActivity;
+        this.serverUrl = EndPoints.SERVER_URL;
+        Log.e("URL",this.serverUrl);
     }
 
     private void uploadImagenMain(){
@@ -81,7 +85,7 @@ public class MakeToUpoad {
         }else{
             try{
                 FileInputStream fileInputStream = new FileInputStream(selectedFile);
-                URL url = new URL(SERVER_URL);
+                URL url = new URL(serverUrl);
                 connection = (HttpURLConnection) url.openConnection();
                 connection.setDoInput(true);//Allow Inputs
                 connection.setDoOutput(true);//Allow Outputs

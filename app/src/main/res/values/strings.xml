@@ -44,7 +44,7 @@
     <string name="btn_120">120 x 120</string>
 
     <string name="lbl_stay_signal">Fijación de la Señal</string>
-    <string name="btn_self_signal">Poste Propio</string>
+    <string name="btn_self_signal">Banderilla</string>
     <string name="btn_light_signal">Poste de Luz</string>
     <string name="btn_wall_signal">Pared</string>
 
@@ -128,5 +128,7 @@
     <string name="select">Seleccione</string>
     <string name="save">Guardar</string>
     <string name="todo">TODO</string>
+    <string name="pause">pause</string>
+    <string name="resume">resume</string>
 
 </resources>

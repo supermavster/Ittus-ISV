@@ -2,10 +2,14 @@ package com.cittus.isv.model
 
 object EndPoints {
     // Server
-    private const val SERVER_MAIN =  "172.20.1.13"//"192.168.43.137"
+    private const val SERVER_MAIN =   "172.20.1.13"//"192.168.43.137"
+    private const val PATH_MAIN = "http://${SERVER_MAIN}/ittus-senalesviales/queries/"
+
+    // Upload Photo
+    const val SERVER_URL = "${PATH_MAIN}UploadFiles.php"
 
     // Main Get
-    private const val URL_ROOT = "http://$SERVER_MAIN/ittus-senalesviales/queries/sliderjsonoutput.php"
+    private const val URL_ROOT = "${PATH_MAIN}sliderjsonoutput.php"
     private const val URL_GET_MAIN = "$URL_ROOT?signal="
 
     // Get Data JSON

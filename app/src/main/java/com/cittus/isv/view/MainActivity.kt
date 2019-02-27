@@ -20,10 +20,7 @@ import android.widget.Toast
 import com.cittus.isv.DAO.DAOConnection
 import com.cittus.isv.R
 import com.cittus.isv.complements.uploadFiles.MakeToUpoad
-import com.cittus.isv.model.ActionsRequest
-import com.cittus.isv.model.CittusInventario
-import com.cittus.isv.model.CittusListSignal
-import com.cittus.isv.model.CittusSignal
+import com.cittus.isv.model.*
 import com.cittus.isv.view.tabs.TabGeneralData
 import com.cittus.isv.view.tabs.TabInformation
 import com.cittus.isv.view.tabs.TabMain
@@ -32,6 +29,9 @@ import kotlinx.android.synthetic.main.activity_main.*
 class MainActivity : AppCompatActivity() {
     private var mSectionsPagerAdapter: SectionsPagerAdapter? = null
     var mainActivity: Activity = this
+    var connection : DAOConnection = DAOConnection(this)
+    var maxID:String = ""
+
 
     // Make Clases
     private var inventario: CittusInventario? = null
@@ -39,7 +39,7 @@ class MainActivity : AppCompatActivity() {
     private var signalMain: CittusSignal? = null
     var message = "";
     private var signalMainArray: ArrayList<CittusSignal> = ArrayList<CittusSignal>()
-
+    var contBaseID = 0;
 
     // Variables Table
     var tabMain: TabMain = TabMain(mainActivity)
@@ -54,7 +54,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)
-        // Init Data
+
 
         resetData()
         //TODO: Get Main DATA - INVENTARIO
@@ -77,15 +77,16 @@ class MainActivity : AppCompatActivity() {
 
   //      tabs.removeTab(tabs.getTabAt(2));
 //        tabs.removeTab(tabs.getTabAt(3));
-
-
+        maxID = connection.loadElement(EndPoints.URL_GET_MAX_ID+"lista")
 
         fab.setOnClickListener { view ->
+            // Init Data
+            maxID = connection.loadElement(EndPoints.URL_GET_MAX_ID+"lista")
+            Log.e("ID",maxID)
             // Save
             saveAllElements(view)
         }
     }
-
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         // Inflate the menu; this adds items to the action bar if it is present.
         menuInflater.inflate(R.menu.menu_main, menu)
@@ -152,11 +153,14 @@ var horizontalItems = ArrayList<String>()
                     Log.e("getData Vertical", "getData:$verticalItems  Images:$dataImagenes")
                 }
             }
-            Activity.RESULT_OK and ActionsRequest.PICK_FILE_REQUEST->{
+            ActionsRequest.GET_ID->{
                 if (data == null) {
                     //no data present
                     return
                 }
+                val extras = data!!.extras ?: return
+                contBaseID = extras.getInt("contBaseID")
+                Log.e("Show ID",contBaseID.toString())
             }
             else -> {
                 super.onActivityResult(requestCode, resultCode, data)
@@ -165,6 +169,7 @@ var horizontalItems = ArrayList<String>()
     }
 
     private fun getAndSetDataMain() {
+
         val data = intent.getStringArrayListExtra("getData")
         // Init Inventario
         if (data != null && inventario == null) {
@@ -173,6 +178,7 @@ var horizontalItems = ArrayList<String>()
             // 1 -> Id Lista Senal
             // 2 -> Municipio
             // 3 -> Departamento
+            // 4 -> Id Max Signal
             inventario = CittusInventario()
             inventario!!.IdInventario = data[0].toInt()
             inventario!!.IdMunicipio = data[2]
@@ -186,13 +192,21 @@ var horizontalItems = ArrayList<String>()
             listSignal!!.setInventario(inventario!!)
             listSignal!!.IdSignal = data[1].toInt()
             Log.e("ListaSenal", listSignal.toString())
+            // Set ID Max (Signal)
+            if(contBaseID==0)
+            contBaseID = data[4].toInt() // 4 - > Get ID Max
         }
+
     }
 
     private fun saveAllElements(view: View) {
         if (inventario != null && listSignal != null) {
             // Make Object Main
-            signalMain = CittusSignal()
+
+
+
+            signalMain = CittusSignal(maxID.toInt())
+
             // Get All Data
             getAllData()
             // Upload to Data Base
@@ -329,7 +343,10 @@ var horizontalItems = ArrayList<String>()
                 // Upload Images
                 uploadImages()
                 // Reset Views
-                resetData()
+                val intent = intent
+                intent.putExtra("contBaseID",contBaseID)
+                finish()
+                startActivityForResult(intent,ActionsRequest.GET_ID)
             } else {
                 message = "No se han podido subir los datos, reviselos por favor."
             }

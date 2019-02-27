@@ -30,5 +30,7 @@ class ActionsRequest {
 
 
         var PICK_FILE_REQUEST: Int = 8;
+
+        var GET_ID = 9;
     }
 }

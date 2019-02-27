@@ -91,8 +91,12 @@ class CittusSignal {
 
 
 
-    constructor(){
-        ++IdSignal
+    constructor(idSignal:Int){
+        if(idSignal!=null){
+            IdSignal = idSignal;
+        }else {
+            ++IdSignal
+        }
     }
 
     companion object {

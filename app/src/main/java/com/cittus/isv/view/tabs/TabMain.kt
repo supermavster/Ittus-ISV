@@ -15,11 +15,12 @@ import android.widget.RadioGroup
 import com.cittus.isv.R
 import com.cittus.isv.complements.Permissions
 import com.cittus.isv.complements.camera.TakePicture
+import com.cittus.isv.complements.gps.GPS_Best
 import com.cittus.isv.complements.gps.GetUserLocation
 import com.cittus.isv.model.ActionsRequest
+import com.cittus.isv.view.MainActivity
 import com.cittus.isv.view.horizontal.ActivityHorizontalMain
 import com.cittus.isv.view.vertical.ActivityVerticalMain
-import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.tab_main.*
 import kotlinx.android.synthetic.main.tab_main.view.*
 
@@ -69,14 +70,20 @@ class TabMain @SuppressLint("ValidFragment") constructor(mainActivity: Activity)
     @RequiresApi(Build.VERSION_CODES.M)
     private fun gpsActions() {
         // Init Location - Permission Check
+
         locationMain?.init(mainActivity)
         // Set Actions
         viewOfLayout.btn_gps.setOnClickListener {
+
+
             var location = locationMain?.setButtonGPSActions()
             if (location != null) {
                 viewOfLayout.txt_latitude.setText(location.longitude.toString())
                 viewOfLayout.txt_longitude.setText(location.latitude.toString())
             }
+            //var tempLocation:GPS_Best = GPS_Best(mainActivity as MainActivity?,viewOfLayout.txt_latitude,viewOfLayout.txt_longitude)
+            //tempLocation.toggleBestUpdates(viewOfLayout)
+
         }
     }
 
