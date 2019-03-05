@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.*;
@@ -17,9 +16,7 @@ import com.android.volley.toolbox.JsonArrayRequest;
 import com.cittus.isv.R;
 import com.cittus.isv.complements.slider.CustomVolleyRequest;
 import com.cittus.isv.complements.slider.ViewPagerAdapter;
-import com.cittus.isv.model.ActionsRequest;
 import com.cittus.isv.model.SliderUtils;
-import com.cittus.isv.view.MainActivity;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -27,6 +24,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
+// TODO: Cambiar a Fragment
 public class MainImage extends AppCompatActivity {
 
     // Variables Globals
@@ -43,6 +41,8 @@ public class MainImage extends AppCompatActivity {
     RequestQueue rq;
     List<SliderUtils> sliderImg;
     ViewPagerAdapter viewPagerAdapter;
+
+
 
 
     @Override

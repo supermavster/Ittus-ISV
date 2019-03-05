@@ -1,21 +1,25 @@
 package com.cittus.isv.view.horizontal
 
-import android.content.Intent
-import android.graphics.Color
 import android.os.Bundle
+import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
-import android.util.Log
+import android.view.LayoutInflater
 import android.view.View
-import android.widget.NumberPicker
-import android.widget.RadioButton
-import android.widget.Toast
+import android.view.ViewGroup
 import com.cittus.isv.R
-import com.cittus.isv.controller.MainImage
-import com.cittus.isv.model.ActionsRequest
-import com.cittus.isv.model.EndPoints
-import kotlinx.android.synthetic.main.activity_horizontal_main.*
 
-class ActivityHorizontalMain : AppCompatActivity() {
+class ActivityHorizontalMain : Fragment() {
+
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
+    ): View? {
+        val view = inflater.inflate(R.layout.activity_address_location_on_the_way, container, false)
+
+        //view.findViewById<Button>(R.id.btn_login).setOnClickListener {Navigation.findNavController(view).navigate(R.id.municipalitiesActivity)}
+        return view
+    }
+
+    /*
 
 
     // Variables
@@ -28,7 +32,7 @@ class ActivityHorizontalMain : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_horizontal_main)
+        /*setContentView(R.layout.activity_horizontal_main)
         if (savedInstanceState != null) {
             val value = savedInstanceState.getStringArrayList("getDataMain")
             var rb: RadioButton = findViewById(rg_directional.checkedRadioButtonId)
@@ -45,8 +49,9 @@ class ActivityHorizontalMain : AppCompatActivity() {
         } else {
             initProcess()
         }
-
+*/
     }
+    /*
     public override fun onSaveInstanceState(savedInstanceState: Bundle) {
         savedInstanceState.putStringArrayList("getDataMain", getData())
         super.onSaveInstanceState(savedInstanceState)
@@ -242,5 +247,6 @@ class ActivityHorizontalMain : AppCompatActivity() {
                 super.onActivityResult(requestCode, resultCode, data)
             }
         }
-    }
+    }*/
+    */
 }

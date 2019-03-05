@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            xmlns:tools="http://schemas.android.com/tools" android:id="@+id/nav_graph"
+            app:startDestination="@id/loginActivity">
+    <fragment android:id="@+id/mainImage" android:name="com.cittus.isv.controller.MainImage"
+              android:label="activity_main_image" tools:layout="@layout/activity_main_image">
+        <action android:id="@+id/action_mainImage3_to_addressLocationOnTheWayActivity3"
+                app:destination="@id/addressLocationOnTheWayActivity"/>
+    </fragment>
+
+    <fragment
+            android:id="@+id/loginActivity"
+            android:name="com.cittus.isv.LoginActivity"
+            android:label="Blank"
+            tools:layout="@layout/activity_login">
+        <action android:id="@+id/action_loginActivity_to_municipalitiesActivity2"
+                app:destination="@id/municipalitiesActivity"/>
+    </fragment>
+    <fragment
+            android:id="@+id/geolocalizationActivity"
+            android:name="com.cittus.isv.GeolocalizationActivity"
+            android:label="Blank"
+            tools:layout="@layout/activity_geolocalization">
+        <action android:id="@+id/action_geolocalizationActivity_to_typeSignalActivity"
+                app:destination="@+id/typeSignalActivity"/>
+    </fragment>
+    <fragment
+            android:id="@+id/typeSignalActivity"
+            android:name="com.cittus.isv.TypeSignalActivity"
+            android:label="Blank"
+            tools:layout="@layout/activity_type_signal">
+        <action android:id="@+id/action_typeSignalActivity_to_locationOnTheWayActivity"
+                app:destination="@id/locationOnTheWayActivity"/>
+        <action android:id="@+id/action_typeSignalActivity_to_typeSignalVertical"
+                app:destination="@id/typeSignalVertical"/>
+    </fragment>
+    <fragment android:id="@+id/locationOnTheWayActivity" android:name="com.cittus.isv.LocationOnTheWayActivity"
+              android:label="activity_location_on_the_way" tools:layout="@layout/activity_location_on_the_way">
+        <action android:id="@+id/action_locationOnTheWayActivity_to_mainImage32" app:destination="@id/mainImage"/>
+        <action android:id="@+id/action_locationOnTheWayActivity_to_mainImage33" app:destination="@id/mainImage"/>
+    </fragment>
+    <fragment android:id="@+id/addressLocationOnTheWayActivity"
+              android:name="com.cittus.isv.AddressLocationOnTheWayActivity"
+              android:label="activity_address_location_on_the_way"
+              tools:layout="@layout/activity_address_location_on_the_way">
+        <action android:id="@+id/action_addressLocationOnTheWayActivity3_to_genearlDataActivity"
+                app:destination="@id/genearlDataActivity"/>
+        <action android:id="@+id/action_addressLocationOnTheWayActivity3_to_stateSignalActivity"
+                app:destination="@id/stateSignalActivity"/>
+    </fragment>
+    <fragment android:id="@+id/typeSignalVertical" android:name="com.cittus.isv.view.vertical.TypeSignalVertical"
+              android:label="activity_type_signal_vertical" tools:layout="@layout/activity_type_signal_vertical">
+        <action android:id="@+id/action_typeSignalVertical_to_typeSignalVerticalInformativeActivity"
+                app:destination="@id/typeSignalVerticalInformativeActivity"/>
+        <action android:id="@+id/action_typeSignalVertical_to_mainImage3" app:destination="@id/mainImage"/>
+    </fragment>
+    <fragment android:id="@+id/typeSignalVerticalInformativeActivity"
+              android:name="com.cittus.isv.view.vertical.TypeSignalVerticalInformativeActivity"
+              android:label="activity_type_signal_vertical_informative"
+              tools:layout="@layout/activity_type_signal_vertical_informative">
+        <action android:id="@+id/action_typeSignalVerticalInformativeActivity_to_mainImage3"
+                app:destination="@id/mainImage"/>
+    </fragment>
+    <fragment android:id="@+id/genearlDataActivity" android:name="com.cittus.isv.GenearlDataActivity"
+              android:label="activity_genearl_data" tools:layout="@layout/activity_genearl_data">
+        <action android:id="@+id/action_genearlDataActivity_to_photoGPSActivity"
+                app:destination="@id/photoGPSActivity"/>
+    </fragment>
+    <fragment android:id="@+id/photoGPSActivity" android:name="com.cittus.isv.PhotoGPSActivity"
+              android:label="activity_photo_gps" tools:layout="@layout/activity_photo_gps">
+        <action android:id="@+id/action_photoGPSActivity_to_finishSaveActivity"
+                app:destination="@id/finishSaveActivity"/>
+    </fragment>
+    <fragment android:id="@+id/stateSignalActivity" android:name="com.cittus.isv.StateSignalActivity"
+              android:label="activity_state_signal" tools:layout="@layout/activity_state_signal">
+        <action android:id="@+id/action_stateSignalActivity_to_statePostActivity"
+                app:destination="@id/statePostActivity"/>
+    </fragment>
+    <fragment android:id="@+id/statePostActivity" android:name="com.cittus.isv.StatePostActivity"
+              android:label="activity_state_post" tools:layout="@layout/activity_state_post">
+        <action android:id="@+id/action_statePostActivity_to_photoGPSActivity" app:destination="@id/photoGPSActivity"/>
+    </fragment>
+    <fragment android:id="@+id/finishSaveActivity" android:name="com.cittus.isv.FinishSaveActivity"
+              android:label="activity_finish_save" tools:layout="@layout/activity_finish_save">
+        <action android:id="@+id/action_finishSaveActivity_to_typeSignalActivity"
+                app:destination="@id/typeSignalActivity"/>
+        <action android:id="@+id/action_finishSaveActivity_to_geolocalizationActivity"
+                app:destination="@id/geolocalizationActivity"/>
+    </fragment>
+    <fragment android:id="@+id/municipalitiesActivity" android:name="com.cittus.isv.MunicipalitiesActivity"
+              android:label="activity_municipalities" tools:layout="@layout/activity_municipalities">
+        <action android:id="@+id/action_municipalitiesActivity_to_geolocalizationActivity"
+                app:destination="@id/geolocalizationActivity"/>
+    </fragment>
+
+
+</navigation>

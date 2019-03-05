@@ -6,6 +6,12 @@
     // Config Labels
     <string name="action_settings">Settings</string>
 
+    // Login
+    <string name="user">Usuario</string>
+    <string name="password">Contraseña</string>
+    <string name="login">Ingresar</string>
+    <string name="forget_password">¿Olvido la contraseña?</string>
+
     // Sección 1: Información de Inventario de Señales Viales
     <string name="tab_text_1">ISV</string>
 

@@ -56,7 +56,7 @@ class CittusListSignal{
 
 }
 
-class CittusSignal {
+class CittusSignal(idSignal: Int) {
 
     var Latitud:Float = 0.0f
     var Longitud:Float = 0.0f
@@ -90,13 +90,8 @@ class CittusSignal {
     var Estado:String = ""
 
 
-
-    constructor(idSignal:Int){
-        if(idSignal!=null){
-            IdSignal = idSignal;
-        }else {
-            ++IdSignal
-        }
+    init {
+        IdSignal = idSignal;
     }
 
     companion object {
