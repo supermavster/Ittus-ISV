@@ -9,6 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.*;
+import androidx.navigation.Navigation;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -273,6 +274,7 @@ public class MainImage extends AppCompatActivity {
                     intent.putExtra("getDataImages", elementsBase);
                     intent.putExtra("getTitle", titleMain);
                     setResult(actionImages, intent);// GET_IMAGES
+
                     finish();
                 }
                 return true;

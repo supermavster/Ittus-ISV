@@ -3,6 +3,7 @@ package com.cittus.isv.view.base
 import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,6 +11,7 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
 import android.widget.Button
+import androidx.navigation.Navigation
 import com.cittus.isv.DAO.DAOConnection
 import com.cittus.isv.R
 import com.cittus.isv.model.ActionsRequest
@@ -29,10 +31,23 @@ class MunicipalitiesActivity : Fragment() {
         val view = inflater.inflate(R.layout.activity_municipalities, container, false)
         viewMain = view
         connection = DAOConnection(view.context)
-
         // Init process
         init()
         return view
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        val venName = arguments?.getBoolean("isLogin")
+        Log.e("isLogin",venName.toString())
+
+        /*val someDataClass: SomeDataClass? = arguments?.getParcelable("custom_object")
+        someDataClass?.let {
+            customObjectField.text = it.someField
+            customObjectNumber.text = it.anotherField.toString()
+        }
+        */
     }
 
 
@@ -64,8 +79,10 @@ class MunicipalitiesActivity : Fragment() {
             makeAutocomplete(array,viewMain!!.findViewById<AutoCompleteTextView>(R.id.auto_complete_municipio))
         }
 
-        viewMain!!.findViewById<Button>(R.id.buttonMain).setOnClickListener {
-            var intentTemp = Intent(context, MainActivity::class.java)
+
+        viewMain!!.findViewById<Button>(R.id.buttonMain).setOnClickListener { view ->
+
+            var intentTemp = Intent(viewMain!!.context, MainActivity::class.java)
             var data =ArrayList<String>()
             // TODO: Location DATA MAIN (1)
             // 0 -> Id Inventario
@@ -94,7 +111,9 @@ class MunicipalitiesActivity : Fragment() {
             data.add(4,maxIDListSignal);//connection.loadElement(EndPoints.URL_GET_MAX_ID+"senal"))
 
             intentTemp.putExtra("getData", data)
-            startActivityForResult(intentTemp, ActionsRequest.GET_INIT)
+            //startActivityForResult(intentTemp, ActionsRequest.GET_INIT)
+
+            Navigation.findNavController(view).navigate(R.id.geolocalizationActivity)
 
         }
     }

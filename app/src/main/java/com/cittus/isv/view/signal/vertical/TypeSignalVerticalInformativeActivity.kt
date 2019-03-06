@@ -44,11 +44,16 @@ class TypeSignalVerticalInformativeActivity : Fragment() {
     private fun btnServices(){
 
         var intent = makeActivityImages(R.string.title_vertical_info_services, EndPoints.URL_GET_VERTICAL_INFO_SERVICES)
-        viewMain!!.findViewById<ImageButton>(R.id.ibtn_vts_informative_services).setOnClickListener {
+        viewMain!!.findViewById<ImageButton>(R.id.ibtn_vts_informative_services).setOnClickListener {view->
             startActivityForResult(intent, ActionsRequest.GET_VERTICAL_IMAGES_VALUES)
+            // TODO: Revisar
+            Navigation.findNavController(view).navigate(R.id.addressLocationOnTheWayActivity)
+
         }
-        viewMain!!.findViewById<Button>(R.id.btn_vts_informative_services).setOnClickListener {
+        viewMain!!.findViewById<Button>(R.id.btn_vts_informative_services).setOnClickListener {view->
             startActivityForResult(intent, ActionsRequest.GET_VERTICAL_IMAGES_VALUES)
+            // TODO: Revisar
+            Navigation.findNavController(view).navigate(R.id.addressLocationOnTheWayActivity)
         }
     }
 
