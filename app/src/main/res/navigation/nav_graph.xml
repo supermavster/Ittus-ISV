@@ -15,7 +15,7 @@
 
     <fragment
             android:id="@+id/loginActivity"
-            android:name="com.cittus.isv.LoginActivity"
+            android:name="com.cittus.isv.view.LoginActivity"
             android:label="Blank"
             tools:layout="@layout/activity_login">
         <action android:id="@+id/action_loginActivity_to_municipalitiesActivity2"
@@ -28,7 +28,7 @@
     </fragment>
     <fragment
             android:id="@+id/geolocalizationActivity"
-            android:name="com.cittus.isv.GeolocalizationActivity"
+            android:name="com.cittus.isv.view.base.GeolocalizationActivity"
             android:label="Blank"
             tools:layout="@layout/activity_geolocalization">
         <action android:id="@+id/action_geolocalizationActivity_to_typeSignalActivity"
@@ -41,7 +41,7 @@
     </fragment>
     <fragment
             android:id="@+id/typeSignalActivity"
-            android:name="com.cittus.isv.TypeSignalActivity"
+            android:name="com.cittus.isv.view.signal.TypeSignalActivity"
             android:label="Blank"
             tools:layout="@layout/activity_type_signal">
         <action android:id="@+id/action_typeSignalActivity_to_locationOnTheWayActivity"
@@ -59,7 +59,7 @@
                 app:exitAnim="@anim/slide_out_left"/>
 
     </fragment>
-    <fragment android:id="@+id/locationOnTheWayActivity" android:name="com.cittus.isv.LocationOnTheWayActivity"
+    <fragment android:id="@+id/locationOnTheWayActivity" android:name="com.cittus.isv.view.signal.horizontal.LocationOnTheWayActivity"
               android:label="activity_location_on_the_way" tools:layout="@layout/activity_location_on_the_way">
         <action android:id="@+id/action_locationOnTheWayActivity_to_mainImage32" app:destination="@id/mainImage"
                 app:popEnterAnim="@anim/slide_in_left"
@@ -75,7 +75,7 @@
 
     </fragment>
     <fragment android:id="@+id/addressLocationOnTheWayActivity"
-              android:name="com.cittus.isv.AddressLocationOnTheWayActivity"
+              android:name="com.cittus.isv.view.signal.AddressLocationOnTheWayActivity"
               android:label="activity_address_location_on_the_way"
               tools:layout="@layout/activity_address_location_on_the_way">
         <action android:id="@+id/action_addressLocationOnTheWayActivity3_to_genearlDataActivity"
@@ -93,7 +93,7 @@
                 app:exitAnim="@anim/slide_out_left"/>
 
     </fragment>
-    <fragment android:id="@+id/typeSignalVertical" android:name="com.cittus.isv.view.vertical.TypeSignalVertical"
+    <fragment android:id="@+id/typeSignalVertical" android:name="com.cittus.isv.view.signal.vertical.TypeSignalVertical"
               android:label="activity_type_signal_vertical" tools:layout="@layout/activity_type_signal_vertical">
         <action android:id="@+id/action_typeSignalVertical_to_typeSignalVerticalInformativeActivity"
                 app:destination="@id/typeSignalVerticalInformativeActivity"
@@ -110,7 +110,7 @@
 
     </fragment>
     <fragment android:id="@+id/typeSignalVerticalInformativeActivity"
-              android:name="com.cittus.isv.view.vertical.TypeSignalVerticalInformativeActivity"
+              android:name="com.cittus.isv.view.signal.vertical.TypeSignalVerticalInformativeActivity"
               android:label="activity_type_signal_vertical_informative"
               tools:layout="@layout/activity_type_signal_vertical_informative">
         <action android:id="@+id/action_typeSignalVerticalInformativeActivity_to_mainImage3"
@@ -121,7 +121,7 @@
                 app:exitAnim="@anim/slide_out_left"/>
 
     </fragment>
-    <fragment android:id="@+id/genearlDataActivity" android:name="com.cittus.isv.GenearlDataActivity"
+    <fragment android:id="@+id/genearlDataActivity" android:name="com.cittus.isv.view.signal.horizontal.GenearlDataActivity"
               android:label="activity_genearl_data" tools:layout="@layout/activity_genearl_data">
         <action android:id="@+id/action_genearlDataActivity_to_photoGPSActivity"
                 app:destination="@id/photoGPSActivity"
@@ -131,7 +131,7 @@
                 app:exitAnim="@anim/slide_out_left"/>
 
     </fragment>
-    <fragment android:id="@+id/photoGPSActivity" android:name="com.cittus.isv.PhotoGPSActivity"
+    <fragment android:id="@+id/photoGPSActivity" android:name="com.cittus.isv.view.signal.PhotoGPSActivity"
               android:label="activity_photo_gps" tools:layout="@layout/activity_photo_gps">
         <action android:id="@+id/action_photoGPSActivity_to_finishSaveActivity"
                 app:destination="@id/finishSaveActivity"
@@ -141,7 +141,7 @@
                 app:exitAnim="@anim/slide_out_left"/>
 
     </fragment>
-    <fragment android:id="@+id/stateSignalActivity" android:name="com.cittus.isv.StateSignalActivity"
+    <fragment android:id="@+id/stateSignalActivity" android:name="com.cittus.isv.view.signal.vertical.StateSignalActivity"
               android:label="activity_state_signal" tools:layout="@layout/activity_state_signal">
         <action android:id="@+id/action_stateSignalActivity_to_statePostActivity"
                 app:destination="@id/statePostActivity"
@@ -151,7 +151,7 @@
                 app:exitAnim="@anim/slide_out_left"/>
 
     </fragment>
-    <fragment android:id="@+id/statePostActivity" android:name="com.cittus.isv.StatePostActivity"
+    <fragment android:id="@+id/statePostActivity" android:name="com.cittus.isv.view.signal.vertical.StatePostActivity"
               android:label="activity_state_post" tools:layout="@layout/activity_state_post">
         <action android:id="@+id/action_statePostActivity_to_photoGPSActivity" app:destination="@id/photoGPSActivity"
                 app:popEnterAnim="@anim/slide_in_left"
@@ -160,7 +160,7 @@
                 app:exitAnim="@anim/slide_out_left"/>
 
     </fragment>
-    <fragment android:id="@+id/finishSaveActivity" android:name="com.cittus.isv.FinishSaveActivity"
+    <fragment android:id="@+id/finishSaveActivity" android:name="com.cittus.isv.view.base.FinishSaveActivity"
               android:label="activity_finish_save" tools:layout="@layout/activity_finish_save">
         <action android:id="@+id/action_finishSaveActivity_to_typeSignalActivity"
                 app:destination="@id/typeSignalActivity"
@@ -177,7 +177,7 @@
                 app:exitAnim="@anim/slide_out_left"/>
 
     </fragment>
-    <fragment android:id="@+id/municipalitiesActivity" android:name="com.cittus.isv.MunicipalitiesActivity"
+    <fragment android:id="@+id/municipalitiesActivity" android:name="com.cittus.isv.view.base.MunicipalitiesActivity"
               android:label="activity_municipalities" tools:layout="@layout/activity_municipalities">
         <action android:id="@+id/action_municipalitiesActivity_to_geolocalizationActivity"
                 app:destination="@id/geolocalizationActivity"

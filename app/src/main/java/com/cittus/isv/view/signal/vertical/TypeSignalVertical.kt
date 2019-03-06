@@ -1,21 +1,13 @@
-package com.cittus.isv.view.vertical
+package com.cittus.isv.view.signal.vertical
 
-import android.content.Intent
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v4.app.Fragment
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import androidx.navigation.Navigation
 import com.cittus.isv.R
-import com.cittus.isv.controller.MainImage
-import com.cittus.isv.model.ActionsRequest
-import com.cittus.isv.model.EndPoints
-import com.cittus.isv.view.horizontal.ActivityHorizontalMain
-import kotlinx.android.synthetic.main.activity_type_signal_vertical.*
 
 class TypeSignalVertical : Fragment() {
 

@@ -5,7 +5,7 @@
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".StatePostActivity">
+        tools:context=".view.signal.vertical.StatePostActivity">
     <TextView
             android:text="@string/lbl_stay_signal"
             android:layout_width="wrap_content"

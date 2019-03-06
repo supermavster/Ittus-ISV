@@ -12,6 +12,12 @@
     <string name="login">Ingresar</string>
     <string name="forget_password">¿Olvido la contraseña?</string>
 
+    <string name="geolocalization_photo">Fotos Geolocalizables</string>
+    <string name="north">Norte</string>
+    <string name="south">Sur</string>
+    <string name="west">Oeste</string>
+    <string name="east">Este</string>
+
     // Sección 1: Información de Inventario de Señales Viales
     <string name="tab_text_1">ISV</string>
 
@@ -132,7 +138,10 @@
     <string name="init_process">Comenzar</string>
     // Extra LBLS
     <string name="select">Seleccione</string>
+    <string name="information">Información</string>
+    <string name="next">Siguiente</string>
     <string name="save">Guardar</string>
+    <string name="exit">Salir</string>
     <string name="todo">TODO</string>
     <string name="pause">pause</string>
     <string name="resume">resume</string>
