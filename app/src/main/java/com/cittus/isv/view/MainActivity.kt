@@ -8,21 +8,24 @@ import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
-import android.view.Menu
-import android.view.MenuItem
 import android.view.View
-import android.widget.Button
-import androidx.navigation.Navigation
+import androidx.navigation.fragment.NavHostFragment.findNavController
 import com.cittus.isv.DAO.DAOConnection
 import com.cittus.isv.R
+import com.cittus.isv.complements.Permissions
 import com.cittus.isv.complements.uploadFiles.MakeToUpoad
 import com.cittus.isv.model.*
+import com.cittus.isv.view.base.GeolocalizationActivity
+import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
 
+    // Main Variables
     var mainActivity: Activity = this
     var connection : DAOConnection = DAOConnection(this)
     var maxID:String = ""
+    override fun onSupportNavigateUp() =
+        findNavController(my_nav_host_fragment).navigateUp()
 
 
     // Make Clases
@@ -33,11 +36,6 @@ class MainActivity : AppCompatActivity() {
     private var signalMainArray: ArrayList<CittusSignal> = ArrayList<CittusSignal>()
     var contBaseID = 0;
 
-    // Variables Table
-    /*var tabMain: TabMain = TabMain(mainActivity)
-    var tabInformation: TabInformation = TabInformation(mainActivity)
-    var tabGeneralData: TabGeneralData = TabGeneralData(mainActivity)*/
-
     // Exception
     var exceptionMain: Boolean = false
 
@@ -46,69 +44,20 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        resetData()
+        // Init Permissions
+        Permissions(this).setPermissions()
+        // Init Process (All Actions in the tab MAIN)
+        initProcess()
+    }
+
+
+    private fun initProcess(){
         //TODO: Get Main DATA - INVENTARIO
         getAndSetDataMain()
 
-        // Create the adapter that will return a fragment for each of the three
-        // primary sections of the activity. mSectionsPagerAdapter = SectionsPagerAdapter(supportFragmentManager)
-
-        // Set up the ViewPager with the sections adapter.container.adapter = mSectionsPagerAdaptercontainer.addOnPageChangeListener(TabLayout.TabLayoutOnPageChangeListener(tabs))tabs.addOnTabSelectedListener(TabLayout.ViewPagerOnTabSelectedListener(container))
-
-        // Hide Elements container.getChildAt(0)).getChildAt(0).setVisibility(View.GONE);
-
-        //mSectionsPagerAdapter.getItem(0).view.visibility = View.GONE
-        //tab_data_general!!.visibility = View.GONE
-
-        //      tabs.removeTab(tabs.getTabAt(2));
-//        tabs.removeTab(tabs.getTabAt(3));
+        // Get Max Id
         maxID = connection.loadElement(EndPoints.URL_GET_MAX_ID+"lista")
-
-        /*fab.setOnClickListener { view ->
-            // Init Data
-            maxID = connection.loadElement(EndPoints.URL_GET_MAX_ID+"lista")
-            Log.e("ID",maxID)
-            // Save
-            saveAllElements(view)
-        }*/
     }
-    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        menuInflater.inflate(R.menu.menu_main, menu)
-        return true
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        val id = item.itemId
-
-        if (id == R.id.action_settings) {
-            return true
-        }
-
-        return super.onOptionsItemSelected(item)
-    }
-
-
-    /*inner class SectionsPagerAdapter(fm: FragmentManager) : FragmentPagerAdapter(fm) {
-
-        override fun getItem(position: Int): Fragment {
-            // getItem is called to instantiate the fragment for the given page.
-            return when (position) {
-                0 -> tabMain
-                1 -> tabInformation
-                2 -> tabGeneralData
-                else -> Fragment()
-            }
-        }
-
-        override fun getCount(): Int {
-            // Show 3 total pages.
-            return 3
-        }
-    }*/
 
     var horizontalItems = ArrayList<String>()
     var verticalItems:String=""
@@ -117,8 +66,33 @@ class MainActivity : AppCompatActivity() {
     // Camera Action // Return Intend Action
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
 
+        // Show Action And Values (Send Variables) - Intent
         Log.i("Main Activity", requestCode.toString() + "->" + resultCode + "->" + data.toString())
+
+        // Get Fragment Called
+        val navHostFragment = supportFragmentManager.findFragmentById(R.id.my_nav_host_fragment)
+        // Select Case
         when (requestCode) {
+            ActionsRequest.TAKE_PHOTO_REQUEST_NORTH and RESULT_OK -> {
+                val fragment = navHostFragment!!.childFragmentManager.fragments[0] as GeolocalizationActivity
+                // Call Method Fragment
+                fragment?.processCapturedPhoto(fragment.getTakePictureMainNorth())
+            }
+            ActionsRequest.TAKE_PHOTO_REQUEST_SOUTH and RESULT_OK -> {
+                val fragment = navHostFragment!!.childFragmentManager.fragments[0] as GeolocalizationActivity
+                // Call Method Fragment
+                fragment?.processCapturedPhoto(fragment.getTakePictureMainSouth())
+            }
+            ActionsRequest.TAKE_PHOTO_REQUEST_WEST and RESULT_OK -> {
+                val fragment = navHostFragment!!.childFragmentManager.fragments[0] as GeolocalizationActivity
+                // Call Method Fragment
+                fragment?.processCapturedPhoto(fragment.getTakePictureMainWest())
+            }
+            ActionsRequest.TAKE_PHOTO_REQUEST_EAST and RESULT_OK -> {
+                val fragment = navHostFragment!!.childFragmentManager.fragments[0] as GeolocalizationActivity
+                // Call Method Fragment
+                fragment?.processCapturedPhoto(fragment.getTakePictureMainEast())
+            }
             //ActionsRequest.TAKE_PHOTO_REQUEST_FRONT and RESULT_OK -> tabMain.processCapturedPhoto(tabMain.getTakePictureMainFront())
 //            ActionsRequest.TAKE_PHOTO_REQUEST_BACK and RESULT_OK -> tabMain.processCapturedPhoto(tabMain.getTakePictureMainBack())
 //            ActionsRequest.TAKE_PHOTO_REQUEST_PLAQUE and RESULT_OK -> tabMain.processCapturedPhoto(tabMain.getTakePictureMainPlaque())
@@ -150,6 +124,7 @@ class MainActivity : AppCompatActivity() {
             ActionsRequest.GET_INIT->{
                 Log.e("Show GET_INIT","Yes")
             }
+            // Save saveAllElements(view)
             else -> {
                 super.onActivityResult(requestCode, resultCode, data)
             }
@@ -183,20 +158,17 @@ class MainActivity : AppCompatActivity() {
             // Set ID Max (Signal)
             if(contBaseID==0)
                 contBaseID = data[4].toInt() // 4 - > Get ID Max
-
-
         }
-
     }
 
     private fun saveAllElements(view: View) {
+        // Init Data
+        maxID = connection.loadElement(EndPoints.URL_GET_MAX_ID+"lista")
+        Log.e("ID",maxID)
+
         if (inventario != null && listSignal != null) {
             // Make Object Main
-
-
-
             signalMain = CittusSignal(maxID.toInt())
-
             // Get All Data
             getAllData()
             // Upload to Data Base
@@ -351,13 +323,6 @@ class MainActivity : AppCompatActivity() {
 
         makeToUpoad.showFileChooser(signalMain!!.PhotoFront)
 
-    }
-
-    private fun resetData(){
-        /*
-        tabMain = TabMain(mainActivity)
-        tabInformation = TabInformation(mainActivity)
-        tabGeneralData = TabGeneralData(mainActivity)*/
     }
 
 

@@ -15,6 +15,11 @@ class ActionsRequest {
         val TAKE_PHOTO_REQUEST_BACK = 31
         val TAKE_PHOTO_REQUEST_PLAQUE = 32
 
+        val TAKE_PHOTO_REQUEST_NORTH = 33
+        val TAKE_PHOTO_REQUEST_SOUTH = 34
+        val TAKE_PHOTO_REQUEST_WEST = 35
+        val TAKE_PHOTO_REQUEST_EAST = 36
+
         val GET_HORIZONTAL_VALUES = 4
         val GET_HORIZONTAL_IMAGES_VALUES = 41
 

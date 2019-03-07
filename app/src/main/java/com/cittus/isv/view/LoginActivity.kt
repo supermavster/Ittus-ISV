@@ -13,26 +13,36 @@ import android.util.Pair as UtilPair
 
 class LoginActivity : Fragment() {
 
+    // Main Variables
+    var viewMain:View? = null;
+    // Make Bundle
+    val bundle = Bundle()
+    
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
-        val view = inflater.inflate(R.layout.activity_login, container, false)
+        // Init View
+        viewMain = inflater.inflate(R.layout.activity_login, container, false)
 
-        view.findViewById<Button>(R.id.btn_login).setOnClickListener {
-
-            // Make Bundle
-            val bundle = Bundle()
-            // Add your data from getFactualResults method to bundle
-            bundle.putBoolean("isLogin", true)
-            // Init Action
-            Navigation.findNavController(view).navigate(
-                R.id.municipalitiesActivity, bundle
-            )
-
-        }
-        return view
+        // Init Process
+        initProcess()
+        return viewMain
     }
 
+    private fun initProcess(){
+        // Btn Login
+        btnLogin()
+    }
 
+    private fun btnLogin(){
+        viewMain!!.findViewById<Button>(R.id.btn_login).setOnClickListener {
+
+            // Add your data from getFactualResults method to bundle
+            bundle.putBoolean("isLogin", true)
+
+            // Init Action
+            Navigation.findNavController(viewMain!!).navigate(R.id.municipalitiesActivity, bundle)
+        }
+    }
 
 }
