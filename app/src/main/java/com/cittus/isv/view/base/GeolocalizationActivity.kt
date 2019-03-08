@@ -96,10 +96,6 @@ class GeolocalizationActivity : Fragment() {
 
     }
 
-    fun processCapturedPhoto(takePicture: TakePicture) {
-        takePicture.processCapturedPhoto(takePicture.getPath())
-    }
-
     fun getTakePictureMainNorth(): TakePicture {
         if(takePictureNorth == null)
             takePictureNorth = TakePicture(this.activity!!, viewMain.ibtn_north, viewMain.cb_north)

@@ -35,4 +35,7 @@ object EndPoints {
 
     // Get Max ID
     const val URL_GET_MAX_ID = "$URL_ROOT?maxID="
+
+    // Get Folder Main Images
+    const val IMAGE_DIRECTORY_NAME = "ITTUS"
 }

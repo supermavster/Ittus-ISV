@@ -13,9 +13,11 @@ import androidx.navigation.fragment.NavHostFragment.findNavController
 import com.cittus.isv.DAO.DAOConnection
 import com.cittus.isv.R
 import com.cittus.isv.complements.Permissions
+import com.cittus.isv.complements.camera.TakePicture
 import com.cittus.isv.complements.uploadFiles.MakeToUpoad
 import com.cittus.isv.model.*
 import com.cittus.isv.view.base.GeolocalizationActivity
+import com.cittus.isv.view.signal.PhotoGPSActivity
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
@@ -76,26 +78,38 @@ class MainActivity : AppCompatActivity() {
             ActionsRequest.TAKE_PHOTO_REQUEST_NORTH and RESULT_OK -> {
                 val fragment = navHostFragment!!.childFragmentManager.fragments[0] as GeolocalizationActivity
                 // Call Method Fragment
-                fragment?.processCapturedPhoto(fragment.getTakePictureMainNorth())
+                processCapturedPhoto(fragment.getTakePictureMainNorth())
             }
             ActionsRequest.TAKE_PHOTO_REQUEST_SOUTH and RESULT_OK -> {
                 val fragment = navHostFragment!!.childFragmentManager.fragments[0] as GeolocalizationActivity
                 // Call Method Fragment
-                fragment?.processCapturedPhoto(fragment.getTakePictureMainSouth())
+                processCapturedPhoto(fragment.getTakePictureMainSouth())
             }
             ActionsRequest.TAKE_PHOTO_REQUEST_WEST and RESULT_OK -> {
                 val fragment = navHostFragment!!.childFragmentManager.fragments[0] as GeolocalizationActivity
                 // Call Method Fragment
-                fragment?.processCapturedPhoto(fragment.getTakePictureMainWest())
+                processCapturedPhoto(fragment.getTakePictureMainWest())
             }
             ActionsRequest.TAKE_PHOTO_REQUEST_EAST and RESULT_OK -> {
                 val fragment = navHostFragment!!.childFragmentManager.fragments[0] as GeolocalizationActivity
                 // Call Method Fragment
-                fragment?.processCapturedPhoto(fragment.getTakePictureMainEast())
+                processCapturedPhoto(fragment.getTakePictureMainEast())
             }
-            //ActionsRequest.TAKE_PHOTO_REQUEST_FRONT and RESULT_OK -> tabMain.processCapturedPhoto(tabMain.getTakePictureMainFront())
-//            ActionsRequest.TAKE_PHOTO_REQUEST_BACK and RESULT_OK -> tabMain.processCapturedPhoto(tabMain.getTakePictureMainBack())
-//            ActionsRequest.TAKE_PHOTO_REQUEST_PLAQUE and RESULT_OK -> tabMain.processCapturedPhoto(tabMain.getTakePictureMainPlaque())
+            ActionsRequest.TAKE_PHOTO_REQUEST_FRONT and RESULT_OK -> {
+                val fragment = navHostFragment!!.childFragmentManager.fragments[0] as PhotoGPSActivity
+                // Call Method Fragment
+                processCapturedPhoto(fragment.getTakePictureMainFront())
+            }
+            ActionsRequest.TAKE_PHOTO_REQUEST_BACK and RESULT_OK -> {
+                val fragment = navHostFragment!!.childFragmentManager.fragments[0] as PhotoGPSActivity
+                // Call Method Fragment
+                processCapturedPhoto(fragment.getTakePictureMainBack())
+            }
+            ActionsRequest.TAKE_PHOTO_REQUEST_PLAQUE and RESULT_OK -> {
+                val fragment = navHostFragment!!.childFragmentManager.fragments[0] as PhotoGPSActivity
+                // Call Method Fragment
+                processCapturedPhoto(fragment.getTakePictureMainPlaque())
+            }
             ActionsRequest.GET_HORIZONTAL_VALUES -> {
                 if (data != null) {
                     val extras = data!!.extras ?: return
@@ -129,6 +143,10 @@ class MainActivity : AppCompatActivity() {
                 super.onActivityResult(requestCode, resultCode, data)
             }
         }
+    }
+
+    private fun processCapturedPhoto(takePicture: TakePicture) {
+        takePicture.processCapturedPhoto(takePicture.getPath())
     }
 
     private fun getAndSetDataMain() {

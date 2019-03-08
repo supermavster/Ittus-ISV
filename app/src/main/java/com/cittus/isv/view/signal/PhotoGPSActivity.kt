@@ -6,19 +6,103 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.ImageButton
 import androidx.navigation.Navigation
 import com.cittus.isv.R
+import com.cittus.isv.complements.camera.TakePicture
+import com.cittus.isv.model.ActionsRequest
+import kotlinx.android.synthetic.main.activity_photo_gps.view.*
 
 class PhotoGPSActivity : Fragment() {
+
+    // Main Variables
+    private lateinit var viewMain: View
+
+    // Make Bundle
+    val bundle = Bundle()
+
+    // Cameras
+    lateinit var takePictureFront: TakePicture
+    lateinit var takePictureBack: TakePicture
+    lateinit var takePicturePlaque: TakePicture
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
-        val view = inflater.inflate(R.layout.activity_photo_gps, container, false)
+        viewMain = inflater.inflate(R.layout.activity_photo_gps, container, false)
+        // Init Process
+        initProcess()
+        return viewMain
+    }
 
-        view.findViewById<Button>(R.id.btn_next_photo).setOnClickListener {
-            Navigation.findNavController(view).navigate(R.id.finishSaveActivity)
+    // TODO: Get Data - Municipalities
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        // Get Values from Login
+        val venName = arguments?.getStringArrayList("getData")
+        //Log.e("getData",venName.toString())
+
+
+        /*val someDataClass: SomeDataClass? = arguments?.getParcelable("custom_object")
+        someDataClass?.let {
+            customObjectField.text = it.someField
+            customObjectNumber.text = it.anotherField.toString()
         }
-        return view
+        */
+    }
+
+
+    private fun initProcess() {
+        // Btn Save and Next
+        btnSave()
+        // Btn Camera
+        cameraActions()
+    }
+
+    private fun cameraActions() {
+        // Call on Click
+        viewMain.findViewById<ImageButton>(R.id.ibtn_front).setOnClickListener {
+            // Init Camera
+            takePictureFront = TakePicture(this.activity!!, viewMain.ibtn_front, viewMain.cb_front)
+            takePictureFront.initProcess(ActionsRequest.TAKE_PHOTO_REQUEST_FRONT)
+        }
+
+        viewMain.findViewById<ImageButton>(R.id.ibtn_back).setOnClickListener {
+            // Init Camera
+            takePictureBack = TakePicture(this.activity!!, viewMain.ibtn_back, viewMain.cb_back)
+            takePictureBack.initProcess(ActionsRequest.TAKE_PHOTO_REQUEST_BACK)
+        }
+
+        viewMain.findViewById<ImageButton>(R.id.ibtn_plaque).setOnClickListener {
+            // Init Camera
+            takePicturePlaque = TakePicture(this.activity!!, viewMain.ibtn_plaque, viewMain.cb_plaque)
+            takePicturePlaque.initProcess(ActionsRequest.TAKE_PHOTO_REQUEST_PLAQUE)
+        }
+    }
+
+    private fun btnSave() {
+        viewMain.findViewById<Button>(R.id.btn_next_photo).setOnClickListener {
+            Navigation.findNavController(viewMain).navigate(R.id.finishSaveActivity)
+        }
+    }
+
+
+    fun getTakePictureMainFront(): TakePicture {
+        if (takePictureFront == null)
+            takePictureFront = TakePicture(this.activity!!, viewMain.ibtn_front, viewMain.cb_front)
+        return takePictureFront
+    }
+
+    fun getTakePictureMainBack(): TakePicture {
+        if (takePictureBack == null)
+            takePictureBack = TakePicture(this.activity!!, viewMain.ibtn_back, viewMain.cb_back)
+        return takePictureBack
+    }
+
+    fun getTakePictureMainPlaque(): TakePicture {
+        if (takePicturePlaque == null)
+            takePicturePlaque = TakePicture(this.activity!!, viewMain.ibtn_plaque, viewMain.cb_plaque)
+        return takePicturePlaque
     }
 }
