@@ -1,12 +1,9 @@
 package com.cittus.isv.complements
 
-import android.Manifest
 import android.Manifest.permission.*
-import android.app.Activity
 import android.content.pm.PackageManager
 import android.support.v4.app.ActivityCompat
 import android.support.v4.app.FragmentActivity
-import android.support.v4.content.ContextCompat
 import com.cittus.isv.model.ActionsRequest
 
 class Permissions(private var context: FragmentActivity) {
@@ -20,7 +17,7 @@ class Permissions(private var context: FragmentActivity) {
     
     // Camera
     fun checkPermissions(onlyCam: Boolean = false): Boolean {
-        if (!onlyCam) {
+        if (onlyCam === false) {
             arrayPermissionsCamera.plus(arrayPermissionsGPS)
         }
 
@@ -35,7 +32,7 @@ class Permissions(private var context: FragmentActivity) {
     }
 
     fun requestPermission(onlyCam: Boolean = false) {
-        if (!onlyCam) {
+        if (onlyCam === false) {
             arrayPermissionsCamera.plus(arrayPermissionsGPS)
         }
         ActivityCompat.requestPermissions(
