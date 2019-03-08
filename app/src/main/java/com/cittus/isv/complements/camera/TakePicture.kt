@@ -6,12 +6,17 @@ import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.Matrix
 import android.net.Uri
+import android.os.Environment
 import android.provider.MediaStore
 import android.support.v4.app.FragmentActivity
+import android.util.Log
 import android.widget.CheckBox
 import android.widget.ImageView
 import com.cittus.isv.complements.Permissions
 import java.io.File
+import java.io.IOException
+import java.text.SimpleDateFormat
+import java.util.*
 
 
 class TakePicture(
@@ -26,13 +31,15 @@ class TakePicture(
     private var permissions: Permissions = Permissions(context)
     var fileUri: Uri? = null
 
+    var count = 0;
+
     fun initProcess(request: Int) {
-        if (permissions.checkPermissions()) launchCamera(request) else permissions.requestPermission()
+        if (permissions.checkPermissions(true)) launchCamera(request) else permissions.requestPermission(true)
     }
 
     private fun launchCamera(request: Int) {
         val values = ContentValues(1)
-        values.put(MediaStore.Images.Media.MIME_TYPE, "image/png")
+        values.put(MediaStore.Images.Media.MIME_TYPE, "image/jpg")
         val fileUri = context.contentResolver
             .insert(
                 MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
@@ -64,25 +71,20 @@ class TakePicture(
     }
 
 
-     fun processCapturedPhoto(path: String?) {
-        val cursor = context.contentResolver.query(
-            Uri.parse(path),
-            Array(1) { android.provider.MediaStore.Images.ImageColumns.DATA },
-            null, null, null
-        )
-        cursor.moveToFirst()
-        val photoPath = cursor.getString(0)
-        cursor.close()
-        //TODO hacer temporales para obtener despues 800 x 400
-        val file = File(photoPath)
-        resizeImage(file, 400)
+    fun processCapturedPhoto(path: String?) {
+        Log.e("Path Main", path)
+        val file = createFile()
         val uri = Uri.fromFile(file)
-        imageView.setImageURI(uri)
-        mCurrentPhoto = file.absoluteFile.toString()
+        this.imageView.setImageURI(uri)
+        resizeImage(file)
         captureButton.isChecked = true
     }
 
-    fun resizeImage(file: File, scaleTo: Int = 1024) {
+
+    //TODO hacer temporales para obtener despues 800 x 400
+
+
+    fun resizeImage(file: File, scaleToW: Int = 800, scaleToH: Int = 400) {
         val bmOptions = BitmapFactory.Options()
         bmOptions.inJustDecodeBounds = true
         BitmapFactory.decodeFile(file.absolutePath, bmOptions)
@@ -90,7 +92,7 @@ class TakePicture(
         val photoH = bmOptions.outHeight
 
         // Determine how much to scale down the image
-        val scaleFactor = Math.min(photoW / scaleTo, photoH / scaleTo)
+        val scaleFactor = Math.min(photoW / scaleToW, photoH / scaleToH)
 
         bmOptions.inJustDecodeBounds = false
         bmOptions.inSampleSize = scaleFactor
@@ -102,22 +104,24 @@ class TakePicture(
         }
     }
 
-    fun scaleBitmap(bitmapToScale: Bitmap?, newWidth: Float, newHeight: Float): Bitmap? {
-        if (bitmapToScale == null)
-            return null
-        //get the original width and height
-        val width = bitmapToScale.width
-        val height = bitmapToScale.height
-        // create a matrix for the manipulation
-        val matrix = Matrix()
+    @Throws(IOException::class)
+    private fun createFile(): File {
 
-        // resize the bit map
-        matrix.postScale(newWidth / width, newHeight / height)
 
-        // recreate the new Bitmap and set it back
-        return Bitmap.createBitmap(bitmapToScale, 0, 0, bitmapToScale.width, bitmapToScale.height, matrix, true)
+        // Create an image file name
+        val timeStamp: String = SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())
+        val storageDir: File = context.getExternalFilesDir(Environment.DIRECTORY_PICTURES)
+        // Make File
+        val file = File.createTempFile(
+            "ITTUS_${timeStamp}_", /* prefix */
+            ".jpg", /* suffix */
+            storageDir /* directory */
+        ).apply {
+            // Save a file: path for use with ACTION_VIEW intents
+            mCurrentPhotoPath = absolutePath
+        }
+        return file
     }
-
 }
 
 

@@ -11,16 +11,21 @@ import com.cittus.isv.model.ActionsRequest
 
 class Permissions(private var context: FragmentActivity) {
 
-    private var arrayPermissions = arrayOf(READ_EXTERNAL_STORAGE, CAMERA,ACCESS_COARSE_LOCATION, ACCESS_FINE_LOCATION);
+    private var arrayPermissionsCamera = arrayOf(READ_EXTERNAL_STORAGE, CAMERA)
+    private var arrayPermissionsGPS = arrayOf(ACCESS_COARSE_LOCATION, ACCESS_FINE_LOCATION)
 
     fun setPermissions(){
         if (!checkPermissions()) requestPermission()
     }
     
     // Camera
-    fun checkPermissions(): Boolean {
-        if (context != null && arrayPermissions != null) {
-            for (permission in arrayPermissions) {
+    fun checkPermissions(onlyCam: Boolean = false): Boolean {
+        if (!onlyCam) {
+            arrayPermissionsCamera.plus(arrayPermissionsGPS)
+        }
+
+        if (context != null && arrayPermissionsCamera != null) {
+            for (permission in arrayPermissionsCamera) {
                 if (ActivityCompat.checkSelfPermission(context, permission) != PackageManager.PERMISSION_GRANTED) {
                     return false
                 }
@@ -29,8 +34,12 @@ class Permissions(private var context: FragmentActivity) {
         return true
     }
 
-    fun requestPermission() {
-        ActivityCompat.requestPermissions(context, arrayPermissions,
+    fun requestPermission(onlyCam: Boolean = false) {
+        if (!onlyCam) {
+            arrayPermissionsCamera.plus(arrayPermissionsGPS)
+        }
+        ActivityCompat.requestPermissions(
+            context, arrayPermissionsCamera,
             ActionsRequest.PERMISSION_REQUEST_CODE
         )
     }
