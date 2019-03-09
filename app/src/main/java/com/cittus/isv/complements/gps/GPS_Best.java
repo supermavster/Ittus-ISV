@@ -1,6 +1,7 @@
 package com.cittus.isv.complements.gps;
 
 import android.Manifest;
+import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -18,25 +19,25 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.cittus.isv.R;
-import com.cittus.isv.view.MainActivity;
 
 public class GPS_Best {
 
     LocationManager locationManager;
-    double longitudeBest, latitudeBest;
-    double longitudeGPS, latitudeGPS;
+    double longitudeBest, latitudeBest, altitudeBest;
+    double longitudeGPS, latitudeGPS, altitudeGPS;
     double longitudeNetwork, latitudeNetwork;
-    TextView longitudeValueBest, latitudeValueBest;
-    TextView longitudeValueGPS, latitudeValueGPS;
+    TextView longitudeValueBest, latitudeValueBest, altitudeValueBest;
+    TextView longitudeValueGPS, latitudeValueGPS, altitudeValueGPS;
     TextView longitudeValueNetwork, latitudeValueNetwork;
-    MainActivity mainActivity;
+    Activity mainActivity;
 
 
-    public GPS_Best(MainActivity mainActivity, TextView longitudeValueBest, TextView latitudeValueBest) {
+    public GPS_Best(Activity mainActivity, TextView longitudeValueBest, TextView altitudeValueBest, TextView latitudeValueBest) {
         this.mainActivity = mainActivity;
         locationManager = (LocationManager) mainActivity.getSystemService(Context.LOCATION_SERVICE);
         this.longitudeValueBest = longitudeValueBest;
         this.latitudeValueBest = latitudeValueBest;
+        this.altitudeValueBest = altitudeValueBest;
     }
 
     private boolean checkLocation() {
@@ -100,17 +101,9 @@ public class GPS_Best {
         String provider = locationManager.getBestProvider(criteria, true);
         if (provider != null) {
             if (ActivityCompat.checkSelfPermission(mainActivity, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(mainActivity, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                // TODO: Consider calling
-                //    ActivityCompat#requestPermissions
-                // here to request the missing permissions, and then overriding
-                //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-                //                                          int[] grantResults)
-                // to handle the case where the user grants the permission. See the documentation
-                // for ActivityCompat#requestPermissions for more details.
                 return;
             }
             locationManager.requestLocationUpdates(provider, 2 * 20 * 1000, 10, locationListenerBest);
-                Toast.makeText(mainActivity, "Best Provider is " + provider, Toast.LENGTH_LONG).show();
                 if (ActivityCompat.checkSelfPermission(mainActivity, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(mainActivity, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             }
             locationManager.removeUpdates(locationListenerBest);
@@ -141,13 +134,14 @@ public class GPS_Best {
         public void onLocationChanged(Location location) {
             longitudeBest = location.getLongitude();
             latitudeBest = location.getLatitude();
+            altitudeBest = location.getAltitude();
 
             mainActivity.runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
                     longitudeValueBest.setText(longitudeBest + "");
                     latitudeValueBest.setText(latitudeBest + "");
-                    Toast.makeText(mainActivity, "Best Provider update", Toast.LENGTH_SHORT).show();
+                    altitudeValueBest.setText(altitudeBest + "");
                 }
             });
         }
@@ -198,11 +192,15 @@ public class GPS_Best {
         public void onLocationChanged(Location location) {
             longitudeGPS = location.getLongitude();
             latitudeGPS = location.getLatitude();
+            altitudeGPS = location.getAltitude();
+
             mainActivity.runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
                     longitudeValueGPS.setText(longitudeGPS + "");
                     latitudeValueGPS.setText(latitudeGPS + "");
+                    altitudeValueGPS.setText(altitudeGPS + "");
+
                     Toast.makeText(mainActivity, "GPS Provider update", Toast.LENGTH_SHORT).show();
                 }
             });

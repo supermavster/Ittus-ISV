@@ -23,6 +23,7 @@
 
     <string name="lbl_lat_lon">Captura de Latitud Y Longitud</string>
     <string name="txt_latitude">Latitud</string>
+    <string name="txt_altitude">Altitud</string>
     <string name="txt_longitude">Longitud</string>
     <string name="btn_gps">Set GPS (Lat, Lon)</string>
 

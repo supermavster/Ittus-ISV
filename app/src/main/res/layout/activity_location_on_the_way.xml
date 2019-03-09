@@ -12,21 +12,23 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent" android:layout_marginTop="16dp"
-            app:layout_constraintEnd_toEndOf="parent" android:id="@+id/textView4"/>
+            app:layout_constraintEnd_toEndOf="parent" android:id="@+id/textView4" android:textAlignment="center"
+            android:gravity="center"/>
     <LinearLayout
             android:orientation="horizontal"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
+            android:layout_height="91dp"
+            android:layout_marginTop="16dp"
             app:layout_constraintTop_toBottomOf="@+id/textView4" app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginEnd="8dp" app:layout_constraintStart_toStartOf="parent"
-            android:layout_marginStart="8dp" android:id="@+id/linearLayout" android:layout_marginBottom="253dp"
+            android:layout_marginStart="8dp" android:id="@+id/linearLayout" android:layout_marginBottom="8dp"
             app:layout_constraintBottom_toTopOf="@+id/linearLayout2">
         <ImageButton
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" app:srcCompat="@mipmap/ic_launcher"
+                android:layout_height="match_parent" app:srcCompat="@mipmap/ic_launcher"
                 tools:layout_editor_absoluteY="224dp" tools:layout_editor_absoluteX="70dp"
-                android:id="@+id/ibtn_stretch" android:contentDescription="@string/btn_stretch"/>
+                android:id="@+id/ibtn_stretch" android:contentDescription="@string/btn_stretch"
+                android:scaleType="fitXY"/>
         <Button
                 android:text="@string/btn_stretch"
                 android:layout_width="206dp"
@@ -38,12 +40,12 @@
     <LinearLayout
             android:orientation="horizontal"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintEnd_toEndOf="parent"
+            android:layout_height="91dp"
+            app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginEnd="8dp" app:layout_constraintStart_toStartOf="parent"
             android:layout_marginStart="8dp" android:layout_marginTop="8dp"
-            app:layout_constraintTop_toBottomOf="@+id/linearLayout" android:id="@+id/linearLayout2">
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout" android:id="@+id/linearLayout2"
+            android:layout_marginBottom="8dp" app:layout_constraintBottom_toBottomOf="parent">
         <Button
                 android:text="@string/btn_intersection"
                 android:layout_width="206dp"
@@ -53,8 +55,9 @@
                 android:textSize="24sp"/>
         <ImageButton
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" app:srcCompat="@mipmap/ic_launcher"
+                android:layout_height="match_parent" app:srcCompat="@mipmap/ic_launcher"
                 tools:layout_editor_absoluteY="224dp" tools:layout_editor_absoluteX="70dp"
-                android:id="@+id/ibtn_intersection" android:contentDescription="@string/btn_intersection"/>
+                android:id="@+id/ibtn_intersection" android:contentDescription="@string/btn_intersection"
+                android:scaleType="fitXY"/>
     </LinearLayout>
 </android.support.constraint.ConstraintLayout>

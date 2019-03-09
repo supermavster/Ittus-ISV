@@ -5,10 +5,8 @@ import android.app.Activity
 import android.location.Location
 import android.location.LocationListener
 import android.location.LocationManager
-import android.os.Build
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-import android.support.annotation.RequiresApi
+import android.support.v7.app.AppCompatActivity
 import android.util.Log
 
 
@@ -29,7 +27,6 @@ class GetUserLocation {
         override fun onProviderDisabled(provider: String) {}
     }
 
-    @RequiresApi(Build.VERSION_CODES.M)
     fun init(app: Activity) {
         // Create persistent LocationManager reference
         locationManager = (app.getSystemService(AppCompatActivity.LOCATION_SERVICE) as LocationManager?)!!;

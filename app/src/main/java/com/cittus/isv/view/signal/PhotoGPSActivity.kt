@@ -10,6 +10,8 @@ import android.widget.ImageButton
 import androidx.navigation.Navigation
 import com.cittus.isv.R
 import com.cittus.isv.complements.camera.TakePicture
+import com.cittus.isv.complements.gps.GPS_Best
+import com.cittus.isv.complements.gps.GetUserLocation
 import com.cittus.isv.model.ActionsRequest
 import kotlinx.android.synthetic.main.activity_photo_gps.view.*
 
@@ -58,6 +60,8 @@ class PhotoGPSActivity : Fragment() {
         btnSave()
         // Btn Camera
         cameraActions()
+        // Btn GPS
+        gpsActions()
     }
 
     private fun cameraActions() {
@@ -104,5 +108,28 @@ class PhotoGPSActivity : Fragment() {
         if (takePicturePlaque == null)
             takePicturePlaque = TakePicture(this.activity!!, viewMain.ibtn_plaque, viewMain.cb_plaque)
         return takePicturePlaque
+    }
+
+    // Get Location Main User
+    private var locationMain: GetUserLocation? = GetUserLocation()
+
+    private fun gpsActions() {
+        // Set Actions
+        viewMain.findViewById<ImageButton>(R.id.btn_gps).setOnClickListener {
+
+            /*locationMain?.init(this.activity!!)
+            var location = locationMain?.setButtonGPSActions()
+            if (location != null) {
+                viewMain.txt_latitude.setText(location.longitude.toString())
+                viewMain.txt_longitude.setText(location.latitude.toString())
+            }*/
+            GPS_Best(
+                this.activity!!,
+                viewMain.txt_latitude,
+                viewMain.txt_altitude,
+                viewMain.txt_longitude
+            )?.toggleBestUpdates(viewMain)
+
+        }
     }
 }

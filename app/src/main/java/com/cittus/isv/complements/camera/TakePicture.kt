@@ -29,11 +29,11 @@ class TakePicture(
     // Variable Main - Path
     private var mCurrentPhotoPath: String? = null;
     private var mCurrentPhoto: String = "";
-    private var permissions: Permissions = Permissions(context)
+    private var permissions: Permissions = Permissions(context, true)
     var fileUri: Uri? = null
 
     fun initProcess(request: Int) {
-        if (permissions.checkPermissions(true)) launchCamera(request) else permissions.requestPermission(true)
+        if (permissions.checkPermissions()) launchCamera(request) else permissions.requestPermission()
     }
 
     private fun launchCamera(request: Int) {

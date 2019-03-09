@@ -47,7 +47,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         // Init Permissions
-        Permissions(this).setPermissions()
+        Permissions(this, false).setPermissions()
         // Init Process (All Actions in the tab MAIN)
         initProcess()
     }
