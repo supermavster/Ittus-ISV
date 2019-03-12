@@ -31,7 +31,7 @@ class MainActivity : AppCompatActivity() {
 
 
     // Make Clases
-    private var inventario: CittusInventario? = null
+    private var inventario: Municipalities? = null // inventario
     private var listSignal: CittusListSignal? = null
     private var signalMain: CittusSignal? = null
     var message = "";
@@ -58,7 +58,7 @@ class MainActivity : AppCompatActivity() {
         getAndSetDataMain()
 
         // Get Max Id
-        maxID = connection.loadElement(EndPoints.URL_GET_MAX_ID+"lista")
+        maxID = connection.getDataSingle(EndPoints.URL_GET_MAX_ID + "lista")
     }
 
     var horizontalItems = ArrayList<String>()
@@ -160,7 +160,7 @@ class MainActivity : AppCompatActivity() {
             // 2 -> Municipio
             // 3 -> Departamento
             // 4 -> Id Max Signal
-            inventario = CittusInventario()
+            inventario = Municipalities()
             inventario!!.IdInventario = data[0].toInt()
             inventario!!.IdMunicipio = data[2]
             Log.e("INVENTARIO", inventario.toString())
@@ -181,7 +181,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun saveAllElements(view: View) {
         // Init Data
-        maxID = connection.loadElement(EndPoints.URL_GET_MAX_ID+"lista")
+        maxID = connection.getDataSingle(EndPoints.URL_GET_MAX_ID + "lista")
         Log.e("ID",maxID)
 
         if (inventario != null && listSignal != null) {

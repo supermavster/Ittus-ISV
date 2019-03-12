@@ -1,6 +1,5 @@
 package com.cittus.isv.view.base
 
-import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.util.Log
@@ -119,12 +118,6 @@ class GeolocalizationActivity : Fragment() {
             takePictureEast = TakePicture(activity!!, viewMain.ibtn_east, viewMain.cb_east)
         return takePictureEast
     }
-
-    // Camera Action // Return Intend Action
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        Log.i("Geolocalization", requestCode.toString() + "->" + resultCode + "->" + data.toString())
-    }
-
         private fun btnSave(){
         viewMain.findViewById<Button>(R.id.btn_save_geolocalization).setOnClickListener {
             Navigation.findNavController(viewMain).navigate(R.id.typeSignalActivity)

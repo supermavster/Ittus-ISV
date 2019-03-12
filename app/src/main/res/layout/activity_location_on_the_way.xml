@@ -24,8 +24,8 @@
             android:layout_marginStart="8dp" android:id="@+id/linearLayout" android:layout_marginBottom="8dp"
             app:layout_constraintBottom_toTopOf="@+id/linearLayout2">
         <ImageButton
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent" app:srcCompat="@mipmap/ic_launcher"
+                android:layout_width="100dp"
+                android:layout_height="match_parent" app:srcCompat="@drawable/tramo"
                 tools:layout_editor_absoluteY="224dp" tools:layout_editor_absoluteX="70dp"
                 android:id="@+id/ibtn_stretch" android:contentDescription="@string/btn_stretch"
                 android:scaleType="fitXY"/>
@@ -54,8 +54,8 @@
                 android:background="@drawable/border"
                 android:textSize="24sp"/>
         <ImageButton
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent" app:srcCompat="@mipmap/ic_launcher"
+                android:layout_width="100dp"
+                android:layout_height="match_parent" app:srcCompat="@drawable/intesection"
                 tools:layout_editor_absoluteY="224dp" tools:layout_editor_absoluteX="70dp"
                 android:id="@+id/ibtn_intersection" android:contentDescription="@string/btn_intersection"
                 android:scaleType="fitXY"/>
