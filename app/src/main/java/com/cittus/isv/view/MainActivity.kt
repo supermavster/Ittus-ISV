@@ -5,17 +5,18 @@ import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
-import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
-import android.view.View
 import androidx.navigation.fragment.NavHostFragment.findNavController
 import com.cittus.isv.DAO.DAOConnection
 import com.cittus.isv.R
 import com.cittus.isv.complements.Permissions
 import com.cittus.isv.complements.camera.TakePicture
 import com.cittus.isv.complements.uploadFiles.MakeToUpoad
-import com.cittus.isv.model.*
+import com.cittus.isv.model.ActionsRequest
+import com.cittus.isv.model.CittusListSignal
+import com.cittus.isv.model.CittusSignal
+import com.cittus.isv.model.Municipalities
 import com.cittus.isv.view.base.GeolocalizationActivity
 import com.cittus.isv.view.signal.PhotoGPSActivity
 import kotlinx.android.synthetic.main.activity_main.*
@@ -55,10 +56,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun initProcess(){
         //TODO: Get Main DATA - INVENTARIO
-        getAndSetDataMain()
-
-        // Get Max Id
-        maxID = connection.getDataSingle(EndPoints.URL_GET_MAX_ID + "lista")
+        //getAndSetDataMain()
     }
 
     var horizontalItems = ArrayList<String>()
@@ -149,55 +147,58 @@ class MainActivity : AppCompatActivity() {
         takePicture.processCapturedPhoto(takePicture.getPath())
     }
 
-    private fun getAndSetDataMain() {
+    /*
+        private fun getAndSetDataMain() {
+            // Get Max Id
+            maxID = connection.getDataSingle(EndPoints.URL_GET_MAX_ID + "lista")
 
-        val data = intent.getStringArrayListExtra("getData")
-        // Init Inventario
-        if (data != null && inventario == null) {
-            // TODO: Location DATA MAIN (2)
-            // 0 -> Id Inventario
-            // 1 -> Id Lista Senal
-            // 2 -> Municipio
-            // 3 -> Departamento
-            // 4 -> Id Max Signal
-            inventario = Municipalities()
-            inventario!!.IdInventario = data[0].toInt()
-            inventario!!.IdMunicipio = data[2]
-            Log.e("INVENTARIO", inventario.toString())
+            val data = intent.getStringArrayListExtra("getData")
+            // Init Inventario
+            if (data != null && inventario == null) {
+                // TODO: Location DATA MAIN (2)
+                // 0 -> Id Inventario
+                // 1 -> Id Lista Senal
+                // 2 -> Municipio
+                // 3 -> Departamento
+                // 4 -> Id Max Signal
+                inventario = Municipalities()
+                inventario!!.IdInventario = data[0].toInt()
+                inventario!!.IdMunicipio = data[2]
+                Log.e("INVENTARIO", inventario.toString())
+            }
+            // Make Item of list
+            if (inventario != null && listSignal == null) {
+                // Init List
+                listSignal = CittusListSignal()
+                listSignal!!.IdInventario = inventario!!.getInventarioID()
+                listSignal!!.setInventario(inventario!!)
+                listSignal!!.IdSignal = data[1].toInt()
+                Log.e("ListaSenal", listSignal.toString())
+                // Set ID Max (Signal)
+                if(contBaseID==0)
+                    contBaseID = data[4].toInt() // 4 - > Get ID Max
+            }
         }
-        // Make Item of list
-        if (inventario != null && listSignal == null) {
-            // Init List
-            listSignal = CittusListSignal()
-            listSignal!!.IdInventario = inventario!!.getInventarioID()
-            listSignal!!.setInventario(inventario!!)
-            listSignal!!.IdSignal = data[1].toInt()
-            Log.e("ListaSenal", listSignal.toString())
-            // Set ID Max (Signal)
-            if(contBaseID==0)
-                contBaseID = data[4].toInt() // 4 - > Get ID Max
+
+        private fun saveAllElements(view: View) {
+            // Init Data
+            maxID = connection.getDataSingle(EndPoints.URL_GET_MAX_ID + "lista")
+            Log.e("ID",maxID)
+
+            if (inventario != null && listSignal != null) {
+                // Make Object Main
+                signalMain = CittusSignal(maxID.toInt())
+                // Get All Data
+                getAllData()
+                // Upload to Data Base
+                uploadDataBase()
+            } else {
+                message = "Error faltal, no se pudo crear el inventario"
+            }
+            Snackbar.make(view, message, Snackbar.LENGTH_LONG)
+                .setAction("Action", null).show()
         }
-    }
-
-    private fun saveAllElements(view: View) {
-        // Init Data
-        maxID = connection.getDataSingle(EndPoints.URL_GET_MAX_ID + "lista")
-        Log.e("ID",maxID)
-
-        if (inventario != null && listSignal != null) {
-            // Make Object Main
-            signalMain = CittusSignal(maxID.toInt())
-            // Get All Data
-            getAllData()
-            // Upload to Data Base
-            uploadDataBase()
-        } else {
-            message = "Error faltal, no se pudo crear el inventario"
-        }
-        Snackbar.make(view, message, Snackbar.LENGTH_LONG)
-            .setAction("Action", null).show()
-    }
-
+    */
     private fun getAllData() {
         /*
         try {
@@ -311,7 +312,7 @@ class MainActivity : AppCompatActivity() {
 
         }*/
     }
-
+/*
     private fun uploadDataBase() {
         if (signalMain != null && exceptionMain === false) {
             // Set Dates
@@ -334,12 +335,12 @@ class MainActivity : AppCompatActivity() {
         } else {
             message = "No se puede crear la señal, revise los datos por favor."
         }
-    }
+    }*/
 
     private fun uploadImages(){
         var makeToUpoad:MakeToUpoad = MakeToUpoad(this);
 
-        makeToUpoad.showFileChooser(signalMain!!.PhotoFront)
+        //makeToUpoad.showFileChooser(signalMain!!.PhotoFront)
 
     }
 

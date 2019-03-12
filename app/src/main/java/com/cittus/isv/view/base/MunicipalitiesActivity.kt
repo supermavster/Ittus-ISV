@@ -1,6 +1,5 @@
 package com.cittus.isv.view.base
 
-import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.util.Log
@@ -11,11 +10,9 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
 import android.widget.Button
-import androidx.navigation.Navigation
 import com.cittus.isv.DAO.DAOConnection
 import com.cittus.isv.R
-import com.cittus.isv.model.EndPoints
-import com.cittus.isv.view.MainActivity
+import com.cittus.isv.model.CittusListSignal
 
 class MunicipalitiesActivity : Fragment() {
 
@@ -38,25 +35,35 @@ class MunicipalitiesActivity : Fragment() {
         viewMain = inflater.inflate(R.layout.activity_municipalities, container, false)
         // Init Connection
         connection = DAOConnection(viewMain.context)
+
+        viewMain!!.findViewById<Button>(R.id.buttonMain).setOnClickListener { view ->
+            Log.e("isLogin", test.toString())
+        }
         return viewMain
     }
+
+    var test = 0
 
     // TODO: Get Data - Login
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        // Get Values from Login
+        /*/ Get Values from Login
         val isLogin = arguments?.getBoolean("isLogin")
         // Add your data from getFactualResults method to bundle
         if (isLogin === true) {
             // Init Process
             initProcess()
+        }Log.e("isLogin", isLogin.toString())*/
+
+        val someDataClass: CittusListSignal? = arguments?.getParcelable("CittusDB")
+        someDataClass?.let {
+            test = it.login
         }
-        Log.e("isLogin", isLogin.toString())
     }
 
     private fun initProcess() {
 
-        // Lock Button and TextView
+        /*/ Lock Button and TextView
         viewMain!!.findViewById<AutoCompleteTextView>(R.id.auto_complete_municipio).isEnabled = false
         viewMain!!.findViewById<Button>(R.id.buttonMain).isEnabled = false
 
@@ -126,7 +133,7 @@ class MunicipalitiesActivity : Fragment() {
             // Init Action
             Navigation.findNavController(viewMain!!).navigate(R.id.geolocalizationActivity, bundle)
 
-        }
+        }*/
     }
 
     private fun makeAutocomplete(array: ArrayList<String>, auto_complete_text_view: AutoCompleteTextView) {

@@ -5,6 +5,7 @@ class Municipalities {
     var IdInventario = 0;
     var IdMunicipio = "";
 
+    constructor() {}
 
     constructor(IdInventario: Int, IdMunicipio: String) {
         this.IdInventario = IdInventario

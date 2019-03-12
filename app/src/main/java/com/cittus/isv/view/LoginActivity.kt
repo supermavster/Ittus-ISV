@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import androidx.navigation.Navigation
 import com.cittus.isv.R
+import com.cittus.isv.model.CittusListSignal
 import android.util.Pair as UtilPair
 
 
@@ -38,8 +39,8 @@ class LoginActivity : Fragment() {
         viewMain!!.findViewById<Button>(R.id.btn_login).setOnClickListener {
 
             // Add your data from getFactualResults method to bundle
-            bundle.putBoolean("isLogin", true)
-
+            var cittusDB: CittusListSignal = CittusListSignal(1)
+            bundle.putParcelable("CittusDB", cittusDB)
             // Init Action
             Navigation.findNavController(viewMain!!).navigate(R.id.municipalitiesActivity, bundle)
         }

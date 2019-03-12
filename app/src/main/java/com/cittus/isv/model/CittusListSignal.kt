@@ -1,36 +1,45 @@
 package com.cittus.isv.model
 
+import android.os.Parcel
+import android.os.Parcelable
+
+/*
 // Main Class
-class CittusListSignal {
+class CittusListSignal  {
 
     // Check Login
     var login: Boolean? = null
     // Inventario Main
-    var municipality: Municipalities? = null
+    //var municipality: Municipalities? = null
 
     // Signals
-    var signal: ArrayList<CittusISV>? = null
+    //var signal: ArrayList<CittusISV>? = null
     // Add ID by Signal
-    var geolocationCardinalImages: ArrayList<GeolocationCardinalImages>? = null
+    //var geolocationCardinalImages: ArrayList<GeolocationCardinalImages>? = null
 
 
-    constructor()
 
-    /*constructor(IdInventario: Int, IdSignal: Int) {
-        this.IdInventario = IdInventario
-        this.IdSignal = IdSignal
-    }*/
+}
+*/
 
-    fun setSignalMain(signal: ArrayList<CittusISV>) {
-        this.signal = signal
+data class CittusListSignal(val login: Int = 0) : Parcelable {
+
+    companion object {
+        @JvmField
+        val CREATOR: Parcelable.Creator<CittusListSignal> = object : Parcelable.Creator<CittusListSignal> {
+            override fun newArray(size: Int): Array<CittusListSignal?> = arrayOfNulls(size)
+            override fun createFromParcel(source: Parcel): CittusListSignal = CittusListSignal(source)
+        }
+
     }
 
-    fun setInventario(inventarioMain: Municipalities) {
-        this.municipality = inventarioMain
+    constructor(source: Parcel) : this(source.readInt())
+
+    override fun writeToParcel(dest: Parcel?, flags: Int) {
+        dest?.let {
+            dest.writeInt(login)
+        }
     }
 
-    override fun toString(): String {
-        return "CittusListSignal(signal=$signal, inventarioMain=$municipality)"
-        //IdInventario=$IdInventario, IdSignal=$IdSignal,
-    }
+    override fun describeContents(): Int = 0
 }

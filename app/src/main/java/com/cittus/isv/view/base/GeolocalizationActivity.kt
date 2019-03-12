@@ -2,7 +2,6 @@ package com.cittus.isv.view.base
 
 import android.os.Bundle
 import android.support.v4.app.Fragment
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -42,21 +41,17 @@ class GeolocalizationActivity : Fragment() {
         return viewMain
     }
 
+    var test = 0
     // TODO: Get Data - Municipalities
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // Get Values from Login
+        /*/ Get Values from Login
         val venName = arguments?.getStringArrayList("getData")
-        Log.e("getData",venName.toString())
+        Log.e("getData",venName.toString())*/
 
 
-        /*val someDataClass: SomeDataClass? = arguments?.getParcelable("custom_object")
-        someDataClass?.let {
-            customObjectField.text = it.someField
-            customObjectNumber.text = it.anotherField.toString()
-        }
-        */
+
     }
 
 
