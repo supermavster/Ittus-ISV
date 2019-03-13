@@ -13,10 +13,11 @@ import com.cittus.isv.R
 import com.cittus.isv.complements.camera.TakePicture
 import com.cittus.isv.model.ActionsRequest
 import com.cittus.isv.model.CittusListSignal
+import com.cittus.isv.model.GeolocationCardinalImages
 import com.cittus.isv.model.Municipalities
 import kotlinx.android.synthetic.main.activity_geolocalization.view.*
 
-class GeolocalizationActivity : Fragment() {
+class GeolocationActivity : Fragment() {
 
 
     // Main Variables
@@ -32,40 +33,34 @@ class GeolocalizationActivity : Fragment() {
     lateinit var takePictureWest: TakePicture
 
 
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
         viewMain = inflater.inflate(R.layout.activity_geolocalization, container, false)
-
-        // Init Process
-        initProcess()
-
         return viewMain
     }
 
     var login = 0
-    var munici: Municipalities? = null
+    private var municipalities: Municipalities? = null
+
     // TODO: Get Data - Municipalities
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        /*/ Get Values from Login
-        val venName = arguments?.getStringArrayList("getData")
-        Log.e("getData",venName.toString())*/
-
         val someDataClass: CittusListSignal? = arguments?.getParcelable("CittusDB")
         someDataClass?.let {
             login = it.login
-            munici = it.municipality
+            municipalities = it.municipality
         }
-        Log.e("isLogin", login.toString())
-        Log.e("Municipal", munici.toString())
+        if (login === 1) {
+            // Init Process
+            initProcess()
+        }
 
     }
 
 
-    private fun initProcess(){
+    private fun initProcess() {
         // Btn Save and Next
         btnSave()
 
@@ -73,7 +68,7 @@ class GeolocalizationActivity : Fragment() {
         cameraGeolocalization()
     }
 
-    private fun cameraGeolocalization(){
+    private fun cameraGeolocalization() {
         viewMain.findViewById<ImageButton>(R.id.ibtn_north).setOnClickListener {
             // Init Camera
             takePictureNorth = TakePicture(this.activity!!, viewMain.ibtn_north, viewMain.cb_north)
@@ -101,33 +96,52 @@ class GeolocalizationActivity : Fragment() {
     }
 
     fun getTakePictureMainNorth(): TakePicture {
-        if(takePictureNorth == null)
+        if (takePictureNorth == null)
             takePictureNorth = TakePicture(this.activity!!, viewMain.ibtn_north, viewMain.cb_north)
         return takePictureNorth
     }
 
     fun getTakePictureMainSouth(): TakePicture {
-        if(takePictureSouth == null)
+        if (takePictureSouth == null)
             takePictureSouth = TakePicture(this.activity!!, viewMain.ibtn_south, viewMain.cb_south)
         return takePictureSouth
     }
 
     fun getTakePictureMainWest(): TakePicture {
-        if(takePictureWest == null)
+        if (takePictureWest == null)
             takePictureWest = TakePicture(this.activity!!, viewMain.ibtn_west, viewMain.cb_west)
         return takePictureWest
     }
 
     fun getTakePictureMainEast(): TakePicture {
-        if(takePictureEast == null)
+        if (takePictureEast == null)
             takePictureEast = TakePicture(activity!!, viewMain.ibtn_east, viewMain.cb_east)
         return takePictureEast
     }
-        private fun btnSave(){
+
+    private fun btnSave() {
         viewMain.findViewById<Button>(R.id.btn_save_geolocalization).setOnClickListener {
+            var geolocationCardinalImages = ArrayList<GeolocationCardinalImages>()
 
+            var geoImagen = GeolocationCardinalImages("North", getTakePictureMainNorth().getPath()!!)
+            geolocationCardinalImages.add(geoImagen)
 
-            Navigation.findNavController(viewMain).navigate(R.id.typeSignalActivity)
+            geoImagen = GeolocationCardinalImages("South", getTakePictureMainSouth().getPath()!!)
+            geolocationCardinalImages.add(geoImagen)
+
+            geoImagen = GeolocationCardinalImages("East", getTakePictureMainEast().getPath()!!)
+            geolocationCardinalImages.add(geoImagen)
+
+            geoImagen = GeolocationCardinalImages("West", getTakePictureMainWest().getPath()!!)
+            geolocationCardinalImages.add(geoImagen)
+
+            // Make Object Main
+            var cittusDB: CittusListSignal = CittusListSignal(login, municipalities, null, geolocationCardinalImages)
+            // Set and Send Data Main
+            Log.e("Data", cittusDB.toString())
+            bundle.putParcelable("CittusDB", cittusDB)
+            Navigation.findNavController(viewMain!!).navigate(R.id.typeSignalActivity, bundle)
+
         }
     }
 

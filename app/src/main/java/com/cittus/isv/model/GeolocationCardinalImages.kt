@@ -5,11 +5,8 @@ import android.os.Parcelable
 
 
 data class GeolocationCardinalImages(
-    var idPhotosGeolocalizationSignal: Int,
-    var photoNorth: String,
-    var photoSouth: String,
-    var photoWest: String,
-    var photoEast: String
+    var nameCardinal: String,
+    var photoPath: String
 ) : Parcelable {
 
     companion object {
@@ -24,28 +21,21 @@ data class GeolocationCardinalImages(
     }
 
     constructor(source: Parcel) : this(
-        source.readInt(),
-        source.readString(),
-        source.readString(),
         source.readString(),
         source.readString()
     )
 
     override fun writeToParcel(dest: Parcel?, flags: Int) {
         dest?.let {
-            dest.writeInt(idPhotosGeolocalizationSignal)
-            dest.writeString(photoNorth)
-            dest.writeString(photoSouth)
-            dest.writeString(photoWest)
-            dest.writeString(photoEast)
+            dest.writeString(nameCardinal)
+            dest.writeString(photoPath)
         }
     }
 
     override fun describeContents(): Int = 0
 
-
     override fun toString(): String {
-        return "GelocalizationImages(idPhotosGeolocalization=$idPhotosGeolocalizationSignal, photoNorth='$photoNorth', photoSouth='$photoSouth', photoWest='$photoWest', photoEast='$photoEast')"
+        return "GeolocationCardinalImages(nameCardinal='$nameCardinal', photoPath='$photoPath')"
     }
 
 

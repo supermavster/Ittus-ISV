@@ -29,7 +29,7 @@
     </fragment>
     <fragment
             android:id="@+id/geolocalizationActivity"
-            android:name="com.cittus.isv.view.base.GeolocalizationActivity"
+            android:name="com.cittus.isv.view.base.GeolocationActivity"
             android:label="Blank"
             tools:layout="@layout/activity_geolocalization">
         <action android:id="@+id/action_geolocalizationActivity_to_typeSignalActivity"

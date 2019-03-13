@@ -17,7 +17,7 @@ import com.cittus.isv.model.ActionsRequest
 import com.cittus.isv.model.CittusListSignal
 import com.cittus.isv.model.CittusSignal
 import com.cittus.isv.model.Municipalities
-import com.cittus.isv.view.base.GeolocalizationActivity
+import com.cittus.isv.view.base.GeolocationActivity
 import com.cittus.isv.view.signal.PhotoGPSActivity
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -74,22 +74,22 @@ class MainActivity : AppCompatActivity() {
         // Select Case
         when (requestCode) {
             ActionsRequest.TAKE_PHOTO_REQUEST_NORTH and RESULT_OK -> {
-                val fragment = navHostFragment!!.childFragmentManager.fragments[0] as GeolocalizationActivity
+                val fragment = navHostFragment!!.childFragmentManager.fragments[0] as GeolocationActivity
                 // Call Method Fragment
                 processCapturedPhoto(fragment.getTakePictureMainNorth())
             }
             ActionsRequest.TAKE_PHOTO_REQUEST_SOUTH and RESULT_OK -> {
-                val fragment = navHostFragment!!.childFragmentManager.fragments[0] as GeolocalizationActivity
+                val fragment = navHostFragment!!.childFragmentManager.fragments[0] as GeolocationActivity
                 // Call Method Fragment
                 processCapturedPhoto(fragment.getTakePictureMainSouth())
             }
             ActionsRequest.TAKE_PHOTO_REQUEST_WEST and RESULT_OK -> {
-                val fragment = navHostFragment!!.childFragmentManager.fragments[0] as GeolocalizationActivity
+                val fragment = navHostFragment!!.childFragmentManager.fragments[0] as GeolocationActivity
                 // Call Method Fragment
                 processCapturedPhoto(fragment.getTakePictureMainWest())
             }
             ActionsRequest.TAKE_PHOTO_REQUEST_EAST and RESULT_OK -> {
-                val fragment = navHostFragment!!.childFragmentManager.fragments[0] as GeolocalizationActivity
+                val fragment = navHostFragment!!.childFragmentManager.fragments[0] as GeolocationActivity
                 // Call Method Fragment
                 processCapturedPhoto(fragment.getTakePictureMainEast())
             }

@@ -2,7 +2,6 @@ package com.cittus.isv.view.base
 
 import android.os.Bundle
 import android.support.v4.app.Fragment
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -29,7 +28,6 @@ class MunicipalitiesActivity : Fragment() {
     var login = 0
 
 
-
     var maxIDInventario = ""
     var maxIDListSignal = ""
 
@@ -47,11 +45,7 @@ class MunicipalitiesActivity : Fragment() {
     // TODO: Get Data - Login
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        /*/ Get Values from Login
-        val isLogin = arguments?.getBoolean("isLogin")
-        // Add your data from getFactualResults method to bundle
-        Log.e("isLogin", isLogin.toString())*/
-
+        // Get data from last Fragment
         val someDataClass: CittusListSignal? = arguments?.getParcelable("CittusDB")
         someDataClass?.let {
             login = it.login
@@ -135,13 +129,11 @@ class MunicipalitiesActivity : Fragment() {
             var idMaxSignal = data.get(4).toInt()
             var nameMunicipal = data.get(2)
             var nameDepartment = data.get(3)
-            Log.e("Data", data.toString())
 
             // Make Object Municipalities
             val municipalities = Municipalities(idInventario, idListSignal, idMaxSignal, nameMunicipal, nameDepartment)
             // Make Object Main
             var cittusDB: CittusListSignal = CittusListSignal(login, municipalities, null, null)
-            Log.e("Id", cittusDB.toString())
             // Set and Send Data Main
             bundle.putParcelable("CittusDB", cittusDB)
             // Init Action
