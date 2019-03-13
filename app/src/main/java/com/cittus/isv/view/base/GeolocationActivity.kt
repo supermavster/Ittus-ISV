@@ -2,7 +2,6 @@ package com.cittus.isv.view.base
 
 import android.os.Bundle
 import android.support.v4.app.Fragment
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -19,12 +18,13 @@ import kotlinx.android.synthetic.main.activity_geolocalization.view.*
 
 class GeolocationActivity : Fragment() {
 
-
     // Main Variables
     private lateinit var viewMain: View
 
     // Make Bundle
     val bundle = Bundle()
+    var login = 0
+    private var municipalities: Municipalities? = null
 
     // Cameras
     lateinit var takePictureNorth: TakePicture
@@ -40,8 +40,6 @@ class GeolocationActivity : Fragment() {
         return viewMain
     }
 
-    var login = 0
-    private var municipalities: Municipalities? = null
 
     // TODO: Get Data - Municipalities
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -138,7 +136,6 @@ class GeolocationActivity : Fragment() {
             // Make Object Main
             var cittusDB: CittusListSignal = CittusListSignal(login, municipalities, null, geolocationCardinalImages)
             // Set and Send Data Main
-            Log.e("Data", cittusDB.toString())
             bundle.putParcelable("CittusDB", cittusDB)
             Navigation.findNavController(viewMain!!).navigate(R.id.typeSignalActivity, bundle)
 
