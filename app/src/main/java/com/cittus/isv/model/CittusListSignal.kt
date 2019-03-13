@@ -3,26 +3,12 @@ package com.cittus.isv.model
 import android.os.Parcel
 import android.os.Parcelable
 
-/*
-// Main Class
-class CittusListSignal  {
-
-    // Check Login
-    var login: Boolean? = null
-    // Inventario Main
-    //var municipality: Municipalities? = null
-
-    // Signals
-    //var signal: ArrayList<CittusISV>? = null
-    // Add ID by Signal
-    //var geolocationCardinalImages: ArrayList<GeolocationCardinalImages>? = null
-
-
-
-}
-*/
-
-data class CittusListSignal(val login: Int = 0) : Parcelable {
+data class CittusListSignal(
+    val login: Int,
+    var municipality: Municipalities?,
+    var signal: ArrayList<CittusISV>?,
+    var geolocationCardinalImages: ArrayList<GeolocationCardinalImages>?
+) : Parcelable {
 
     companion object {
         @JvmField
@@ -33,11 +19,26 @@ data class CittusListSignal(val login: Int = 0) : Parcelable {
 
     }
 
-    constructor(source: Parcel) : this(source.readInt())
+    constructor(source: Parcel) : this(
+        source.readInt(),
+        source.readParcelable(Municipalities::class.java.classLoader),
+        arrayListOf<CittusISV>().apply {
+            source.readArrayList(CittusISV::class.java.classLoader)
+        },
+        arrayListOf<GeolocationCardinalImages>().apply {
+            source.readArrayList(GeolocationCardinalImages::class.java.classLoader)
+        }
+    )
 
     override fun writeToParcel(dest: Parcel?, flags: Int) {
         dest?.let {
             dest.writeInt(login)
+            // Data Municipality
+            dest.writeParcelable(municipality, flags)
+            // Cittus ISV - Signal
+            dest.writeParcelableArray(arrayOf(signal?.get(0)), flags)
+            // Cardinal Images
+            dest.writeParcelableArray(arrayOf(geolocationCardinalImages?.get(0)), flags)
         }
     }
 

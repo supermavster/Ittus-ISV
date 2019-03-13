@@ -1,17 +1,38 @@
 package com.cittus.isv.model
 
-class CittusISV {
+import android.os.Parcel
+import android.os.Parcelable
 
-    var typeSignal: String? = null // Check -> Enum
+data class CittusISV(var typeSignal: String) : Parcelable {
+
     var imagesByCode: ImagenSignalCode? = null
     var locationSignal: LocationSignal? = null
     var cittusSignal: CittusSignal? = null
     var verticalSignal: VerticalSignal? = null
     var horizontalSignal: HorizontalSignal? = null
 
+    companion object {
+        @JvmField
+        val CREATOR: Parcelable.Creator<Municipalities> = object : Parcelable.Creator<Municipalities> {
+            override fun newArray(size: Int): Array<Municipalities?> = arrayOfNulls(size)
+            override fun createFromParcel(source: Parcel): Municipalities = Municipalities(source)
+        }
 
+    }
+
+    constructor(source: Parcel) : this(
+        source.readString()
+    )
+
+    override fun writeToParcel(dest: Parcel?, flags: Int) {
+        dest?.let {
+            dest.writeString(typeSignal)
+        }
+    }
+
+    override fun describeContents(): Int = 0
     override fun toString(): String {
-        return "CittusISV(typeSignal=$typeSignal, imagesByCode=$imagesByCode, locationSignal=$locationSignal, cittusSignal=$cittusSignal, verticalSignal=$verticalSignal, horizontalSignal=$horizontalSignal)"
+        return "CittusISV(typeSignal='$typeSignal', imagesByCode=$imagesByCode, locationSignal=$locationSignal, cittusSignal=$cittusSignal, verticalSignal=$verticalSignal, horizontalSignal=$horizontalSignal)"
     }
 
 

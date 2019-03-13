@@ -2,6 +2,7 @@ package com.cittus.isv.view.base
 
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,6 +12,8 @@ import androidx.navigation.Navigation
 import com.cittus.isv.R
 import com.cittus.isv.complements.camera.TakePicture
 import com.cittus.isv.model.ActionsRequest
+import com.cittus.isv.model.CittusListSignal
+import com.cittus.isv.model.Municipalities
 import kotlinx.android.synthetic.main.activity_geolocalization.view.*
 
 class GeolocalizationActivity : Fragment() {
@@ -41,7 +44,8 @@ class GeolocalizationActivity : Fragment() {
         return viewMain
     }
 
-    var test = 0
+    var login = 0
+    var munici: Municipalities? = null
     // TODO: Get Data - Municipalities
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -50,7 +54,13 @@ class GeolocalizationActivity : Fragment() {
         val venName = arguments?.getStringArrayList("getData")
         Log.e("getData",venName.toString())*/
 
-
+        val someDataClass: CittusListSignal? = arguments?.getParcelable("CittusDB")
+        someDataClass?.let {
+            login = it.login
+            munici = it.municipality
+        }
+        Log.e("isLogin", login.toString())
+        Log.e("Municipal", munici.toString())
 
     }
 
@@ -115,6 +125,8 @@ class GeolocalizationActivity : Fragment() {
     }
         private fun btnSave(){
         viewMain.findViewById<Button>(R.id.btn_save_geolocalization).setOnClickListener {
+
+
             Navigation.findNavController(viewMain).navigate(R.id.typeSignalActivity)
         }
     }

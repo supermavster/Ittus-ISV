@@ -38,4 +38,8 @@ object EndPoints {
 
     // Get Folder Main Images
     const val IMAGE_DIRECTORY_NAME = "ITTUS"
+
+    const val URL_GET_MAX_ID_INVENTORY = URL_GET_MAX_ID + "inventario"
+    const val URL_GET_MAX_ID_LIST = URL_GET_MAX_ID + "lista"
+    const val URL_GET_MAX_ID_SIGNAL = URL_GET_MAX_ID + "signal"
 }

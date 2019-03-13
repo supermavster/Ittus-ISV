@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.Toast
 import androidx.navigation.Navigation
 import com.cittus.isv.R
 import com.cittus.isv.model.CittusListSignal
@@ -37,13 +38,47 @@ class LoginActivity : Fragment() {
 
     private fun btnLogin(){
         viewMain!!.findViewById<Button>(R.id.btn_login).setOnClickListener {
+            //TODO(LOAD DATA) - Example
+            // Check Login by Boolean - Make method
+            var check: Boolean = true
+            var login: Int = if (check) 1 else 0
 
-            // Add your data from getFactualResults method to bundle
-            var cittusDB: CittusListSignal = CittusListSignal(1)
-            bundle.putParcelable("CittusDB", cittusDB)
-            // Init Action
-            Navigation.findNavController(viewMain!!).navigate(R.id.municipalitiesActivity, bundle)
+            /*
+            val municipalities = Municipalities(2,"holi")
+
+            val signal = ArrayList<CittusISV>()
+            var temp = CittusISV("como me le va")
+
+
+            var signalTemporal = CittusSignal()
+            signalTemporal.altitude = 10f
+            temp.cittusSignal = signalTemporal
+            signal.add(temp)
+
+            temp = CittusISV("Bien bien")
+            signal.add(temp)
+
+            temp = CittusISV("Como le fue a su jermu")
+            signal.add(temp)
+
+            val geolocationCardinal = ArrayList<GeolocationCardinalImages>()
+            var tempGeo = GeolocationCardinalImages(1,"a","b","c","d")
+            geolocationCardinal.add(tempGeo)
+
+            var cittusDB: CittusListSignal = CittusListSignal(login,municipalities,signal,geolocationCardinal)*/
+            // Check Login
+            if (login === 1) {
+                // Make Object Main
+                var cittusDB: CittusListSignal = CittusListSignal(login, null, null, null)
+                // Set and Send Data Main
+                bundle.putParcelable("CittusDB", cittusDB)
+                // Init Action
+                Navigation.findNavController(viewMain!!).navigate(R.id.municipalitiesActivity, bundle)
+            } else {
+                Toast.makeText(this.context, "Error al ingresr", Toast.LENGTH_SHORT).show()
+            }
         }
     }
+
 
 }

@@ -13,6 +13,8 @@ import android.widget.Button
 import com.cittus.isv.DAO.DAOConnection
 import com.cittus.isv.R
 import com.cittus.isv.model.CittusListSignal
+import com.cittus.isv.model.EndPoints
+import java.util.*
 
 class MunicipalitiesActivity : Fragment() {
 
@@ -50,29 +52,30 @@ class MunicipalitiesActivity : Fragment() {
         /*/ Get Values from Login
         val isLogin = arguments?.getBoolean("isLogin")
         // Add your data from getFactualResults method to bundle
-        if (isLogin === true) {
-            // Init Process
-            initProcess()
-        }Log.e("isLogin", isLogin.toString())*/
+        Log.e("isLogin", isLogin.toString())*/
 
         val someDataClass: CittusListSignal? = arguments?.getParcelable("CittusDB")
         someDataClass?.let {
             test = it.login
         }
+        if (test === 1) {
+            // Init Process
+            initProcess()
+        }
     }
 
     private fun initProcess() {
 
-        /*/ Lock Button and TextView
+        // Lock Button and TextView
         viewMain!!.findViewById<AutoCompleteTextView>(R.id.auto_complete_municipio).isEnabled = false
         viewMain!!.findViewById<Button>(R.id.buttonMain).isEnabled = false
 
         // MAx ID Inventario - maxIDListSignal
-        maxIDInventario = connection!!.loadElement(EndPoints.URL_GET_MAX_ID + "inventario")
-        maxIDListSignal = connection!!.loadElement(EndPoints.URL_GET_MAX_ID + "lista")
+        maxIDInventario = connection!!.getDataSingle(EndPoints.URL_GET_MAX_ID + "inventario")
+        maxIDListSignal = connection!!.getDataSingle(EndPoints.URL_GET_MAX_ID + "lista")
 
         // Departamento
-        var array = connection!!.loadElements(EndPoints.URL_GET_DEPARTAMENTOS)
+        var array = connection!!.getData(EndPoints.URL_GET_DEPARTAMENTOS)
         makeAutocomplete(array, viewMain!!.findViewById<AutoCompleteTextView>(R.id.auto_complete_departamento))
 
         // Set Actions
@@ -83,14 +86,12 @@ class MunicipalitiesActivity : Fragment() {
                 viewMain!!.findViewById<Button>(R.id.buttonMain).isEnabled = true
                 // Add Actions
                 val selectedItem = parent.getItemAtPosition(position).toString()
-                array = connection!!.loadElements(EndPoints.URL_GET_SEARCH_MUNICIPIOS + selectedItem)
+                array = connection!!.getData(EndPoints.URL_GET_SEARCH_MUNICIPIOS + selectedItem)
                 makeAutocomplete(array, viewMain!!.findViewById<AutoCompleteTextView>(R.id.auto_complete_municipio))
             }
 
 
         viewMain!!.findViewById<Button>(R.id.buttonMain).setOnClickListener { view ->
-
-            var intentTemp = Intent(viewMain!!.context, MainActivity::class.java)
             var data = ArrayList<String>()
             // TODO: Location DATA MAIN (1)
             // 0 -> Id Inventario
@@ -100,12 +101,12 @@ class MunicipalitiesActivity : Fragment() {
             // 4 -> Id Max Signal
             // Get Max Inventario
             if (maxIDInventario.isEmpty()) {
-                maxIDInventario = connection!!.loadElement(EndPoints.URL_GET_MAX_ID + "inventario")
+                maxIDInventario = connection!!.getDataSingle(EndPoints.URL_GET_MAX_ID + "inventario")
             }
             data.add(0, maxIDInventario) // 0 -> Id Inventario
             // Get Max Signal
             if (maxIDListSignal.isEmpty()) {
-                maxIDListSignal = connection!!.loadElement(EndPoints.URL_GET_MAX_ID + "lista")
+                maxIDListSignal = connection!!.getDataSingle(EndPoints.URL_GET_MAX_ID + "lista")
             }
             data.add(1, maxIDListSignal) // 1 -> Id Lista Senal
 
@@ -127,13 +128,14 @@ class MunicipalitiesActivity : Fragment() {
             //intentTemp.putExtra("getData", data)
             //startActivityForResult(intentTemp, ActionsRequest.GET_INIT)
 
+            Log.e("Data", data.toString())
             // Add your data from getData method to bundle
             bundle.putStringArrayList("getData", data)
 
             // Init Action
-            Navigation.findNavController(viewMain!!).navigate(R.id.geolocalizationActivity, bundle)
+            //Navigation.findNavController(viewMain!!).navigate(R.id.geolocalizationActivity, bundle)
 
-        }*/
+        }
     }
 
     private fun makeAutocomplete(array: ArrayList<String>, auto_complete_text_view: AutoCompleteTextView) {
