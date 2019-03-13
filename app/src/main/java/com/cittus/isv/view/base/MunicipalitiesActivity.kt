@@ -10,10 +10,12 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
 import android.widget.Button
+import androidx.navigation.Navigation
 import com.cittus.isv.DAO.DAOConnection
 import com.cittus.isv.R
 import com.cittus.isv.model.CittusListSignal
 import com.cittus.isv.model.EndPoints
+import com.cittus.isv.model.Municipalities
 import java.util.*
 
 class MunicipalitiesActivity : Fragment() {
@@ -24,6 +26,8 @@ class MunicipalitiesActivity : Fragment() {
 
     // Make Bundle
     val bundle = Bundle()
+    var login = 0
+
 
 
     var maxIDInventario = ""
@@ -37,14 +41,8 @@ class MunicipalitiesActivity : Fragment() {
         viewMain = inflater.inflate(R.layout.activity_municipalities, container, false)
         // Init Connection
         connection = DAOConnection(viewMain.context)
-
-        viewMain!!.findViewById<Button>(R.id.buttonMain).setOnClickListener { view ->
-            Log.e("isLogin", test.toString())
-        }
         return viewMain
     }
-
-    var test = 0
 
     // TODO: Get Data - Login
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -56,9 +54,9 @@ class MunicipalitiesActivity : Fragment() {
 
         val someDataClass: CittusListSignal? = arguments?.getParcelable("CittusDB")
         someDataClass?.let {
-            test = it.login
+            login = it.login
         }
-        if (test === 1) {
+        if (login === 1) {
             // Init Process
             initProcess()
         }
@@ -99,6 +97,7 @@ class MunicipalitiesActivity : Fragment() {
             // 2 -> Municipio
             // 3 -> Departamento
             // 4 -> Id Max Signal
+
             // Get Max Inventario
             if (maxIDInventario.isEmpty()) {
                 maxIDInventario = connection!!.getDataSingle(EndPoints.URL_GET_MAX_ID + "inventario")
@@ -125,15 +124,28 @@ class MunicipalitiesActivity : Fragment() {
             // Get Max Id Singal
             data.add(4, maxIDListSignal);//connection.loadElement(EndPoints.URL_GET_MAX_ID+"senal"))
 
-            //intentTemp.putExtra("getData", data)
-            //startActivityForResult(intentTemp, ActionsRequest.GET_INIT)
-
+            // Set Data
+            // 0 -> Id Inventario
+            // 1 -> Id Lista Senal
+            // 2 -> Municipio
+            // 3 -> Departamento
+            // 4 -> Id Max Signal
+            var idInventario = data.get(0).toInt()
+            var idListSignal = data.get(1).toInt()
+            var idMaxSignal = data.get(4).toInt()
+            var nameMunicipal = data.get(2)
+            var nameDepartment = data.get(3)
             Log.e("Data", data.toString())
-            // Add your data from getData method to bundle
-            bundle.putStringArrayList("getData", data)
 
+            // Make Object Municipalities
+            val municipalities = Municipalities(idInventario, idListSignal, idMaxSignal, nameMunicipal, nameDepartment)
+            // Make Object Main
+            var cittusDB: CittusListSignal = CittusListSignal(login, municipalities, null, null)
+            Log.e("Id", cittusDB.toString())
+            // Set and Send Data Main
+            bundle.putParcelable("CittusDB", cittusDB)
             // Init Action
-            //Navigation.findNavController(viewMain!!).navigate(R.id.geolocalizationActivity, bundle)
+            Navigation.findNavController(viewMain!!).navigate(R.id.geolocalizationActivity, bundle)
 
         }
     }

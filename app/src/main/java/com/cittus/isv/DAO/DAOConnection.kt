@@ -45,9 +45,6 @@ class DAOConnection(contextMain: Context) {
 
         val requestQueue = Volley.newRequestQueue(contextMain)
         requestQueue.add<String>(stringRequest)
-
-        Log.e("Data", elements.toString())
-
         return elements
     }
 
@@ -67,7 +64,6 @@ class DAOConnection(contextMain: Context) {
 
         val requestQueue = Volley.newRequestQueue(contextMain)
         requestQueue.add<String>(stringRequest)
-        Log.e("eleme", element)
         return element
     }
 

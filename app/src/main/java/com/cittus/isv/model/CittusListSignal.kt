@@ -43,4 +43,10 @@ data class CittusListSignal(
     }
 
     override fun describeContents(): Int = 0
+
+    override fun toString(): String {
+        return "CittusListSignal(login=$login, municipality=$municipality, signal=$signal, geolocationCardinalImages=$geolocationCardinalImages)"
+    }
+
+
 }
