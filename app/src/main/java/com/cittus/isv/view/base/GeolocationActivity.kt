@@ -54,7 +54,6 @@ class GeolocationActivity : Fragment() {
             // Init Process
             initProcess()
         }
-
     }
 
 

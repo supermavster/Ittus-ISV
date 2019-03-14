@@ -1,15 +1,10 @@
 package com.cittus.isv.controller;
 
-import android.content.Intent;
-import android.os.Bundle;
-import android.support.v4.app.Fragment;
+import android.content.Context;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.AppCompatActivity;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.*;
-import androidx.navigation.Navigation;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -18,6 +13,7 @@ import com.android.volley.toolbox.JsonArrayRequest;
 import com.cittus.isv.R;
 import com.cittus.isv.complements.slider.CustomVolleyRequest;
 import com.cittus.isv.complements.slider.ViewPagerAdapter;
+import com.cittus.isv.model.CittusImage;
 import com.cittus.isv.model.SliderUtils;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -27,10 +23,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 // TODO: Cambiar a Fragment
-public class MainImage extends AppCompatActivity {
+public class MainImages {
 
     // Variables Globals
-    String request_url;
     Spinner spinner;
     Boolean sliderOn = false;
 
@@ -44,73 +39,50 @@ public class MainImage extends AppCompatActivity {
     List<SliderUtils> sliderImg;
     ViewPagerAdapter viewPagerAdapter;
 
-
-
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-        setContentView(R.layout.activity_main_image);
-        // Init Process
-        intiProcess();
-    }
+    Context context;
 
 
     private void intiProcess() {
-        // Init Variables
-        initVariables();
-
-        // Get Elements Base (Consult and Set)
-        getValuesMain();
-
         // Make Slider
         getRequest();
 
         // Set Process to Click
         processClick();
-
-        // BTN Save
-        saveElements();
-    }
-
-    private void initVariables() {
-
-        // Init Elements Base (Consult and Set)
-        sliderImg = new ArrayList<>();
-        rq = CustomVolleyRequest.getInstance(this).getRequestQueue();
-
-        // Init Elements - View
-        viewPager = (ViewPager) findViewById(R.id.viewPager);
-        sliderDotspanel = (LinearLayout) findViewById(R.id.SliderDots);
-
-        // Selection of the spinner
-        spinner = (Spinner) findViewById(R.id.spin_code_images);
     }
 
     int actionImages = 5;
     String titleMain = "";
-    private void getValuesMain() {
-        // Intent Variable
-        Intent intent = getIntent();
+    String request_url;
 
-        // Set Template New Activity
-        TextView title = findViewById(R.id.lbl_title_images);
-        titleMain = intent.getStringExtra("title");
-        title.setText(titleMain);
+    public void getValuesMain(CittusImage imageSelect, Context context, ViewPager viewPagerTemp, LinearLayout SliderDotsTemp, Spinner spinCode) {
 
-        // Url Main Base - Imgs
-        request_url = intent.getStringExtra("url_img");
+        // Select Values
+        String titleMain = imageSelect.getTitle();
+        String urlImg = imageSelect.getUrl_img();
+        Integer action = imageSelect.getAction();
 
-        actionImages = intent.getIntExtra("Action",5);
+        // Set Variables
+        this.titleMain = titleMain;//;intent.getStringExtra("title");
+        request_url = urlImg;//intent.getStringExtra("url_img");
+        actionImages = action;//intent.getIntExtra("Action",5);
 
-        //actionImages =  (int) intent.getStringExtra("Action");
-        // Active Select
-        findViewById(R.id.codeMain).setVisibility(intent.getBooleanExtra("code", true) ? View.VISIBLE : View.GONE);
-        //findViewById(R.id.descriptionMain).setVisibility(intent.getBooleanExtra("description", true) ? View.VISIBLE : View.GONE);
+        // Init Varaibles Main
 
-        // Url Main Base - Imgs
-        request_url = intent.getStringExtra("url_img");
+        // Init Elements Base (Consult and Set)
+        sliderImg = new ArrayList<>();
+        this.context = context;
+
+        rq = CustomVolleyRequest.getInstance(this.context).getRequestQueue();
+
+        // Init Elements - View
+        viewPager = viewPagerTemp;//(ViewPager) findViewById(R.id.viewPager);
+        sliderDotspanel = SliderDotsTemp;//(LinearLayout) findViewById(R.id.SliderDots);
+
+        // Selection of the spinner
+        spinner = spinCode;//(Spinner) findViewById(R.id.spin_code_images);
+
+        // Init Process
+        intiProcess();
     }
 
     private void processClick() {
@@ -205,12 +177,12 @@ public class MainImage extends AppCompatActivity {
             }
         });
         // Make Request
-        CustomVolleyRequest.getInstance(this).addToRequestQueue(jsonArrayRequest);
+        CustomVolleyRequest.getInstance(context).addToRequestQueue(jsonArrayRequest);
     }
 
     private void setSlider() {
         // Init Elements Base - Adapters
-        viewPagerAdapter = new ViewPagerAdapter(sliderImg, MainImage.this, spinner);
+        viewPagerAdapter = new ViewPagerAdapter(sliderImg, context, spinner);
         viewPager.setAdapter(viewPagerAdapter);
         // Get Count
         dotscount = viewPagerAdapter.getCount();
@@ -220,20 +192,20 @@ public class MainImage extends AppCompatActivity {
             dots = new ImageView[dotscount];
             for (int i = 0; i < dotscount; i++) {
                 // Set location and move to do it
-                dots[i] = new ImageView(MainImage.this);
-                dots[i].setImageDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.non_active_dot));
+                dots[i] = new ImageView(context);
+                dots[i].setImageDrawable(ContextCompat.getDrawable(context, R.drawable.non_active_dot));
                 LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
                 params.setMargins(8, 0, 8, 0);
                 sliderDotspanel.addView(dots[i], params);
             }
             // Set image at select the dot
-            dots[0].setImageDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.active_dot));
+            dots[0].setImageDrawable(ContextCompat.getDrawable(context, R.drawable.active_dot));
         }
     }
 
     private void setSpinner() {
         // Application of the Array to the Spinner
-        ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, arrayCodes);
+        ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<String>(context, android.R.layout.simple_spinner_item, arrayCodes);
         spinnerArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item); // The drop down view
         spinner.setAdapter(spinnerArrayAdapter);
     }
@@ -241,46 +213,15 @@ public class MainImage extends AppCompatActivity {
     private void setElementByPosition(int position) {
         // Move another Elements (DOTS)
         for (int i = 0; i < dotscount; i++) {
-            dots[i].setImageDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.non_active_dot));
+            dots[i].setImageDrawable(ContextCompat.getDrawable(context, R.drawable.non_active_dot));
         }
         // Set Image
-        dots[position].setImageDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.active_dot));
+        dots[position].setImageDrawable(ContextCompat.getDrawable(context, R.drawable.active_dot));
         // Set element in Spinner
         if (position >= 0) {
             spinner.setSelection(position);
         }
     }
 
-    ArrayList elementsBase = new ArrayList<String>();
-    private void saveElements() {
-        findViewById(R.id.btn_save_image).setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                // TODO: Get Data Images
-                // 0 -> Number
-                // 1 -> Code
-                // 2 -> Img Select
-                if (spinner != null) {
-                    String ss = spinner.getSelectedItem().toString();
-                    for (int i = 0; i < arrayCodes.length; i++) {
-                        if (arrayCodes[i] == ss) {
-                            elementsBase.add(0,i);
-                            elementsBase.add(1,arrayCodes[i]);
-                            elementsBase.add(2, arrayImages[i]);
-                        }
-                    }
-                    // Array
-                    Intent intent = getIntent();
-                    intent.putExtra("getDataImages", elementsBase);
-                    intent.putExtra("getTitle", titleMain);
-                    setResult(actionImages, intent);// GET_IMAGES
 
-                    finish();
-                }
-                return true;
-            }
-        });
-
-
-    }
 }

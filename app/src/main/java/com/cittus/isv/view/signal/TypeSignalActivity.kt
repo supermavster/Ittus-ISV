@@ -52,12 +52,12 @@ class TypeSignalActivity: Fragment() {
     private fun initProcess() {
         viewMain.findViewById<Button>(R.id.btn_horizontal).setOnClickListener {
             setData("Horizontal")
-            Navigation.findNavController(viewMain).navigate(R.id.locationOnTheWayActivity)
+            Navigation.findNavController(viewMain!!).navigate(R.id.locationOnTheWayActivity, bundle)
         }
 
         viewMain.findViewById<Button>(R.id.btn_vertical).setOnClickListener {
             setData("Vertical")
-            Navigation.findNavController(viewMain).navigate(R.id.typeSignalVertical)
+            Navigation.findNavController(viewMain!!).navigate(R.id.typeSignalVertical, bundle)
         }
     }
 

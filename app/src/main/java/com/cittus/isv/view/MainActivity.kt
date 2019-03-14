@@ -67,7 +67,7 @@ class MainActivity : AppCompatActivity() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
 
         // Show Action And Values (Send Variables) - Intent
-        Log.i("Main Activity", requestCode.toString() + "->" + resultCode + "->" + data.toString())
+        Log.e("Main Activity", requestCode.toString() + "->" + resultCode + "->" + data.toString())
 
         // Get Fragment Called
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.my_nav_host_fragment)
