@@ -174,7 +174,7 @@ class GenearlDataActivity : Fragment() {
             // Set and Send Data Main
             bundle.putParcelable("CittusDB", cittusDB)
             // Start Activity
-            Navigation.findNavController(viewMain!!).navigate(R.id.mainImage, bundle)
+            Navigation.findNavController(viewMain!!).navigate(R.id.photoGPSActivity, bundle)
         }
     }
 

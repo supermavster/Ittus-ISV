@@ -6,13 +6,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.EditText
 import android.widget.ImageButton
 import androidx.navigation.Navigation
 import com.cittus.isv.R
 import com.cittus.isv.complements.camera.TakePicture
 import com.cittus.isv.complements.gps.GPS_Best
 import com.cittus.isv.complements.gps.GetUserLocation
-import com.cittus.isv.model.ActionsRequest
+import com.cittus.isv.model.*
 import kotlinx.android.synthetic.main.activity_photo_gps.view.*
 
 class PhotoGPSActivity : Fragment() {
@@ -22,46 +23,55 @@ class PhotoGPSActivity : Fragment() {
 
     // Make Bundle
     val bundle = Bundle()
+    var login = 0
+    private var municipalities: Municipalities? = null
+    private var geolocationCardinalImages: ArrayList<GeolocationCardinalImages>? = null
+    private var signalArrayList = ArrayList<CittusISV>()
+    // Variables Class
 
     // Cameras
     lateinit var takePictureFront: TakePicture
     lateinit var takePictureBack: TakePicture
     lateinit var takePicturePlaque: TakePicture
 
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
         viewMain = inflater.inflate(R.layout.activity_photo_gps, container, false)
-        // Init Process
-        initProcess()
         return viewMain
     }
 
     // TODO: Get Data - Municipalities
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        // Get Values from Login
-        val venName = arguments?.getStringArrayList("getData")
-        //Log.e("getData",venName.toString())
-
-
-        /*val someDataClass: SomeDataClass? = arguments?.getParcelable("custom_object")
+        // Get Data
+        val someDataClass: CittusListSignal? = arguments?.getParcelable("CittusDB")
         someDataClass?.let {
-            customObjectField.text = it.someField
-            customObjectNumber.text = it.anotherField.toString()
+            login = it.login
+            municipalities = it.municipality
+            geolocationCardinalImages = it.geolocationCardinalImages
+            signalArrayList = it.signal!!
+
         }
-        */
+        if (login === 1) {
+            // Init Process
+            initProcess()
+        }
     }
 
 
+
+
     private fun initProcess() {
-        // Btn Save and Next
-        btnSave()
+
         // Btn Camera
         cameraActions()
         // Btn GPS
         gpsActions()
+
+        // Btn Save and Next
+        btnSave()
     }
 
     private fun cameraActions() {
@@ -87,7 +97,34 @@ class PhotoGPSActivity : Fragment() {
 
     private fun btnSave() {
         viewMain.findViewById<Button>(R.id.btn_next_photo).setOnClickListener {
-            Navigation.findNavController(viewMain).navigate(R.id.finishSaveActivity)
+
+            // Get Data Temp
+            var tempData = getData()
+            // 0 -> Latitud
+            // 1 -> Longitud
+            // 2 -> Clasification
+            // 3 -> Img Front
+            // 4 -> Img Back
+            // 5 -> Img Plaque
+            // Set data temp - GPS PHOTO
+            var cittusSignal = CittusSignal()
+            cittusSignal.latitude = tempData.get(0).toFloat()
+            cittusSignal.longitude = tempData.get(1).toFloat()
+            cittusSignal.altitude = tempData.get(2).toFloat()
+            cittusSignal.photoFront = tempData.get(3)
+            cittusSignal.photoBack = tempData.get(4)
+            cittusSignal.photoPlaque = tempData.get(5)
+
+            signalArrayList.get(0).cittusSignal = cittusSignal
+
+            // Make Object Main
+            var cittusDB: CittusListSignal =
+                CittusListSignal(login, municipalities, signalArrayList, geolocationCardinalImages)
+            // Set and Send Data Main
+            bundle.putParcelable("CittusDB", cittusDB)
+            // Start Activity
+            Navigation.findNavController(viewMain!!).navigate(R.id.finishSaveActivity, bundle)
+
         }
     }
 
@@ -117,12 +154,6 @@ class PhotoGPSActivity : Fragment() {
         // Set Actions
         viewMain.findViewById<ImageButton>(R.id.btn_gps).setOnClickListener {
 
-            /*locationMain?.init(this.activity!!)
-            var location = locationMain?.setButtonGPSActions()
-            if (location != null) {
-                viewMain.txt_latitude.setText(location.longitude.toString())
-                viewMain.txt_longitude.setText(location.latitude.toString())
-            }*/
             GPS_Best(
                 this.activity!!,
                 viewMain.txt_latitude,
@@ -131,5 +162,43 @@ class PhotoGPSActivity : Fragment() {
             )?.toggleBestUpdates(viewMain)
 
         }
+    }
+
+    fun getData(): ArrayList<String> {
+        // TODO: ISV DATA MAIN (1)
+        // 0 -> Latitud
+        // 1 -> Longitud
+        // 2 -> Altitude
+        // 3 -> Img Front
+        // 4 -> Img Back
+        // 5 -> Img Plaque
+        var tempArray: ArrayList<String> = ArrayList<String>()
+        // Latitude and Longitude
+
+        tempArray.add(0, viewMain.findViewById<EditText>(R.id.txt_latitude).text.toString()) // 0 -> Latitud
+        tempArray.add(1, viewMain.findViewById<EditText>(R.id.txt_longitude).text.toString()) // 1 -> Longitud
+        tempArray.add(2, viewMain.findViewById<EditText>(R.id.txt_altitude).text.toString()) // 1 -> Altitude
+
+
+        // Get Imagen
+        if (viewMain.findViewById<ImageButton>(R.id.ibtn_front).isClickable) {
+            tempArray.add(3, takePictureFront.getFileUriMain().toString()!!) // 3 -> Img Front
+        } else {
+            tempArray.add(3, "NONE")
+        }
+
+        if (viewMain.findViewById<ImageButton>(R.id.ibtn_back).isClickable) {//&& vertical){
+            tempArray.add(4, takePictureBack.getFileUriMain().toString()!!) // 4 -> Img Back
+        } else {
+            tempArray.add(4, "NONE")
+        }
+
+        if (viewMain.findViewById<ImageButton>(R.id.ibtn_plaque).isClickable) {//&& vertical){S
+            tempArray.add(5, takePicturePlaque.getFileUriMain().toString()!!) // 5 -> Img Plaque
+        } else {
+            tempArray.add(5, "NONE")
+        }
+
+        return tempArray
     }
 }
