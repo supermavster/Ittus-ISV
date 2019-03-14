@@ -4,7 +4,7 @@ class HorizontalSignal {
 
     var locationOnTheWay: String = ""
     var directionJourney: String = ""
-    var percentage: Int? = null
+    var percentage: String = ""
     var rail: String = ""
 
     override fun toString(): String {
