@@ -1,9 +1,7 @@
 package com.cittus.isv.view.signal.horizontal
 
-import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.Fragment
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -23,9 +21,7 @@ class LocationOnTheWayActivity : Fragment() {
     var login = 0
     private var municipalities: Municipalities? = null
     private var geolocationCardinalImages: ArrayList<GeolocationCardinalImages>? = null
-    var signalArrayList = ArrayList<CittusISV>()
-
-    lateinit var intentImage: Intent
+    private var signalArrayList = ArrayList<CittusISV>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -87,12 +83,5 @@ class LocationOnTheWayActivity : Fragment() {
         bundle.putParcelable("CittusDB", cittusDB)
         // Start Activity
         Navigation.findNavController(viewMain!!).navigate(R.id.mainImage, bundle)
-    }
-
-    // Camera Action // Return Intend Action
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-
-        // Show Action And Values (Send Variables) - Intent
-        Log.e("Location on the Way", requestCode.toString() + "->" + resultCode + "->" + data.toString())
     }
 }

@@ -100,7 +100,7 @@ class MainImage : Fragment() {
                         elementsBase.add(2, arrayImages[i])
                     }
                 }
-                // Array
+                // Array Add Images
                 var imagesByCode: ImagenSignalCode = ImagenSignalCode()
                 imagesByCode.idImagen = elementsBase.get(0).toInt()
                 imagesByCode.codeImagen = elementsBase.get(1)
