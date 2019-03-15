@@ -1,19 +1,18 @@
 package com.cittus.isv.complements.gps;
 
-import android.Manifest;
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.provider.Settings;
-import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AlertDialog;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -35,6 +34,7 @@ public class GPS_Best {
         this.longitudeValueBest = longitudeValueBest;
         this.latitudeValueBest = latitudeValueBest;
         this.altitudeValueBest = altitudeValueBest;
+        checkLocation();
     }
 
     private boolean checkLocation() {
@@ -68,9 +68,8 @@ public class GPS_Best {
                 locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
     }
 
+    @SuppressLint("MissingPermission")
     public void toggleBestUpdates(View view) {
-        if (!checkLocation())
-            return;
 
         Criteria criteria = new Criteria();
         criteria.setAccuracy(Criteria.ACCURACY_FINE);
@@ -79,17 +78,15 @@ public class GPS_Best {
         criteria.setCostAllowed(true);
         criteria.setPowerRequirement(Criteria.POWER_LOW);
         String provider = locationManager.getBestProvider(criteria, true);
+        Log.e("Provider", provider);
         if (provider != null) {
-            if (ActivityCompat.checkSelfPermission(mainActivity, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(mainActivity, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                return;
+            if (checkLocation()
+            ) {
+                locationManager.requestLocationUpdates(provider, 2 * 20 * 1000, 10, locationListenerBest);
+                Log.e("Inside", locationManager + "<->" + locationListenerBest);
             }
-            locationManager.requestLocationUpdates(provider, 2 * 20 * 1000, 10, locationListenerBest);
-                if (ActivityCompat.checkSelfPermission(mainActivity, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(mainActivity, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            }
-            locationManager.removeUpdates(locationListenerBest);
-
         }
-
+        locationManager.removeUpdates(locationListenerBest);
     }
 
     private final LocationListener locationListenerBest = new LocationListener() {
@@ -104,6 +101,7 @@ public class GPS_Best {
                     longitudeValueBest.setText(String.valueOf(longitudeBest));
                     latitudeValueBest.setText(String.valueOf(latitudeBest));
                     altitudeValueBest.setText(String.valueOf(altitudeBest));
+                    Toast.makeText(mainActivity, "GPS Provider update", Toast.LENGTH_SHORT).show();
                 }
             });
         }
@@ -181,4 +179,6 @@ public class GPS_Best {
         public void onProviderDisabled(String s) {
         }
     };
+
+
 }

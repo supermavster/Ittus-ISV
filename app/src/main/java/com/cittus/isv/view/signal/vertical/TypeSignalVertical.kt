@@ -2,28 +2,56 @@ package com.cittus.isv.view.signal.vertical
 
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.ImageButton
 import androidx.navigation.Navigation
 import com.cittus.isv.R
+import com.cittus.isv.model.*
 
 class TypeSignalVertical : Fragment() {
+
+    // Main Variables
+    private lateinit var viewMain: View
+
+    // Make Bundle
+    val bundle = Bundle()
+    var login = 0
+    private var municipalities: Municipalities? = null
+    private var geolocationCardinalImages: ArrayList<GeolocationCardinalImages>? = null
+    private var signalArrayList = ArrayList<CittusISV>()
+
+    // Variables Class
+    var verticalNameSignal = ""
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
-        val view = inflater.inflate(R.layout.activity_type_signal_vertical, container, false)
-
-        view.findViewById<Button>(R.id.btn_vertical_informative).setOnClickListener {
-            Navigation.findNavController(view).navigate(R.id.typeSignalVerticalInformativeActivity)
-        }
-        // Init Process initProcess()
-        return view
+        viewMain = inflater.inflate(R.layout.activity_type_signal_vertical, container, false)
+        return viewMain
     }
 
-    /*
+    // TODO: Get Data - Municipalities
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        // Get Data
+        val someDataClass: CittusListSignal? = arguments?.getParcelable("CittusDB")
+        someDataClass?.let {
+            login = it.login
+            municipalities = it.municipality
+            geolocationCardinalImages = it.geolocationCardinalImages
+            signalArrayList = it.signal!!
+
+        }
+        if (login === 1) {
+            // Init Process
+            initProcess()
+        }
+    }
+
     private fun initProcess(){
         // BTN Information
         btnInformation()
@@ -38,122 +66,87 @@ class TypeSignalVertical : Fragment() {
     }
 
     private fun btnInformation(){
-        var intent = Intent(this, TypeSignalVerticalInformativeActivity::class.java);
-        ibtn_vertical_informative.setOnClickListener {
-            startActivityForResult(intent, ActionsRequest.GET_VERTICAL_IMAGES_VALUES and ActionsRequest.GET_VERTICAL_VALUES)
+        viewMain!!.findViewById<ImageButton>(R.id.ibtn_vertical_informative).setOnClickListener { view ->
+            sendData(0, false)
         }
-        btn_vertical_informative.setOnClickListener {
-            startActivityForResult(intent, ActionsRequest.GET_VERTICAL_IMAGES_VALUES and ActionsRequest.GET_VERTICAL_VALUES)
+        viewMain!!.findViewById<Button>(R.id.btn_vertical_informative).setOnClickListener { view ->
+            sendData(0, false)
         }
     }
 
     private fun btnRegulatory(){
-        var intent = makeActivityImages(R.string.title_vertical_regulatory,EndPoints.URL_GET_VERTICAL_REGULATORY)
-        ibtn_vertical_regulatory.setOnClickListener {
-            startActivityForResult(intent, ActionsRequest.GET_VERTICAL_IMAGES_VALUES)
+        viewMain!!.findViewById<ImageButton>(R.id.ibtn_vertical_regulatory).setOnClickListener { view ->
+            makeActivityImages(R.string.title_vertical_regulatory, EndPoints.URL_GET_VERTICAL_REGULATORY)
         }
-        btn_vertical_regulatory.setOnClickListener {
-            startActivityForResult(intent, ActionsRequest.GET_VERTICAL_IMAGES_VALUES)
+        viewMain!!.findViewById<Button>(R.id.btn_vertical_regulatory).setOnClickListener { view ->
+            makeActivityImages(R.string.title_vertical_regulatory, EndPoints.URL_GET_VERTICAL_REGULATORY)
         }
     }
 
     private fun btnPreventive(){
-        var intent = makeActivityImages(R.string.title_vertical_preventives,EndPoints.URL_GET_VERTICAL_PREVENTIVES)
-        ibtn_vertical_preventive.setOnClickListener {
-            startActivityForResult(intent, ActionsRequest.GET_VERTICAL_IMAGES_VALUES)
+        viewMain!!.findViewById<ImageButton>(R.id.ibtn_vertical_preventive).setOnClickListener { view ->
+            makeActivityImages(R.string.title_vertical_preventives, EndPoints.URL_GET_VERTICAL_PREVENTIVES)
         }
-        btn_vertical_preventive.setOnClickListener {
-            startActivityForResult(intent, ActionsRequest.GET_VERTICAL_IMAGES_VALUES)
+        viewMain!!.findViewById<Button>(R.id.btn_vertical_preventive).setOnClickListener { view ->
+            makeActivityImages(R.string.title_vertical_preventives, EndPoints.URL_GET_VERTICAL_PREVENTIVES)
         }
     }
 
     private fun btnWork(){
-        var intent = makeActivityImages(R.string.title_vertical_work,EndPoints.URL_GET_VERTICAL_WORK)
-        ibtn_vertical_work.setOnClickListener {
-            startActivityForResult(intent, ActionsRequest.GET_VERTICAL_IMAGES_VALUES)
+        viewMain!!.findViewById<ImageButton>(R.id.ibtn_vertical_preventive).setOnClickListener { view ->
+            makeActivityImages(R.string.title_vertical_work, EndPoints.URL_GET_VERTICAL_WORK)
         }
-        btn_vertical_work.setOnClickListener {
-            startActivityForResult(intent, ActionsRequest.GET_VERTICAL_IMAGES_VALUES)
+        viewMain!!.findViewById<Button>(R.id.btn_vertical_preventive).setOnClickListener { view ->
+            makeActivityImages(R.string.title_vertical_work, EndPoints.URL_GET_VERTICAL_WORK)
         }
     }
 
     private fun btnCycleRoute(){
-
-        var intent = makeActivityImages(R.string.title_vertical_cycle_route,EndPoints.URL_GET_VERTICAL_CYCLE_ROUTE)
-        ibtn_vertical_cycle_route.setOnClickListener {
-            startActivityForResult(intent, ActionsRequest.GET_VERTICAL_IMAGES_VALUES)
+        viewMain!!.findViewById<ImageButton>(R.id.ibtn_vertical_cycle_route).setOnClickListener { view ->
+            makeActivityImages(R.string.title_vertical_cycle_route, EndPoints.URL_GET_VERTICAL_CYCLE_ROUTE)
         }
-        btn_vertical_cycle_route.setOnClickListener {
-            startActivityForResult(intent, ActionsRequest.GET_VERTICAL_IMAGES_VALUES)
+        viewMain!!.findViewById<Button>(R.id.btn_vertical_cycle_route).setOnClickListener { view ->
+            makeActivityImages(R.string.title_vertical_cycle_route, EndPoints.URL_GET_VERTICAL_CYCLE_ROUTE)
         }
     }
 
-    // Add class
-    private fun makeActivityImages(title: Int, url_img:String,code:Boolean=true,description: Boolean=false): Intent {
-        var intent: Intent = Intent(this, MainImage::class.java)
-        intent.putExtra("title", resources.getString(title))
-        intent.putExtra("url_img",url_img)
-        intent.putExtra("code",code)
-        intent.putExtra("description",description)
-        intent.putExtra("Action",ActionsRequest.GET_VERTICAL_IMAGES_VALUES)
-        return(intent)
+    private fun makeActivityImages(title: Int, url_img: String, code: Int = 1) {
+        var cittusImage =
+            CittusImage(resources.getString(title), url_img, code, ActionsRequest.GET_VERTICAL_IMAGES_VALUES)
+        bundle.putParcelable("CittusImage", cittusImage)
+
+        sendData(title)
     }
 
-    var exceptionMain: Boolean = false
-    private fun getData(): ArrayList<String> {
-
-        return ArrayList<String>()
-    }
-
-    // Actions To Return
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-
-        Log.i("Vertical Activity", requestCode.toString() + "->" + resultCode + "->" + data.toString())
-        when (requestCode) {
-            ActionsRequest.GET_VERTICAL_IMAGES_VALUES -> {
-                // TODO: Get Data Images
-                // 0 -> Number
-                // 1 -> Code
-                // 2 -> Img Select
-                if (data != null) {
-                    val extras = data!!.extras ?: return
-                    val titleTemp = extras.getString("getTitle")
-                    val elementsBaseImage = extras.getStringArrayList("getDataImages")
-                    Log.e("getData", "getDataImages:$elementsBaseImage")
-                    // Get Data of this Activity
-                    var data = getData();
-                    // Check Errors
-                    if (exceptionMain === false) {
-                        // Init Process TO send  MAIN ACTIVIVTY
-                        var intentTemp: Intent = Intent()
-                        intentTemp.putExtra("getTitle", titleTemp)
-                        intentTemp.putExtra("getDataImages", elementsBaseImage)
-                        setResult(ActionsRequest.GET_VERTICAL_VALUES, intentTemp)
-                        finish()
-                    }
-                }
-            }
-            ActionsRequest.GET_VERTICAL_IMAGES_VALUES and ActionsRequest.GET_VERTICAL_VALUES->{
-                if (data != null) {
-                    val extras = data!!.extras ?: return
-                    val titleTemp = extras.getString("getTitle")
-                    val elementsBaseImage = extras.getStringArrayList("getDataImages")
-                    Log.e("getData", "getDataImages:$elementsBaseImage")
-                    // Check Errors
-                    if (exceptionMain === false) {
-                        // Init Process TO send  MAIN ACTIVIVTY
-                        var intentTemp: Intent = Intent()
-                        intentTemp.putExtra("getTitle", titleTemp)
-                        intentTemp.putExtra("getDataImages", elementsBaseImage)
-                        setResult(ActionsRequest.GET_VERTICAL_VALUES, intentTemp)
-                        finish()
-                    }
-                }
-            }
-            else -> {
-                super.onActivityResult(requestCode, resultCode, data)
-            }
+    private fun sendData(title: Int, idTypeSignal: Boolean = true) {
+        var idSiganl = 0
+        if (idTypeSignal) {
+            idSiganl = R.id.mainImage
+        } else {
+            idSiganl = R.id.typeSignalVerticalInformativeActivity
         }
+
+        verticalNameSignal = when (title) {
+            R.string.title_vertical_regulatory -> "Reglamentaria"
+            R.string.title_vertical_preventives -> "Preventiva"
+            R.string.title_vertical_work -> "Obra"
+            R.string.title_vertical_cycle_route -> "Cicloruta"
+            else -> ""
+        }
+
+        // Name Siganl Vertical
+        var verticalSignal = VerticalSignal()
+        verticalSignal.verticalNameSignal = verticalNameSignal
+        signalArrayList[0].verticalSignal = verticalSignal
+
+        // Make Object Main
+        var cittusDB: CittusListSignal =
+            CittusListSignal(login, municipalities, signalArrayList, geolocationCardinalImages)
+        // Show Data
+        Log.e("Data-Vertical", cittusDB.toString())
+        // Set and Send Data Main
+        bundle.putParcelable("CittusDB", cittusDB)
+        // Start Activity
+        Navigation.findNavController(viewMain!!).navigate(idSiganl, bundle)
     }
-*/
 }

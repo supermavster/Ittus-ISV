@@ -1,16 +1,18 @@
 package com.cittus.isv.view.signal
 
+import android.annotation.SuppressLint
+import android.content.Context
 import android.graphics.Color
+import android.location.Location
+import android.location.LocationListener
+import android.location.LocationManager
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.EditText
-import android.widget.ImageButton
-import android.widget.ToggleButton
+import android.widget.*
 import androidx.navigation.Navigation
 import com.cittus.isv.R
 import com.cittus.isv.complements.camera.TakePicture
@@ -56,7 +58,7 @@ class PhotoGPSActivity : Fragment() {
             signalArrayList = it.signal!!
 
         }
-        if (login === 1) {
+        if (login == 1) {
             // Init Process
             initProcess()
         }
@@ -120,7 +122,7 @@ class PhotoGPSActivity : Fragment() {
     }
 
     private fun btnSave() {
-        viewMain!!.findViewById<Button>(R.id.btn_next_photo).setOnClickListener { view ->
+        viewMain.findViewById<Button>(R.id.btn_next_photo).setOnClickListener {
 
             // Get Data Temp
             var tempData = getData()
@@ -154,27 +156,24 @@ class PhotoGPSActivity : Fragment() {
             // Set and Send Data Main
             bundle.putParcelable("CittusDB", cittusDB)
             // Start Activity
-            Navigation.findNavController(viewMain!!).navigate(R.id.finishSaveActivity, bundle)
+            Navigation.findNavController(viewMain).navigate(R.id.finishSaveActivity, bundle)
 
         }
     }
 
 
     fun getTakePictureMainFront(): TakePicture {
-        if (takePictureFront == null)
-            takePictureFront = TakePicture(this.activity!!, viewMain.ibtn_front, viewMain.cb_front)
+        //if (takePictureFront == null) takePictureFront = TakePicture(this.activity!!, viewMain.ibtn_front, viewMain.cb_front)
         return takePictureFront
     }
 
     fun getTakePictureMainBack(): TakePicture {
-        if (takePictureBack == null)
-            takePictureBack = TakePicture(this.activity!!, viewMain.ibtn_back, viewMain.cb_back)
+        //if (takePictureBack == null) takePictureBack = TakePicture(this.activity!!, viewMain.ibtn_back, viewMain.cb_back)
         return takePictureBack
     }
 
     fun getTakePictureMainPlaque(): TakePicture {
-        if (takePicturePlaque == null)
-            takePicturePlaque = TakePicture(this.activity!!, viewMain.ibtn_plaque, viewMain.cb_plaque)
+        //if (takePicturePlaque == null) takePicturePlaque = TakePicture(this.activity!!, viewMain.ibtn_plaque, viewMain.cb_plaque)
         return takePicturePlaque
     }
 
@@ -191,8 +190,118 @@ class PhotoGPSActivity : Fragment() {
         // Set Actions
         viewMain.findViewById<ImageButton>(R.id.btn_gps).setOnClickListener {
 
-            locationMain?.toggleBestUpdates(viewMain)
+            getLocation()
 
+        }
+    }
+
+    lateinit var locationManager: LocationManager
+    private var hasGps = false
+    private var hasNetwork = false
+    private var locationGps: Location? = null
+    private var locationNetwork: Location? = null
+
+
+    @SuppressLint("MissingPermission")
+    private fun getLocation() {
+        locationManager = viewMain.context.getSystemService(Context.LOCATION_SERVICE) as LocationManager
+        hasGps = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)
+        hasNetwork = locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)
+        if (hasGps || hasNetwork) {
+
+            if (hasGps) {
+                Log.d("CodeAndroidLocation", "hasGps")
+                locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 5000, 0F, object :
+                    LocationListener {
+                    override fun onLocationChanged(location: Location?) {
+                        if (location != null) {
+                            locationGps = location
+                            viewMain.findViewById<TextView>(R.id.txt_latitude).text = locationGps!!.latitude.toString()
+                            viewMain.findViewById<TextView>(R.id.txt_longitude).text =
+                                locationGps!!.longitude.toString()
+                            viewMain.findViewById<TextView>(R.id.txt_altitude).text = locationGps!!.altitude.toString()
+
+                            Log.d("CodeAndroidLocation", " GPS Latitude : " + locationGps!!.latitude)
+                            Log.d("CodeAndroidLocation", " GPS Longitude : " + locationGps!!.longitude)
+                        }
+                    }
+
+                    override fun onStatusChanged(provider: String?, status: Int, extras: Bundle?) {
+
+                    }
+
+                    override fun onProviderEnabled(provider: String?) {
+
+                    }
+
+                    override fun onProviderDisabled(provider: String?) {
+
+                    }
+
+                })
+
+                val localGpsLocation = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER)
+                if (localGpsLocation != null)
+                    locationGps = localGpsLocation
+            }
+            if (hasNetwork) {
+                Log.d("CodeAndroidLocation", "hasGps")
+                locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 5000, 0F, object :
+                    LocationListener {
+                    override fun onLocationChanged(location: Location?) {
+                        if (location != null) {
+                            locationNetwork = location
+                            viewMain.findViewById<TextView>(R.id.txt_latitude).text =
+                                locationNetwork!!.latitude.toString()
+                            viewMain.findViewById<TextView>(R.id.txt_longitude).text =
+                                locationNetwork!!.longitude.toString()
+                            viewMain.findViewById<TextView>(R.id.txt_altitude).text =
+                                locationNetwork!!.altitude.toString()
+
+                            Log.d("CodeAndroidLocation", " Network Latitude : " + locationNetwork!!.latitude)
+                            Log.d("CodeAndroidLocation", " Network Longitude : " + locationNetwork!!.longitude)
+                        }
+                    }
+
+                    override fun onStatusChanged(provider: String?, status: Int, extras: Bundle?) {
+
+                    }
+
+                    override fun onProviderEnabled(provider: String?) {
+
+                    }
+
+                    override fun onProviderDisabled(provider: String?) {
+
+                    }
+
+                })
+
+                val localNetworkLocation = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER)
+                if (localNetworkLocation != null)
+                    locationNetwork = localNetworkLocation
+            }
+
+            if (locationGps != null && locationNetwork != null) {
+                if (locationGps!!.accuracy > locationNetwork!!.accuracy) {
+                    viewMain.findViewById<TextView>(R.id.txt_latitude).text = locationNetwork!!.latitude.toString()
+                    viewMain.findViewById<TextView>(R.id.txt_longitude).text = locationNetwork!!.longitude.toString()
+                    viewMain.findViewById<TextView>(R.id.txt_altitude).text = locationNetwork!!.altitude.toString()
+
+                    Log.d("CodeAndroidLocation", " Network Latitude : " + locationNetwork!!.latitude)
+                    Log.d("CodeAndroidLocation", " Network Longitude : " + locationNetwork!!.longitude)
+                } else {
+                    viewMain.findViewById<TextView>(R.id.txt_latitude).text = locationGps!!.latitude.toString()
+                    viewMain.findViewById<TextView>(R.id.txt_longitude).text = locationGps!!.longitude.toString()
+                    viewMain.findViewById<TextView>(R.id.txt_altitude).text = locationGps!!.altitude.toString()
+
+                    Log.d("CodeAndroidLocation", " GPS Latitude : " + locationGps!!.latitude)
+                    Log.d("CodeAndroidLocation", " GPS Longitude : " + locationGps!!.longitude)
+                }
+            }
+
+        } else {
+            Log.e("ERROR", "GPS")
         }
     }
 

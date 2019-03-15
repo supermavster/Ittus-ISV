@@ -111,8 +111,14 @@ class AddressLocationOnTheWayActivity : Fragment() {
             Log.e("Data-ALocationOTW", cittusDB.toString())
             // Set and Send Data Main
             bundle.putParcelable("CittusDB", cittusDB)
+
+            // Ids
+            var id = R.id.genearlDataActivity
+            if (signalArrayList.get(0).typeSignal == "Vertical") {
+                id = R.id.stateSignalActivity
+            }
             // Start Activity
-            Navigation.findNavController(viewMain!!).navigate(R.id.genearlDataActivity, bundle)
+            Navigation.findNavController(viewMain!!).navigate(id, bundle)
         }
     }
 

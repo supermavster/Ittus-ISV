@@ -1,6 +1,5 @@
 package com.cittus.isv.view.signal.vertical
 
-import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.util.Log
@@ -11,123 +10,123 @@ import android.widget.Button
 import android.widget.ImageButton
 import androidx.navigation.Navigation
 import com.cittus.isv.R
-import com.cittus.isv.controller.MainImage
-import com.cittus.isv.model.ActionsRequest
-import com.cittus.isv.model.EndPoints
-import kotlinx.android.synthetic.main.activity_type_signal_vertical_informative.*
+import com.cittus.isv.model.*
 
 class TypeSignalVerticalInformativeActivity : Fragment() {
 
-    private var viewMain: View? = null;
+
+    // Main Variables
+    private lateinit var viewMain: View
+
+    // Make Bundle
+    val bundle = Bundle()
+    var login = 0
+    private var municipalities: Municipalities? = null
+    private var geolocationCardinalImages: ArrayList<GeolocationCardinalImages>? = null
+    private var signalArrayList = ArrayList<CittusISV>()
+
+    // Variables Class
+    var verticalNameSignal = ""
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
-        val view:View = inflater.inflate(R.layout.activity_type_signal_vertical_informative, container, false)
-        viewMain = view
-        //Imagen
-        viewMain!!.findViewById<Button>(R.id.btn_vts_informative_services).setOnClickListener {
-            //Navigation.findNavController(view).navigate(R.id.makeActivityImages)
+        viewMain = inflater.inflate(R.layout.activity_type_signal_vertical_informative, container, false)
+        return viewMain
+    }
+
+    // TODO: Get Data - Municipalities
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        // Get Data
+        val someDataClass: CittusListSignal? = arguments?.getParcelable("CittusDB")
+        someDataClass?.let {
+            login = it.login
+            municipalities = it.municipality
+            geolocationCardinalImages = it.geolocationCardinalImages
+            signalArrayList = it.signal!!
+
         }
-        // Init Process
-        initProcess()
-        return view
+        if (login === 1) {
+            // Init Process
+            initProcess()
+        }
     }
 
 
     private fun initProcess(){
         // BTN Services
         btnServices()
-        // BTN Touristic btnTouristic()
-        // BTN Location btnLocation()
+        // BTN Touristic
+        btnTouristic()
+        // BTN Location
+        btnLocation()
     }
 
     private fun btnServices(){
-
-        var intent = makeActivityImages(R.string.title_vertical_info_services, EndPoints.URL_GET_VERTICAL_INFO_SERVICES)
-        viewMain!!.findViewById<ImageButton>(R.id.ibtn_vts_informative_services).setOnClickListener {view->
-            startActivityForResult(intent, ActionsRequest.GET_VERTICAL_IMAGES_VALUES)
-            // TODO: Revisar
-            Navigation.findNavController(view).navigate(R.id.addressLocationOnTheWayActivity)
-
+        viewMain!!.findViewById<ImageButton>(R.id.ibtn_vts_informative_services).setOnClickListener { view ->
+            makeActivityImages(R.string.title_vertical_info_services, EndPoints.URL_GET_VERTICAL_INFO_SERVICES)
         }
         viewMain!!.findViewById<Button>(R.id.btn_vts_informative_services).setOnClickListener {view->
-            startActivityForResult(intent, ActionsRequest.GET_VERTICAL_IMAGES_VALUES)
-            // TODO: Revisar
-            Navigation.findNavController(view).navigate(R.id.addressLocationOnTheWayActivity)
+            makeActivityImages(R.string.title_vertical_info_services, EndPoints.URL_GET_VERTICAL_INFO_SERVICES)
         }
     }
 
     private fun btnTouristic(){
-
-        var intent = makeActivityImages(R.string.title_vertical_info_turistic,EndPoints.URL_GET_VERTICAL_INFO_TOURIST)
-        ibtn_vts_informative_turist.setOnClickListener {
-            startActivityForResult(intent, ActionsRequest.GET_VERTICAL_IMAGES_VALUES)
+        viewMain!!.findViewById<ImageButton>(R.id.ibtn_vts_informative_turist).setOnClickListener {
+            makeActivityImages(R.string.title_vertical_info_turistic, EndPoints.URL_GET_VERTICAL_INFO_TOURIST)
         }
-        btn_vts_informative_turist.setOnClickListener {
-            startActivityForResult(intent, ActionsRequest.GET_VERTICAL_IMAGES_VALUES)
+        viewMain!!.findViewById<Button>(R.id.btn_vts_informative_turist).setOnClickListener {
+            makeActivityImages(R.string.title_vertical_info_turistic, EndPoints.URL_GET_VERTICAL_INFO_TOURIST)
         }
     }
 
     private fun btnLocation(){
-
-        var intent = makeActivityImages(R.string.title_vertical_info_localization,EndPoints.URL_GET_VERTICAL_INFO_LOCATION)
-        ibtn_vts_informative_location.setOnClickListener {
-            startActivityForResult(intent, ActionsRequest.GET_VERTICAL_IMAGES_VALUES)
+        viewMain!!.findViewById<ImageButton>(R.id.ibtn_vts_informative_location).setOnClickListener {
+            makeActivityImages(R.string.title_vertical_info_localization, EndPoints.URL_GET_VERTICAL_INFO_LOCATION)
         }
-        btn_vts_informative_location.setOnClickListener {
-            startActivityForResult(intent, ActionsRequest.GET_VERTICAL_IMAGES_VALUES)
+        viewMain!!.findViewById<Button>(R.id.btn_vts_informative_location).setOnClickListener {
+            makeActivityImages(R.string.title_vertical_info_localization, EndPoints.URL_GET_VERTICAL_INFO_LOCATION)
         }
     }
 
-    // Add class
-    private fun makeActivityImages(title: Int, url_img: String,code:Boolean=true,description: Boolean=false): Intent {
-        var intent: Intent = Intent(context, MainImage::class.java)
-        Log.i("TEST",url_img)
-        intent.putExtra("title", resources.getString(title))
-        intent.putExtra("url_img", (url_img))
-        intent.putExtra("code",code)
-        intent.putExtra("description",description)
-        return(intent)
+    private fun makeActivityImages(title: Int, url_img: String, code: Int = 1) {
+        var cittusImage =
+            CittusImage(resources.getString(title), url_img, code, ActionsRequest.GET_VERTICAL_IMAGES_VALUES)
+        bundle.putParcelable("CittusImage", cittusImage)
+
+        sendData(title)
     }
 
-    var exceptionMain: Boolean = false
-    private fun getData(): ArrayList<String> {
-
-        return ArrayList<String>()
-    }
-
-    // Actions To Return
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-
-        Log.i("Vertical Information", requestCode.toString() + "->" + resultCode + "->" + data.toString())
-        when (requestCode) {
-            ActionsRequest.GET_VERTICAL_IMAGES_VALUES -> {
-                // TODO: Get Data Images
-                // 0 -> Number
-                // 1 -> Code
-                // 2 -> Img Select
-                if (data != null) {
-                    val extras = data!!.extras ?: return
-                    val titleTemp = extras.getString("getTitle")
-                    val elementsBaseImage = extras.getStringArrayList("getDataImages")
-                    Log.e("getData", "getDataImages:$elementsBaseImage")
-                    // Get Data of this Activity
-                    var data = getData();
-                    // Check Errors
-                    if (exceptionMain === false) {
-                        // Init Process TO send  MAIN ACTIVIVTY
-                        var intentTemp: Intent = Intent()
-                        intentTemp.putExtra("getTitle", titleTemp)
-                        intentTemp.putExtra("getDataImages", elementsBaseImage)
-                        activity!!.setResult(ActionsRequest.GET_VERTICAL_IMAGES_VALUES and ActionsRequest.GET_VERTICAL_VALUES, intentTemp)
-                        activity!!.finish()
-                    }
-                }
-            }
-
-            else -> {
-                super.onActivityResult(requestCode, resultCode, data)
-            }
+    private fun sendData(title: Int, idTypeSignal: Boolean = true) {
+        var idSiganl = 0
+        if (idTypeSignal) {
+            idSiganl = R.id.mainImage
+        } else {
+            idSiganl = R.id.typeSignalVerticalInformativeActivity
         }
+
+        verticalNameSignal = when (title) {
+            R.string.title_vertical_info_localization -> "Info. Localizacion"
+            R.string.title_vertical_info_services -> "Info. Servicios"
+            R.string.title_vertical_info_turistic -> "Info. Turismo"
+            else -> ""
+        }
+
+        // Name Siganl Vertical
+        var verticalSignal = VerticalSignal()
+        verticalSignal.verticalNameSignal = verticalNameSignal
+        signalArrayList[0].verticalSignal = verticalSignal
+
+        // Make Object Main
+        var cittusDB: CittusListSignal =
+            CittusListSignal(login, municipalities, signalArrayList, geolocationCardinalImages)
+        // Show Data
+        Log.e("Data-VerticalInfo", cittusDB.toString())
+        // Set and Send Data Main
+        bundle.putParcelable("CittusDB", cittusDB)
+        // Start Activity
+        Navigation.findNavController(viewMain!!).navigate(idSiganl, bundle)
     }
+
 }

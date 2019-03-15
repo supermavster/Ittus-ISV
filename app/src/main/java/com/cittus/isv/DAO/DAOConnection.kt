@@ -10,7 +10,8 @@ import com.android.volley.VolleyError
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
 import com.cittus.isv.complements.slider.CustomVolleyRequest
-import com.cittus.isv.model.*
+import com.cittus.isv.model.CittusListSignal
+import com.cittus.isv.model.EndPoints
 import org.json.JSONArray
 import org.json.JSONException
 import org.json.JSONObject
@@ -76,15 +77,7 @@ class DAOConnection(contextMain: Context) {
     //adding a new record to database
     public fun addSignal(signalMain: CittusListSignal): Boolean {
 
-        // Get Data
-        var typeSignal: String
-        var imagesByCode: ImagenSignalCode? = null
-        var locationSignal: LocationSignal? = null
-        var cittusSignal: CittusSignal? = null
-        var verticalSignal: VerticalSignal? = null
-        var horizontalSignal: HorizontalSignal? = null
-
-        Log.e("INIT", EndPoints.URL_ADD_SIGNAL)
+        Log.e("INIT", signalMain.toString())
         //creating volley string request
         val stringRequest = object : StringRequest(Request.Method.POST, EndPoints.URL_ADD_SIGNAL,
             Response.Listener<String> { response ->
