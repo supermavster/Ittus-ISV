@@ -9,7 +9,7 @@ class VerticalSignal {
     var statePost: Float = 0.0f
 
     override fun toString(): String {
-        return "VerticalSignal(verticalNameSignal='$verticalNameSignal', sizeSignal='$sizeSignal', stateSingal=$stateSingal, postTypeSignal='$postTypeSignal', statePost=$statePost)"
+        return "\"VerticalSignal\":{\"verticalNameSignal\":\"$verticalNameSignal\", \"sizeSignal\":\"$sizeSignal\", \"stateSingal\":$stateSingal, \"postTypeSignal\":\"$postTypeSignal\", \"statePost\":$statePost}"
     }
 
 

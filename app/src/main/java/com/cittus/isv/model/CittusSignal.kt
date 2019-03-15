@@ -11,10 +11,11 @@ class CittusSignal {
     var photoBack: String = ""
     var photoPlaque: String = ""
 
-    var location: String? = null
+    var location: String = ""
 
     override fun toString(): String {
-        return "CittusSignal(altitude=$altitude, latitud=$latitude, longitud=$longitude, photoFront='$photoFront', photoBack='$photoBack', photoPlaque='$photoPlaque', Location=$location)"
+        return "\"CittusSignal\":{\"altitude\":$altitude, \"latitude\":$latitude, \"longitude\":$longitude, \"photoFront\":\"$photoFront\", \"photoBack\":\"$photoBack\", \"photoPlaque\":\"$photoPlaque\", \"location\":\"$location\"}"
     }
+
 
 }

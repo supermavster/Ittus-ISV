@@ -6,6 +6,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.NumberPicker
 import android.widget.RadioButton
 import android.widget.RadioGroup
@@ -117,8 +118,8 @@ class GenearlDataActivity : Fragment() {
         var tempValues = ArrayList<String>();
         // TODO: ISV Horizontal DATA MAIN
         // 1-0 -> Direccion
-        // 1-2 -> Carril
-        // 1-3 -> Porcentaje
+        // 1-1 -> Carril
+        // 1-2 -> Porcentaje
         try {
             // Direccion
             var rg_directional = viewMain!!.findViewById<RadioGroup>(R.id.rg_directional)
@@ -126,9 +127,9 @@ class GenearlDataActivity : Fragment() {
             tempValues.add(0, rb.text.toString()) // 1-0 -> Direccion
 
             // Carriles
-            tempValues.add(2, carril) // 1-2 -> Carril
+            tempValues.add(1, carril) // 1-2 -> Carril
 
-            tempValues.add(3, porcentaje) // 1-3 -> Porcentaje
+            tempValues.add(2, porcentaje) // 1-3 -> Porcentaje
 
             exceptionMain = false
         } catch (e: Exception) {
@@ -152,7 +153,7 @@ class GenearlDataActivity : Fragment() {
     }
 
     private fun save() {
-        viewMain!!.findViewById<NumberPicker>(R.id.btn_next_address).setOnClickListener {
+        viewMain!!.findViewById<Button>(R.id.btn_next_general_data).setOnClickListener {
 
             var dataTemp = getDataMain()
             // 1-0 -> Direccion
@@ -162,8 +163,8 @@ class GenearlDataActivity : Fragment() {
             var horizontalSignal = HorizontalSignal()
             horizontalSignal.locationOnTheWay = ""
             horizontalSignal.directionJourney = dataTemp.get(0)
-            horizontalSignal.rail = dataTemp.get(2)
-            horizontalSignal.percentage = dataTemp.get(3)
+            horizontalSignal.rail = dataTemp.get(1)
+            horizontalSignal.percentage = dataTemp.get(2)
 
             // Add data to Object
             signalArrayList.get(0).horizontalSignal = horizontalSignal

@@ -31,8 +31,15 @@ data class CittusISV(var typeSignal: String) : Parcelable {
     }
 
     override fun describeContents(): Int = 0
+
     override fun toString(): String {
-        return "CittusISV(typeSignal='$typeSignal', imagesByCode=$imagesByCode, locationSignal=$locationSignal, cittusSignal=$cittusSignal, verticalSignal=$verticalSignal, horizontalSignal=$horizontalSignal)"
+        var typeSignalMain = ""
+        if (verticalSignal != null) {
+            typeSignalMain = "$verticalSignal"
+        } else if (horizontalSignal != null) {
+            typeSignalMain = "$horizontalSignal"
+        }
+        return "\"CittusISV\":{\"typeSignal\":\"$typeSignal\",$imagesByCode,$locationSignal,$cittusSignal,$typeSignalMain}"
     }
 
 

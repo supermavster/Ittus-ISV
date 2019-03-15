@@ -27,6 +27,7 @@ class FinishSaveActivity : Fragment() {
     // Make Bundle
     val bundle = Bundle()
     var login = 0
+    private var allData: CittusListSignal? = null
     private var municipalities: Municipalities? = null
     private var geolocationCardinalImages: ArrayList<GeolocationCardinalImages>? = null
     private var signalArrayList = ArrayList<CittusISV>()
@@ -50,8 +51,8 @@ class FinishSaveActivity : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         // Get Data
-        val someDataClass: CittusListSignal? = arguments?.getParcelable("CittusDB")
-        someDataClass?.let {
+        allData = arguments?.getParcelable("CittusDB")
+        allData?.let {
             login = it.login
             municipalities = it.municipality
             geolocationCardinalImages = it.geolocationCardinalImages
@@ -104,7 +105,7 @@ class FinishSaveActivity : Fragment() {
             // Set Dates
 
             val bd = DAOConnection(viewMain.context)
-            if (bd.addSignal(signalArrayList.get(0)!!) === true) {
+            if (bd.addSignal(allData!!) === true) {
                 message = "Datos añadidos con exito."
                 // Upload Images
                 uploadImages()

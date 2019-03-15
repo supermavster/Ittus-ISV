@@ -46,11 +46,10 @@ data class Municipalities(
     }
 
     override fun describeContents(): Int = 0
+
     override fun toString(): String {
-        return "Municipalities(idInventario=$idInventario, idListSignal=$idListSignal, idMaxSignal=$idMaxSignal, nameMunicipal='$nameMunicipal', nameDepartment='$nameDepartment')"
+        return "\"Municipalities\":{\"idInventario\":\"$idInventario\",\"idListSignal\":\"$idListSignal\",\"idMaxSignal\":\"$idMaxSignal\",\"nameMunicipal\":\"$nameMunicipal\",\"nameDepartment\":\"$nameDepartment\"}"
     }
-
-
 }
 
 

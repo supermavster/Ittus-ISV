@@ -74,7 +74,7 @@ class DAOConnection(contextMain: Context) {
     }
 
     //adding a new record to database
-    public fun addSignal(signalMain: CittusISV): Boolean {
+    public fun addSignal(signalMain: CittusListSignal): Boolean {
 
         // Get Data
         var typeSignal: String

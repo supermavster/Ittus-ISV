@@ -28,14 +28,14 @@ data class GeolocationCardinalImages(
     override fun writeToParcel(dest: Parcel?, flags: Int) {
         dest?.let {
             dest.writeString(nameCardinal)
-            dest.writeString(photoPath)
+            dest.writeString("$photoPath,")
         }
     }
 
     override fun describeContents(): Int = 0
 
     override fun toString(): String {
-        return "GeolocationCardinalImages(nameCardinal='$nameCardinal', photoPath='$photoPath')"
+        return "\"$nameCardinal\":\"$photoPath\""
     }
 
 

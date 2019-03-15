@@ -8,7 +8,7 @@ class HorizontalSignal {
     var rail: String = ""
 
     override fun toString(): String {
-        return "HorizontalSignal(locationOnTheWay='$locationOnTheWay', directionJourney='$directionJourney', percentage=$percentage, rail='$rail')"
+        return "\"HorizontalSignal\":{\"locationOnTheWay\":\"$locationOnTheWay\", \"directionJourney\":\"$directionJourney\", \"percentage\":\"$percentage\", \"rail\":\"$rail\"}"
     }
 
 }

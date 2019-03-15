@@ -79,8 +79,8 @@ class PhotoGPSActivity : Fragment() {
 
     var main = false
     private fun toggleButtonAction() {
-        var btn_stretch = viewMain.findViewById<ToggleButton>(R.id.btn_stretch)
-        var btn_intersection = viewMain.findViewById<ToggleButton>(R.id.btn_intersection)
+        var btn_stretch = viewMain.findViewById<ToggleButton>(R.id.btn_left)
+        var btn_intersection = viewMain.findViewById<ToggleButton>(R.id.btn_right)
 
         btn_intersection.setOnClickListener {
             // Block Other Button
@@ -216,25 +216,25 @@ class PhotoGPSActivity : Fragment() {
 
         // Get Imagen
         if (viewMain.findViewById<ImageButton>(R.id.ibtn_front).isClickable) {
-            tempArray.add(3, takePictureFront.getFileUriMain().toString()!!) // 3 -> Img Front
+            tempArray.add(3, takePictureFront.getPath()!!) // 3 -> Img Front
         } else {
             tempArray.add(3, "NONE")
         }
 
         if (viewMain.findViewById<ImageButton>(R.id.ibtn_back).isClickable) {//&& vertical){
-            tempArray.add(4, takePictureBack.getFileUriMain().toString()!!) // 4 -> Img Back
+            tempArray.add(4, takePictureBack.getPath()!!) // 4 -> Img Back
         } else {
             tempArray.add(4, "NONE")
         }
 
         if (viewMain.findViewById<ImageButton>(R.id.ibtn_plaque).isClickable) {//&& vertical){S
-            tempArray.add(5, takePicturePlaque.getFileUriMain().toString()!!) // 5 -> Img Plaque
+            tempArray.add(5, takePicturePlaque.getPath()!!) // 5 -> Img Plaque
         } else {
             tempArray.add(5, "NONE")
         }
 
-        var btn_stretch = viewMain.findViewById<ToggleButton>(R.id.btn_stretch)
-        var btn_intersection = viewMain.findViewById<ToggleButton>(R.id.btn_intersection)
+        var btn_stretch = viewMain.findViewById<ToggleButton>(R.id.btn_left)
+        var btn_intersection = viewMain.findViewById<ToggleButton>(R.id.btn_right)
 
         // Location in the Trayect
         var btnLocationMain: String = ""

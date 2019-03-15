@@ -8,7 +8,7 @@ class LocationSignal {
 
 
     override fun toString(): String {
-        return "LocationSignal(firstAddressSignal=$firstAddressSignal, secondAddressSignal=$secondAddressSignal, thirdAddressSignal=$thirdAddressSignal)"
+        return "\"LocationSignal\":{\"firstAddressSignal\":\"$firstAddressSignal\",\"secondAddressSignal\":\"$secondAddressSignal\",\"thirdAddressSignal\":\"$thirdAddressSignal\"}"
     }
 
 
