@@ -2,6 +2,7 @@ package com.cittus.isv.view
 
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -70,6 +71,8 @@ class LoginActivity : Fragment() {
             if (login === 1) {
                 // Make Object Main
                 var cittusDB: CittusListSignal = CittusListSignal(login, null, null, null)
+                // Show Data
+                Log.e("Data-Login", cittusDB.toString())
                 // Set and Send Data Main
                 bundle.putParcelable("CittusDB", cittusDB)
                 // Init Action

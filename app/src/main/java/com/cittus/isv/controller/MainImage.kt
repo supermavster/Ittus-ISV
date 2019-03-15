@@ -112,7 +112,7 @@ class MainImage : Fragment() {
                 var cittusDB: CittusListSignal =
                     CittusListSignal(login, municipalities, signalArrayList, geolocationCardinalImages)
                 // Set and Send Data Main
-                Log.e("Data", cittusDB.toString())
+                Log.e("Data-Image", cittusDB.toString())
                 bundle.putParcelable("CittusDB", cittusDB)
                 Navigation.findNavController(viewMain!!).navigate(R.id.addressLocationOnTheWayActivity, bundle)
             }

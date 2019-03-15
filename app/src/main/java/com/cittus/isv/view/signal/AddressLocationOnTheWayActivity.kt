@@ -2,6 +2,7 @@ package com.cittus.isv.view.signal
 
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -106,10 +107,12 @@ class AddressLocationOnTheWayActivity : Fragment() {
             // Make Object Main
             var cittusDB: CittusListSignal =
                 CittusListSignal(login, municipalities, signalArrayList, geolocationCardinalImages)
+            // Show Data
+            Log.e("Data-ALocationOTW", cittusDB.toString())
             // Set and Send Data Main
             bundle.putParcelable("CittusDB", cittusDB)
             // Start Activity
-            Navigation.findNavController(viewMain!!).navigate(R.id.stateSignalActivity, bundle)
+            Navigation.findNavController(viewMain!!).navigate(R.id.genearlDataActivity, bundle)
         }
     }
 

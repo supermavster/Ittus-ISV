@@ -2,7 +2,7 @@ package com.cittus.isv.model
 
 object EndPoints {
     // Server
-    private const val SERVER_MAIN = "172.20.1.19"//"192.168.43.137"//"172.20.1.13"//
+    private const val SERVER_MAIN = "192.168.43.44"//"192.168.43.137"//"172.20.1.13"//
     private const val PATH_MAIN = "http://${SERVER_MAIN}/ittus-senalesviales/queries/"
 
     // Upload Photo

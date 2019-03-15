@@ -2,6 +2,7 @@ package com.cittus.isv.view.base
 
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -134,6 +135,8 @@ class MunicipalitiesActivity : Fragment() {
             val municipalities = Municipalities(idInventario, idListSignal, idMaxSignal, nameMunicipal, nameDepartment)
             // Make Object Main
             var cittusDB: CittusListSignal = CittusListSignal(login, municipalities, null, null)
+            // Show Data
+            Log.e("Data-Municipalities", cittusDB.toString())
             // Set and Send Data Main
             bundle.putParcelable("CittusDB", cittusDB)
             // Init Action

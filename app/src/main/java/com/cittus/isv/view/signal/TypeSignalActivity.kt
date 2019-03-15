@@ -72,8 +72,9 @@ class TypeSignalActivity: Fragment() {
         // Make Object Main
         var cittusDB: CittusListSignal =
             CittusListSignal(login, municipalities, signalArrayList, geolocationCardinalImages)
+        // Show Data
+        Log.e("Data-TypeSignal", cittusDB.toString())
         // Set and Send Data Main
-        Log.e("Data", cittusDB.toString())
         bundle.putParcelable("CittusDB", cittusDB)
     }
 }

@@ -4,6 +4,7 @@ import android.net.Uri
 import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.v4.app.Fragment
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -74,6 +75,9 @@ class FinishSaveActivity : Fragment() {
             // Make Object Main
             var cittusDB: CittusListSignal =
                 CittusListSignal(login, municipalities, signalArrayList, geolocationCardinalImages)
+            // Show Data
+            Log.e("Data-Finish", cittusDB.toString())
+
             // Set and Send Data Main
             bundle.putParcelable("CittusDB", cittusDB)
             // Save Data

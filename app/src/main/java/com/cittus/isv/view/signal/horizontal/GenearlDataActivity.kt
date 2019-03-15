@@ -171,6 +171,8 @@ class GenearlDataActivity : Fragment() {
             // Make Object Main
             var cittusDB: CittusListSignal =
                 CittusListSignal(login, municipalities, signalArrayList, geolocationCardinalImages)
+            // Show Data
+            Log.e("Data-GeneralD", cittusDB.toString())
             // Set and Send Data Main
             bundle.putParcelable("CittusDB", cittusDB)
             // Start Activity

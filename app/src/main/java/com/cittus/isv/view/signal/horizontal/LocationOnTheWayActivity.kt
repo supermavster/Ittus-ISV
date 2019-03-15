@@ -2,6 +2,7 @@ package com.cittus.isv.view.signal.horizontal
 
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -79,6 +80,8 @@ class LocationOnTheWayActivity : Fragment() {
         // Make Object Main
         var cittusDB: CittusListSignal =
             CittusListSignal(login, municipalities, signalArrayList, geolocationCardinalImages)
+        // Show Data
+        Log.e("Data-LocationOTW", cittusDB.toString())
         // Set and Send Data Main
         bundle.putParcelable("CittusDB", cittusDB)
         // Start Activity

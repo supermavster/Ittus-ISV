@@ -3,6 +3,7 @@ package com.cittus.isv.view.signal
 import android.graphics.Color
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,7 +15,6 @@ import androidx.navigation.Navigation
 import com.cittus.isv.R
 import com.cittus.isv.complements.camera.TakePicture
 import com.cittus.isv.complements.gps.GPS_Best
-import com.cittus.isv.complements.gps.GetUserLocation
 import com.cittus.isv.model.*
 import kotlinx.android.synthetic.main.activity_photo_gps.view.*
 
@@ -61,8 +61,6 @@ class PhotoGPSActivity : Fragment() {
             initProcess()
         }
     }
-
-
 
 
     private fun initProcess() {
@@ -122,7 +120,7 @@ class PhotoGPSActivity : Fragment() {
     }
 
     private fun btnSave() {
-        viewMain.findViewById<Button>(R.id.btn_next_photo).setOnClickListener {
+        viewMain!!.findViewById<Button>(R.id.btn_next_photo).setOnClickListener { view ->
 
             // Get Data Temp
             var tempData = getData()
@@ -151,6 +149,8 @@ class PhotoGPSActivity : Fragment() {
             // Make Object Main
             var cittusDB: CittusListSignal =
                 CittusListSignal(login, municipalities, signalArrayList, geolocationCardinalImages)
+            // Show Data
+            Log.e("Data-GPS", cittusDB.toString())
             // Set and Send Data Main
             bundle.putParcelable("CittusDB", cittusDB)
             // Start Activity
@@ -179,18 +179,19 @@ class PhotoGPSActivity : Fragment() {
     }
 
     // Get Location Main User
-    private var locationMain: GetUserLocation? = GetUserLocation()
+    private var locationMain: GPS_Best? = null
 
     private fun gpsActions() {
+        locationMain = GPS_Best(
+            this.activity!!,
+            viewMain.txt_latitude,
+            viewMain.txt_altitude,
+            viewMain.txt_longitude
+        )
         // Set Actions
         viewMain.findViewById<ImageButton>(R.id.btn_gps).setOnClickListener {
 
-            GPS_Best(
-                this.activity!!,
-                viewMain.txt_latitude,
-                viewMain.txt_altitude,
-                viewMain.txt_longitude
-            )?.toggleBestUpdates(viewMain)
+            locationMain?.toggleBestUpdates(viewMain)
 
         }
     }

@@ -2,6 +2,7 @@ package com.cittus.isv.view.base
 
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -134,6 +135,8 @@ class GeolocationActivity : Fragment() {
 
             // Make Object Main
             var cittusDB: CittusListSignal = CittusListSignal(login, municipalities, null, geolocationCardinalImages)
+            // Show Data
+            Log.e("Data-Geolocation", cittusDB.toString())
             // Set and Send Data Main
             bundle.putParcelable("CittusDB", cittusDB)
             Navigation.findNavController(viewMain!!).navigate(R.id.typeSignalActivity, bundle)
