@@ -26,6 +26,9 @@ class GenearlDataActivity : Fragment() {
     private var geolocationCardinalImages: ArrayList<GeolocationCardinalImages>? = null
     private var signalArrayList = ArrayList<CittusISV>()
 
+    // Variables temp
+    var horizontalSignal: HorizontalSignal? = null
+
     // Variables Class
     // Variables
     var carril = "";
@@ -51,6 +54,8 @@ class GenearlDataActivity : Fragment() {
             municipalities = it.municipality
             geolocationCardinalImages = it.geolocationCardinalImages
             signalArrayList = it.signal!!
+            // Variable Temp
+            horizontalSignal = it.signal!![0].horizontalSignal
 
         }
         if (login === 1) {
@@ -160,11 +165,10 @@ class GenearlDataActivity : Fragment() {
             // 1-2 -> Carril
             // 1-3 -> Porcentaje
 
-            var horizontalSignal = HorizontalSignal()
-            horizontalSignal.locationOnTheWay = ""
-            horizontalSignal.directionJourney = dataTemp.get(0)
-            horizontalSignal.rail = dataTemp.get(1)
-            horizontalSignal.percentage = dataTemp.get(2)
+
+            horizontalSignal!!.directionJourney = dataTemp.get(0)
+            horizontalSignal!!.rail = dataTemp.get(1)
+            horizontalSignal!!.percentage = dataTemp.get(2)
 
             // Add data to Object
             signalArrayList.get(0).horizontalSignal = horizontalSignal

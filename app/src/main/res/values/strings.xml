@@ -44,10 +44,10 @@
     <string name="tab_text_2">Información</string>
 
     <string name="lbl_location_signal">Ubicación de la Señal en la Via</string>
-    <string name="btn_left">Norte - Sur</string>
+    <string name="btn_left">Norte-Sur</string>
     <string name="btn_arrow_left">N-S</string>
 
-    <string name="btn_right">Oeste - Este</string>
+    <string name="btn_right">Oeste-Este</string>
     <string name="btn_arrow_right">O-E</string>
 
     <string name="lbl_size_signal">Tamaño de la Señal</string>

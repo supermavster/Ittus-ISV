@@ -239,9 +239,9 @@ class PhotoGPSActivity : Fragment() {
         // Location in the Trayect
         var btnLocationMain: String = ""
         if (btn_stretch.isChecked) {
-            btnLocationMain = btn_stretch.textOn.toString()
+            btnLocationMain = btn_stretch.textOff.toString()
         } else if (btn_intersection.isChecked) {
-            btnLocationMain = btn_intersection.textOn.toString()
+            btnLocationMain = btn_intersection.textOff.toString()
         }
         if (btnLocationMain.isNotEmpty()) {
             tempArray.add(6, btnLocationMain)// 1-1 -> Location Trayecto

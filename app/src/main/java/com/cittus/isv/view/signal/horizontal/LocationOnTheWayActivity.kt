@@ -77,6 +77,20 @@ class LocationOnTheWayActivity : Fragment() {
         var cittusImage =
             CittusImage(resources.getString(title), url_img, code, ActionsRequest.GET_HORIZONTAL_IMAGES_VALUES)
         bundle.putParcelable("CittusImage", cittusImage)
+
+        var locationOnTheWay = ""
+        if (title == R.string.title_horizontal_intersection) {
+            locationOnTheWay = "Intersección"
+        } else {
+            locationOnTheWay = "Tramo"
+        }
+
+        // Location
+        var horizontalSignal = HorizontalSignal()
+        horizontalSignal.locationOnTheWay = locationOnTheWay
+
+        signalArrayList[0].horizontalSignal = horizontalSignal
+
         // Make Object Main
         var cittusDB: CittusListSignal =
             CittusListSignal(login, municipalities, signalArrayList, geolocationCardinalImages)

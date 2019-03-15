@@ -15,10 +15,8 @@ import android.provider.Settings;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AlertDialog;
 import android.view.View;
-import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
-import com.cittus.isv.R;
 
 public class GPS_Best {
 
@@ -71,23 +69,6 @@ public class GPS_Best {
                 locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
     }
 
-    public void toggleGPSUpdates(View view) {
-        if (!checkLocation())
-            return;
-        Button button = (Button) view;
-        if (button.getText().equals(mainActivity.getString(R.string.pause))) {
-            locationManager.removeUpdates(locationListenerGPS);
-            button.setText(R.string.resume);
-        } else {
-            if (ActivityCompat.checkSelfPermission(mainActivity, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(mainActivity, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-
-            }
-            locationManager.requestLocationUpdates(
-                    LocationManager.GPS_PROVIDER, 2 * 20 * 1000, 10, locationListenerGPS);
-            button.setText(R.string.pause);
-        }
-    }
-
     public void toggleBestUpdates(View view) {
         if (!checkLocation())
             return;
@@ -110,24 +91,6 @@ public class GPS_Best {
 
         }
 
-    }
-
-    public void toggleNetworkUpdates(View view) {
-        if (!checkLocation())
-            return;
-        Button button = (Button) view;
-        if (button.getText().equals(mainActivity.getResources().getString(R.string.pause))) {
-            if (ActivityCompat.checkSelfPermission(mainActivity, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(mainActivity, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            }
-            locationManager.removeUpdates(locationListenerNetwork);
-            button.setText(R.string.resume);
-        }
-        else {
-            locationManager.requestLocationUpdates(
-                    LocationManager.NETWORK_PROVIDER, 20 * 1000, 10, locationListenerNetwork);
-            Toast.makeText(mainActivity, "Network provider started running", Toast.LENGTH_LONG).show();
-            button.setText(R.string.pause);
-        }
     }
 
     private final LocationListener locationListenerBest = new LocationListener() {
@@ -163,12 +126,15 @@ public class GPS_Best {
         public void onLocationChanged(Location location) {
             longitudeNetwork = location.getLongitude();
             latitudeNetwork = location.getLatitude();
+            altitudeBest = location.getAltitude();
 
             mainActivity.runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
                     longitudeValueNetwork.setText(longitudeNetwork + "");
                     latitudeValueNetwork.setText(latitudeNetwork + "");
+                    altitudeValueBest.setText(altitudeBest + "");
+
                     Toast.makeText(mainActivity, "Network Provider update", Toast.LENGTH_SHORT).show();
                 }
             });
