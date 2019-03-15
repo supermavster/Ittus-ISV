@@ -1,5 +1,6 @@
 package com.cittus.isv.view.signal
 
+import android.graphics.Color
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.view.LayoutInflater
@@ -8,6 +9,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageButton
+import android.widget.ToggleButton
 import androidx.navigation.Navigation
 import com.cittus.isv.R
 import com.cittus.isv.complements.camera.TakePicture
@@ -70,8 +72,32 @@ class PhotoGPSActivity : Fragment() {
         // Btn GPS
         gpsActions()
 
+        // Toggle Button
+        toggleButtonAction()
+
         // Btn Save and Next
         btnSave()
+    }
+
+    var main = false
+    private fun toggleButtonAction() {
+        var btn_stretch = viewMain.findViewById<ToggleButton>(R.id.btn_stretch)
+        var btn_intersection = viewMain.findViewById<ToggleButton>(R.id.btn_intersection)
+
+        btn_intersection.setOnClickListener {
+            // Block Other Button
+            btn_intersection.setLinkTextColor(android.R.attr.colorPrimary)
+            btn_stretch.setLinkTextColor(Color.RED)
+            btn_stretch.isClickable = main
+            main = !main
+        }
+        btn_stretch.setOnClickListener {
+            // Block Other Button
+            btn_stretch.setLinkTextColor(android.R.attr.colorPrimary)
+            btn_intersection.setLinkTextColor(Color.RED)
+            btn_intersection.isClickable = main
+            main = !main
+        }
     }
 
     private fun cameraActions() {
@@ -102,10 +128,13 @@ class PhotoGPSActivity : Fragment() {
             var tempData = getData()
             // 0 -> Latitud
             // 1 -> Longitud
-            // 2 -> Clasification
+            // 2 -> Altitud
             // 3 -> Img Front
             // 4 -> Img Back
             // 5 -> Img Plaque
+            // 6 -> Location Trayecto
+
+
             // Set data temp - GPS PHOTO
             var cittusSignal = CittusSignal()
             cittusSignal.latitude = tempData.get(0).toFloat()
@@ -114,6 +143,8 @@ class PhotoGPSActivity : Fragment() {
             cittusSignal.photoFront = tempData.get(3)
             cittusSignal.photoBack = tempData.get(4)
             cittusSignal.photoPlaque = tempData.get(5)
+            cittusSignal.location = tempData.get(6)
+
 
             signalArrayList.get(0).cittusSignal = cittusSignal
 
@@ -172,6 +203,8 @@ class PhotoGPSActivity : Fragment() {
         // 3 -> Img Front
         // 4 -> Img Back
         // 5 -> Img Plaque
+        // 6 -> Location Trayecto
+
         var tempArray: ArrayList<String> = ArrayList<String>()
         // Latitude and Longitude
 
@@ -198,6 +231,23 @@ class PhotoGPSActivity : Fragment() {
         } else {
             tempArray.add(5, "NONE")
         }
+
+        var btn_stretch = viewMain.findViewById<ToggleButton>(R.id.btn_stretch)
+        var btn_intersection = viewMain.findViewById<ToggleButton>(R.id.btn_intersection)
+
+        // Location in the Trayect
+        var btnLocationMain: String = ""
+        if (btn_stretch.isChecked) {
+            btnLocationMain = btn_stretch.textOn.toString()
+        } else if (btn_intersection.isChecked) {
+            btnLocationMain = btn_intersection.textOn.toString()
+        }
+        if (btnLocationMain.isNotEmpty()) {
+            tempArray.add(6, btnLocationMain)// 1-1 -> Location Trayecto
+        } else {
+            throw Exception("Location was not Select")
+        }
+
 
         return tempArray
     }
