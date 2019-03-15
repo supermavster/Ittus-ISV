@@ -23,10 +23,9 @@ public class GPS_Best {
     LocationManager locationManager;
     double longitudeBest, latitudeBest, altitudeBest;
     double longitudeGPS, latitudeGPS, altitudeGPS;
-    double longitudeNetwork, latitudeNetwork;
+    double longitudeNetwork, latitudeNetwork, altitudeNetwork;
     TextView longitudeValueBest, latitudeValueBest, altitudeValueBest;
     TextView longitudeValueGPS, latitudeValueGPS, altitudeValueGPS;
-    TextView longitudeValueNetwork, latitudeValueNetwork;
     Activity mainActivity;
 
 
@@ -102,9 +101,9 @@ public class GPS_Best {
             mainActivity.runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    longitudeValueBest.setText(longitudeBest + "");
-                    latitudeValueBest.setText(latitudeBest + "");
-                    altitudeValueBest.setText(altitudeBest + "");
+                    longitudeValueBest.setText(String.valueOf(longitudeBest));
+                    latitudeValueBest.setText(String.valueOf(latitudeBest));
+                    altitudeValueBest.setText(String.valueOf(altitudeBest));
                 }
             });
         }
@@ -126,14 +125,14 @@ public class GPS_Best {
         public void onLocationChanged(Location location) {
             longitudeNetwork = location.getLongitude();
             latitudeNetwork = location.getLatitude();
-            altitudeBest = location.getAltitude();
+            altitudeNetwork = location.getAltitude();
 
             mainActivity.runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    longitudeValueNetwork.setText(longitudeNetwork + "");
-                    latitudeValueNetwork.setText(latitudeNetwork + "");
-                    altitudeValueBest.setText(altitudeBest + "");
+                    longitudeValueBest.setText(String.valueOf(longitudeNetwork));
+                    latitudeValueBest.setText(String.valueOf(latitudeNetwork));
+                    altitudeValueBest.setText(String.valueOf(altitudeNetwork));
 
                     Toast.makeText(mainActivity, "Network Provider update", Toast.LENGTH_SHORT).show();
                 }
