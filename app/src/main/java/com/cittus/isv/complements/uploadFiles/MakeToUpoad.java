@@ -1,5 +1,6 @@
 package com.cittus.isv.complements.uploadFiles;
 
+import android.content.Context;
 import android.net.Uri;
 import android.util.Log;
 import android.widget.Toast;
@@ -14,13 +15,13 @@ import java.net.URL;
 
 public class MakeToUpoad {
 
-    private MainActivity mainActivity;
+    private Context mainActivity;
     private static final String TAG = MainActivity.class.getSimpleName();
     private String selectedFilePath;
 
     private String serverUrl = "";
 
-    public MakeToUpoad(MainActivity mainActivity){
+    public MakeToUpoad(Context mainActivity) {
         this.mainActivity = mainActivity;
         this.serverUrl = EndPoints.SERVER_URL;
         Log.e("URL",this.serverUrl);
@@ -135,12 +136,12 @@ public class MakeToUpoad {
 
                 //response code of 200 indicates the server status OK
                 if(serverResponseCode == 200){
-                    mainActivity.runOnUiThread(new Runnable() {
+                    /*mainActivity.runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
                             //tvFileName.setText("File Upload completed.\n\n You can see the uploaded file here: \n\n" + SERVER_URL +"?see="ivAttachment + fileName);
                         }
-                    });
+                    });*/
                 }
 
                 //closing the input and output streams
@@ -152,12 +153,12 @@ public class MakeToUpoad {
 
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
-                mainActivity.runOnUiThread(new Runnable() {
+                /*mainActivity.runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
                         Toast.makeText(mainActivity,"File Not Found",Toast.LENGTH_SHORT).show();
                     }
-                });
+                });*/
             } catch (MalformedURLException e) {
                 e.printStackTrace();
                 Toast.makeText(mainActivity, "URL error!", Toast.LENGTH_SHORT).show();

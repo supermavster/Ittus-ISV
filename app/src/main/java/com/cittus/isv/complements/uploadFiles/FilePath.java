@@ -8,7 +8,6 @@ import android.os.Build;
 import android.os.Environment;
 import android.provider.DocumentsContract;
 import android.provider.MediaStore;
-import com.cittus.isv.view.MainActivity;
 
 public class FilePath {
 
@@ -19,7 +18,7 @@ public class FilePath {
      * @param uri
      * @return path of the selected image file from gallery
      */
-    public static String getPath(final MainActivity context, final Uri uri) {
+    public static String getPath(final Context context, final Uri uri) {
 
         // check here to KITKAT or new version
         final boolean isKitKat = Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT;
