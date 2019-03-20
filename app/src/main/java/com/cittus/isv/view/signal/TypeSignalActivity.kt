@@ -77,7 +77,7 @@ class TypeSignalActivity: Fragment() {
 
 
         // Add Signal Values
-        var signal = CittusISV(signalArrayList.size - 1, typeSignal)
+        var signal = CittusISV(signalArrayList.size, typeSignal)
         signalArrayList.add(signal)
 
         // Make Object Main

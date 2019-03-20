@@ -137,7 +137,7 @@ class TypeSignalVertical : Fragment() {
         // Name Siganl Vertical
         var verticalSignal = VerticalSignal()
         verticalSignal.verticalNameSignal = verticalNameSignal
-        signalArrayList[0].verticalSignal = verticalSignal
+        signalArrayList[signalArrayList.size - 1].verticalSignal = verticalSignal
 
         // Make Object Main
         var cittusDB: CittusListSignal =

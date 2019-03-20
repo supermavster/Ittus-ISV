@@ -332,6 +332,13 @@ class PhotoGPSActivity : Fragment() {
         } else {
             Log.e("ERROR", "GPS")
         }
+
+        try {
+            locationManager.removeUpdates(listenerGPS)
+            locationManager.removeUpdates(listenerNetwork)
+        } catch (ex: Exception) {
+
+        }
     }
 
     fun getData(): ArrayList<String> {

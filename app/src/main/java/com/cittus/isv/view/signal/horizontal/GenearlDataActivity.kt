@@ -54,14 +54,38 @@ class GenearlDataActivity : Fragment() {
             municipalities = it.municipality
             geolocationCardinalImages = it.geolocationCardinalImages
             signalArrayList = it.signal!!
-            // Variable Temp
-            horizontalSignal = it.signal!![0].horizontalSignal
-
         }
         if (login === 1) {
+            // Variable Temp
+            horizontalSignal = checkSignal("Horizontal") as HorizontalSignal?
             // Init Process
             initProcess()
         }
+    }
+
+    private fun checkSignal(type: String): Any? {
+        var tempData: Any? = null
+        var count = 0
+        if (type == "Horizontal") {
+            var size = signalArrayList.size
+            for (i in 0 until size) {
+                var tempObject = signalArrayList[i].horizontalSignal
+                if (tempObject != null) {
+                    count = i
+                }
+            }
+            tempData = signalArrayList[count].horizontalSignal
+        } else if (type == "Vertical") {
+            var size = signalArrayList.size
+            for (i in 0 until size) {
+                var tempObject = signalArrayList[i].verticalSignal
+                if (tempObject != null) {
+                    count = i
+                }
+            }
+            tempData = signalArrayList[count].verticalSignal
+        }
+        return tempData
     }
 
     private fun initProcess() {
@@ -84,7 +108,7 @@ class GenearlDataActivity : Fragment() {
             "Carril 6"
         )
 
-        var textPicker: NumberPicker = viewMain!!.findViewById<NumberPicker>(R.id.txt_location_signal)
+        var textPicker: NumberPicker = viewMain.findViewById<NumberPicker>(R.id.txt_location_signal)
         textPicker.setMinValue(0)
         textPicker.setMaxValue(values.size - 1)
         textPicker.setDisplayedValues(values)
@@ -104,7 +128,7 @@ class GenearlDataActivity : Fragment() {
             valTemp.add("${i}%")
         }
 
-        textPicker = viewMain!!.findViewById<NumberPicker>(R.id.txt_percentage_coverage)
+        textPicker = viewMain.findViewById<NumberPicker>(R.id.txt_percentage_coverage)
         textPicker.setMinValue(0)
         textPicker.setMaxValue(valTemp.size - 1)
         textPicker.setDisplayedValues(valTemp.toTypedArray())
@@ -127,8 +151,8 @@ class GenearlDataActivity : Fragment() {
         // 1-2 -> Porcentaje
         try {
             // Direccion
-            var rg_directional = viewMain!!.findViewById<RadioGroup>(R.id.rg_directional)
-            var rb: RadioButton = viewMain!!.findViewById<RadioButton>(rg_directional.checkedRadioButtonId)
+            var rg_directional = viewMain.findViewById<RadioGroup>(R.id.rg_directional)
+            var rb: RadioButton = viewMain.findViewById<RadioButton>(rg_directional.checkedRadioButtonId)
             tempValues.add(0, rb.text.toString()) // 1-0 -> Direccion
 
             // Carriles
@@ -158,7 +182,7 @@ class GenearlDataActivity : Fragment() {
     }
 
     private fun save() {
-        viewMain!!.findViewById<Button>(R.id.btn_next_general_data).setOnClickListener {
+        viewMain.findViewById<Button>(R.id.btn_next_general_data).setOnClickListener {
 
             var dataTemp = getDataMain()
             // 1-0 -> Direccion
@@ -166,12 +190,12 @@ class GenearlDataActivity : Fragment() {
             // 1-3 -> Porcentaje
 
 
-            horizontalSignal!!.directionJourney = dataTemp.get(0)
-            horizontalSignal!!.rail = dataTemp.get(1)
-            horizontalSignal!!.percentage = dataTemp.get(2)
+            horizontalSignal!!.directionJourney = dataTemp[0]
+            horizontalSignal!!.rail = dataTemp[1]
+            horizontalSignal!!.percentage = dataTemp[2]
 
             // Add data to Object
-            signalArrayList.get(0).horizontalSignal = horizontalSignal
+            signalArrayList[signalArrayList.size - 1].horizontalSignal = horizontalSignal
 
             // Make Object Main
             var cittusDB: CittusListSignal =
@@ -181,7 +205,7 @@ class GenearlDataActivity : Fragment() {
             // Set and Send Data Main
             bundle.putParcelable("CittusDB", cittusDB)
             // Start Activity
-            Navigation.findNavController(viewMain!!).navigate(R.id.photoGPSActivity, bundle)
+            Navigation.findNavController(viewMain).navigate(R.id.photoGPSActivity, bundle)
         }
     }
 

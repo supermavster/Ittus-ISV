@@ -34,11 +34,10 @@ data class CittusISV(var count: Int, var typeSignal: String) : Parcelable {
     override fun describeContents(): Int = 0
 
     override fun toString(): String {
-        var typeSignalMain = ""
-        if (verticalSignal != null) {
-            typeSignalMain = "$verticalSignal"
-        } else if (horizontalSignal != null) {
-            typeSignalMain = "$horizontalSignal"
+        var typeSignalMain = when (typeSignal) {
+            "Vertical" -> this.verticalSignal
+            "Horizontal" -> this.horizontalSignal
+            else -> null
         }
         return "\"$count\":{\"typeSignal\":\"$typeSignal\",$imagesByCode,$locationSignal,$cittusSignal,$typeSignalMain}"
     }
