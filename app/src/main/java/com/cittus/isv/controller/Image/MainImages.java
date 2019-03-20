@@ -1,4 +1,4 @@
-package com.cittus.isv.controller;
+package com.cittus.isv.controller.Image;
 
 import android.content.Context;
 import android.support.v4.content.ContextCompat;

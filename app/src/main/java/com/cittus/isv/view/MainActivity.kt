@@ -12,12 +12,12 @@ import com.cittus.isv.DAO.DAOConnection
 import com.cittus.isv.R
 import com.cittus.isv.complements.Permissions
 import com.cittus.isv.complements.camera.TakePicture
+import com.cittus.isv.controller.base.GeolocationActivity
+import com.cittus.isv.controller.signal.PhotoGPSActivity
 import com.cittus.isv.model.ActionsRequest
 import com.cittus.isv.model.CittusListSignal
 import com.cittus.isv.model.CittusSignal
 import com.cittus.isv.model.Municipalities
-import com.cittus.isv.view.base.GeolocationActivity
-import com.cittus.isv.view.signal.PhotoGPSActivity
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
@@ -34,9 +34,9 @@ class MainActivity : AppCompatActivity() {
     private var inventario: Municipalities? = null // inventario
     private var listSignal: CittusListSignal? = null
     private var signalMain: CittusSignal? = null
-    var message = "";
+    var message = ""
     private var signalMainArray: ArrayList<CittusSignal> = ArrayList<CittusSignal>()
-    var contBaseID = 0;
+    var contBaseID = 0
 
     // Exception
     var exceptionMain: Boolean = false
@@ -109,7 +109,7 @@ class MainActivity : AppCompatActivity() {
             }
             ActionsRequest.GET_HORIZONTAL_VALUES -> {
                 if (data != null) {
-                    val extras = data!!.extras ?: return
+                    val extras = data.extras ?: return
                     horizontalItems = extras.getStringArrayList("getData")
                     dataImagenes = extras.getStringArrayList("getDataImages")
                     Log.e("getData Horizontal", "getData:$horizontalItems  Images:$dataImagenes")
@@ -117,7 +117,7 @@ class MainActivity : AppCompatActivity() {
             }
             ActionsRequest.GET_VERTICAL_VALUES or ActionsRequest.GET_VERTICAL_IMAGES_VALUES->{
                 if (data != null) {
-                    val extras = data!!.extras ?: return
+                    val extras = data.extras ?: return
                     verticalItems = extras.getString("getTitle")
                     dataImagenes = extras.getStringArrayList("getDataImages")
                     Log.e("getData Vertical", "getData:$verticalItems  Images:$dataImagenes")
@@ -128,7 +128,7 @@ class MainActivity : AppCompatActivity() {
                     //no data present
                     return
                 }
-                val extras = data!!.extras ?: return
+                val extras = data.extras ?: return
                 contBaseID = extras.getInt("contBaseID")
                 Log.e("Show ID",contBaseID.toString())
             }

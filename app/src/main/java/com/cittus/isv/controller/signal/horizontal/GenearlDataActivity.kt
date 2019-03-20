@@ -1,4 +1,4 @@
-package com.cittus.isv.view.signal.horizontal
+package com.cittus.isv.controller.signal.horizontal
 
 import android.os.Bundle
 import android.support.v4.app.Fragment
@@ -6,10 +6,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.NumberPicker
-import android.widget.RadioButton
-import android.widget.RadioGroup
+import android.widget.*
 import androidx.navigation.Navigation
 import com.cittus.isv.R
 import com.cittus.isv.model.*
@@ -31,8 +28,8 @@ class GenearlDataActivity : Fragment() {
 
     // Variables Class
     // Variables
-    var carril = "";
-    var porcentaje = "";
+    var carril = ""
+    var porcentaje = ""
     // Exception
     var exceptionMain: Boolean = false
     var elementsBaseImage = java.util.ArrayList<String>()
@@ -109,10 +106,10 @@ class GenearlDataActivity : Fragment() {
         )
 
         var textPicker: NumberPicker = viewMain.findViewById<NumberPicker>(R.id.txt_location_signal)
-        textPicker.setMinValue(0)
-        textPicker.setMaxValue(values.size - 1)
-        textPicker.setDisplayedValues(values)
-        textPicker.setWrapSelectorWheel(true)
+        textPicker.minValue = 0
+        textPicker.maxValue = values.size - 1
+        textPicker.displayedValues = values
+        textPicker.wrapSelectorWheel = true
 
         textPicker.setOnValueChangedListener(object : NumberPicker.OnValueChangeListener {
             override fun onValueChange(numberPicker: NumberPicker, i: Int, i1: Int) {
@@ -129,10 +126,10 @@ class GenearlDataActivity : Fragment() {
         }
 
         textPicker = viewMain.findViewById<NumberPicker>(R.id.txt_percentage_coverage)
-        textPicker.setMinValue(0)
-        textPicker.setMaxValue(valTemp.size - 1)
-        textPicker.setDisplayedValues(valTemp.toTypedArray())
-        textPicker.setWrapSelectorWheel(true)
+        textPicker.minValue = 0
+        textPicker.maxValue = valTemp.size - 1
+        textPicker.displayedValues = valTemp.toTypedArray()
+        textPicker.wrapSelectorWheel = true
 
         textPicker.setOnValueChangedListener(object : NumberPicker.OnValueChangeListener {
             override fun onValueChange(numberPicker: NumberPicker, i: Int, i1: Int) {
@@ -144,11 +141,12 @@ class GenearlDataActivity : Fragment() {
 
 
     fun getDataMain(): ArrayList<String> {
-        var tempValues = ArrayList<String>();
+        var tempValues = ArrayList<String>()
         // TODO: ISV Horizontal DATA MAIN
         // 1-0 -> Direccion
         // 1-1 -> Carril
         // 1-2 -> Porcentaje
+        // 1-3 -> State
         try {
             // Direccion
             var rg_directional = viewMain.findViewById<RadioGroup>(R.id.rg_directional)
@@ -159,6 +157,9 @@ class GenearlDataActivity : Fragment() {
             tempValues.add(1, carril) // 1-2 -> Carril
 
             tempValues.add(2, porcentaje) // 1-3 -> Porcentaje
+
+            tempValues.add(3, viewMain.findViewById<RatingBar>(R.id.ratingBar).rating.toString())
+
 
             exceptionMain = false
         } catch (e: Exception) {
@@ -178,7 +179,7 @@ class GenearlDataActivity : Fragment() {
             exceptionMain = true
         }
 
-        return tempValues;
+        return tempValues
     }
 
     private fun save() {
@@ -186,13 +187,14 @@ class GenearlDataActivity : Fragment() {
 
             var dataTemp = getDataMain()
             // 1-0 -> Direccion
-            // 1-2 -> Carril
-            // 1-3 -> Porcentaje
-
+            // 1-1 -> Carril
+            // 1-2 -> Porcentaje
+            // 1-3 -> State
 
             horizontalSignal!!.directionJourney = dataTemp[0]
             horizontalSignal!!.rail = dataTemp[1]
             horizontalSignal!!.percentage = dataTemp[2]
+            horizontalSignal!!.stateSingal = dataTemp[3].toFloat()
 
             // Add data to Object
             signalArrayList[signalArrayList.size - 1].horizontalSignal = horizontalSignal

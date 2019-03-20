@@ -1,4 +1,4 @@
-package com.cittus.isv.view.signal.horizontal
+package com.cittus.isv.controller.signal.horizontal
 
 import android.os.Bundle
 import android.support.v4.app.Fragment
@@ -55,19 +55,19 @@ class LocationOnTheWayActivity : Fragment() {
 
     private fun makeActionsButtons() {
 
-        viewMain!!.findViewById<ImageButton>(R.id.ibtn_stretch).setOnClickListener { view ->
+        viewMain.findViewById<ImageButton>(R.id.ibtn_stretch).setOnClickListener { view ->
             makeActivityImages(R.string.title_horizontal_stretch, EndPoints.URL_GET_HORIZONTAL_STRETCH)
         }
 
-        viewMain!!.findViewById<Button>(R.id.btn_stretch).setOnClickListener { view ->
+        viewMain.findViewById<Button>(R.id.btn_stretch).setOnClickListener { view ->
             makeActivityImages(R.string.title_horizontal_stretch, EndPoints.URL_GET_HORIZONTAL_STRETCH)
         }
 
-        viewMain!!.findViewById<ImageButton>(R.id.ibtn_intersection).setOnClickListener { view ->
+        viewMain.findViewById<ImageButton>(R.id.ibtn_intersection).setOnClickListener { view ->
             makeActivityImages(R.string.title_horizontal_intersection, EndPoints.URL_GET_HORIZONTAL_INTERSECTION)
         }
 
-        viewMain!!.findViewById<Button>(R.id.btn_intersection).setOnClickListener { view ->
+        viewMain.findViewById<Button>(R.id.btn_intersection).setOnClickListener { view ->
             makeActivityImages(R.string.title_horizontal_intersection, EndPoints.URL_GET_HORIZONTAL_INTERSECTION)
         }
 
@@ -99,6 +99,6 @@ class LocationOnTheWayActivity : Fragment() {
         // Set and Send Data Main
         bundle.putParcelable("CittusDB", cittusDB)
         // Start Activity
-        Navigation.findNavController(viewMain!!).navigate(R.id.mainImage, bundle)
+        Navigation.findNavController(viewMain).navigate(R.id.mainImage, bundle)
     }
 }

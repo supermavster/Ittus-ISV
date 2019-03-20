@@ -1,4 +1,4 @@
-package com.cittus.isv.view.base
+package com.cittus.isv.controller.base
 
 import android.os.Bundle
 import android.support.v4.app.Fragment
@@ -60,31 +60,31 @@ class MunicipalitiesActivity : Fragment() {
     private fun initProcess() {
 
         // Lock Button and TextView
-        viewMain!!.findViewById<AutoCompleteTextView>(R.id.auto_complete_municipio).isEnabled = false
-        viewMain!!.findViewById<Button>(R.id.buttonMain).isEnabled = false
+        viewMain.findViewById<AutoCompleteTextView>(R.id.auto_complete_municipio).isEnabled = false
+        viewMain.findViewById<Button>(R.id.buttonMain).isEnabled = false
 
         // MAx ID Inventario - maxIDListSignal
-        maxIDInventario = connection!!.getDataSingle(EndPoints.URL_GET_MAX_ID + "inventario")
-        maxIDListSignal = connection!!.getDataSingle(EndPoints.URL_GET_MAX_ID + "lista")
+        maxIDInventario = connection.getDataSingle(EndPoints.URL_GET_MAX_ID + "inventario")
+        maxIDListSignal = connection.getDataSingle(EndPoints.URL_GET_MAX_ID + "lista")
 
         // Departamento
-        var array = connection!!.getData(EndPoints.URL_GET_DEPARTAMENTOS)
-        makeAutocomplete(array, viewMain!!.findViewById<AutoCompleteTextView>(R.id.auto_complete_departamento))
+        var array = connection.getData(EndPoints.URL_GET_DEPARTAMENTOS)
+        makeAutocomplete(array, viewMain.findViewById<AutoCompleteTextView>(R.id.auto_complete_departamento))
 
         // Set Actions
-        viewMain!!.findViewById<AutoCompleteTextView>(R.id.auto_complete_departamento).onItemClickListener =
+        viewMain.findViewById<AutoCompleteTextView>(R.id.auto_complete_departamento).onItemClickListener =
             AdapterView.OnItemClickListener { parent, view, position, id ->
                 // Active Buttons
-                viewMain!!.findViewById<AutoCompleteTextView>(R.id.auto_complete_municipio).isEnabled = true
-                viewMain!!.findViewById<Button>(R.id.buttonMain).isEnabled = true
+                viewMain.findViewById<AutoCompleteTextView>(R.id.auto_complete_municipio).isEnabled = true
+                viewMain.findViewById<Button>(R.id.buttonMain).isEnabled = true
                 // Add Actions
                 val selectedItem = parent.getItemAtPosition(position).toString()
-                array = connection!!.getData(EndPoints.URL_GET_SEARCH_MUNICIPIOS + selectedItem)
-                makeAutocomplete(array, viewMain!!.findViewById<AutoCompleteTextView>(R.id.auto_complete_municipio))
+                array = connection.getData(EndPoints.URL_GET_SEARCH_MUNICIPIOS + selectedItem)
+                makeAutocomplete(array, viewMain.findViewById<AutoCompleteTextView>(R.id.auto_complete_municipio))
             }
 
 
-        viewMain!!.findViewById<Button>(R.id.buttonMain).setOnClickListener { view ->
+        viewMain.findViewById<Button>(R.id.buttonMain).setOnClickListener { view ->
             var data = ArrayList<String>()
             // TODO: Location DATA MAIN (1)
             // 0 -> Id Inventario
@@ -95,29 +95,29 @@ class MunicipalitiesActivity : Fragment() {
 
             // Get Max Inventario
             if (maxIDInventario.isEmpty()) {
-                maxIDInventario = connection!!.getDataSingle(EndPoints.URL_GET_MAX_ID + "inventario")
+                maxIDInventario = connection.getDataSingle(EndPoints.URL_GET_MAX_ID + "inventario")
             }
             data.add(0, maxIDInventario) // 0 -> Id Inventario
             // Get Max Signal
             if (maxIDListSignal.isEmpty()) {
-                maxIDListSignal = connection!!.getDataSingle(EndPoints.URL_GET_MAX_ID + "lista")
+                maxIDListSignal = connection.getDataSingle(EndPoints.URL_GET_MAX_ID + "lista")
             }
             data.add(1, maxIDListSignal) // 1 -> Id Lista Senal
 
             // Get Municipio
             data.add(
                 2,
-                viewMain!!.findViewById<AutoCompleteTextView>(R.id.auto_complete_municipio).text.toString()
+                viewMain.findViewById<AutoCompleteTextView>(R.id.auto_complete_municipio).text.toString()
             ) // 2 -> Municipio
 
             // Get Municipio
             data.add(
                 3,
-                viewMain!!.findViewById<AutoCompleteTextView>(R.id.auto_complete_departamento).text.toString()
+                viewMain.findViewById<AutoCompleteTextView>(R.id.auto_complete_departamento).text.toString()
             ) // 3 -> Departamento
 
             // Get Max Id Singal
-            data.add(4, maxIDListSignal);//connection.loadElement(EndPoints.URL_GET_MAX_ID+"senal"))
+            data.add(4, maxIDListSignal)//connection.loadElement(EndPoints.URL_GET_MAX_ID+"senal"))
 
             // Set Data
             // 0 -> Id Inventario
@@ -140,7 +140,7 @@ class MunicipalitiesActivity : Fragment() {
             // Set and Send Data Main
             bundle.putParcelable("CittusDB", cittusDB)
             // Init Action
-            Navigation.findNavController(viewMain!!).navigate(R.id.geolocalizationActivity, bundle)
+            Navigation.findNavController(viewMain).navigate(R.id.geolocalizationActivity, bundle)
 
         }
     }

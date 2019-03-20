@@ -1,4 +1,4 @@
-package com.cittus.isv.view.signal.vertical
+package com.cittus.isv.controller.signal.vertical
 
 import android.os.Bundle
 import android.support.v4.app.Fragment
@@ -11,7 +11,8 @@ import androidx.navigation.Navigation
 import com.cittus.isv.R
 import com.cittus.isv.model.*
 
-class StatePostActivity : Fragment() {
+class StateSignalActivity : Fragment() {
+
 
     // Main Variables
     private lateinit var viewMain: View
@@ -29,7 +30,7 @@ class StatePostActivity : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
-        viewMain = inflater.inflate(R.layout.activity_state_post, container, false)
+        viewMain = inflater.inflate(R.layout.activity_state_signal, container, false)
         return viewMain
     }
 
@@ -77,64 +78,61 @@ class StatePostActivity : Fragment() {
         return tempData
     }
 
-
     private fun initProcess() {
-
-        // Button Post
-        buttonStay()
+        // Set Function - Size
+        buttonsSize()
         // Save Data
         btnSave()
     }
 
-    private fun buttonStay() {
-
-        viewMain.findViewById<ImageButton>(R.id.ibtn_self_signal).setOnClickListener {
-            viewMain.findViewById<RadioGroup>(R.id.rg_signal).check(R.id.rbtn_self_signal)
+    private fun buttonsSize() {
+        viewMain.findViewById<ImageButton>(R.id.ibtn_60).setOnClickListener {
+            viewMain.findViewById<RadioGroup>(R.id.rg_size).check(R.id.rbtn_60)
         }
 
-        viewMain.findViewById<ImageButton>(R.id.ibtn_light_signal).setOnClickListener {
-            viewMain.findViewById<RadioGroup>(R.id.rg_signal).check(R.id.rbtn_light_signal)
+        viewMain.findViewById<ImageButton>(R.id.ibtn_75).setOnClickListener {
+            viewMain.findViewById<RadioGroup>(R.id.rg_size).check(R.id.rbtn_75)
         }
 
-        viewMain.findViewById<ImageButton>(R.id.ibtn_wall_signal).setOnClickListener {
-            viewMain.findViewById<RadioGroup>(R.id.rg_signal).check(R.id.rbtn_wall_signal)
+        viewMain.findViewById<ImageButton>(R.id.ibtn_90).setOnClickListener {
+            viewMain.findViewById<RadioGroup>(R.id.rg_size).check(R.id.rbtn_90)
         }
 
+        viewMain.findViewById<ImageButton>(R.id.ibtn_120).setOnClickListener {
+            viewMain.findViewById<RadioGroup>(R.id.rg_size).check(R.id.rbtn_120)
+        }
     }
 
     private fun btnSave() {
-        viewMain.findViewById<Button>(R.id.btn_next_state_post).setOnClickListener {
-
+        viewMain.findViewById<Button>(R.id.btn_next_state_signal).setOnClickListener {
             // Get Data
             var data = getData()
-            verticalSignal!!.postTypeSignal = data[0]
-            verticalSignal!!.statePost = data[1].toFloat()
-
+            verticalSignal!!.sizeSignal = data[0]
+            verticalSignal!!.stateSingal = data[1].toFloat()
             // Make Object Main
             var cittusDB: CittusListSignal =
                 CittusListSignal(login, municipalities, signalArrayList, geolocationCardinalImages)
             // Show Data
-            Log.e("Data-GeneralD", cittusDB.toString())
+            Log.e("Data-StateS", cittusDB.toString())
             // Set and Send Data Main
             bundle.putParcelable("CittusDB", cittusDB)
             // Start Activity
-            Navigation.findNavController(viewMain!!).navigate(R.id.photoGPSActivity, bundle)
+            Navigation.findNavController(viewMain).navigate(R.id.statePostActivity, bundle)
         }
     }
+
 
     fun getData(): ArrayList<String> {
         // TODO: Get Data Main - Information
         // 0 -> Size
         // 1 -> Starts - State Post
         var tempArray: ArrayList<String> = ArrayList<String>()
-        var radioGroup = viewMain.findViewById<RadioGroup>(R.id.rg_signal)
+        var radioGroup = viewMain.findViewById<RadioGroup>(R.id.rg_size)
         var rb = viewMain.findViewById<RadioButton>(radioGroup.checkedRadioButtonId)
         tempArray.add(0, rb.text.toString())
 
-        tempArray.add(1, viewMain.findViewById<RatingBar>(R.id.ratingBar).rating.toString())
+        tempArray.add(1, viewMain.findViewById<RatingBar>(R.id.rb_state_signal).rating.toString())
         return tempArray
     }
-
-
 
 }

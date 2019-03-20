@@ -1,4 +1,4 @@
-package com.cittus.isv.view
+package com.cittus.isv.controller.base
 
 import android.os.Bundle
 import android.support.v4.app.Fragment
@@ -17,7 +17,7 @@ import android.util.Pair as UtilPair
 class LoginActivity : Fragment() {
 
     // Main Variables
-    var viewMain:View? = null;
+    var viewMain: View? = null
     // Make Bundle
     val bundle = Bundle()
     

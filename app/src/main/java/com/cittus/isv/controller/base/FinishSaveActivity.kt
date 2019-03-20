@@ -1,4 +1,4 @@
-package com.cittus.isv.view.base
+package com.cittus.isv.controller.base
 
 import android.net.Uri
 import android.os.Bundle
@@ -37,7 +37,7 @@ class FinishSaveActivity : Fragment() {
     // Exception
     var exceptionMain: Boolean = false
     // Make Clases
-    var message = "";
+    var message = ""
 
 
     override fun onCreateView(
@@ -84,7 +84,7 @@ class FinishSaveActivity : Fragment() {
             // Save Data
             saveAllElements()
             // Start Activity
-            Navigation.findNavController(viewMain!!).navigate(R.id.typeSignalActivity, bundle)
+            Navigation.findNavController(viewMain).navigate(R.id.typeSignalActivity, bundle)
         }
     }
 
@@ -119,7 +119,7 @@ class FinishSaveActivity : Fragment() {
     }
 
     private fun uploadImages() {
-        var makeToUpoad: MakeToUpoad = MakeToUpoad(viewMain.context);
+        var makeToUpoad: MakeToUpoad = MakeToUpoad(viewMain.context)
         var signal = signalArrayList[signalArrayList.size - 1]
         var image = signal.imagesByCode
         var path = image!!.pathImagen

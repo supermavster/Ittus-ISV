@@ -1,4 +1,4 @@
-package com.cittus.isv.view.signal
+package com.cittus.isv.controller.signal
 
 import android.os.Bundle
 import android.support.v4.app.Fragment
@@ -70,14 +70,14 @@ class AddressLocationOnTheWayActivity : Fragment() {
         // 3 -> Starts 2 - State Signal
         var tempArray: ArrayList<String> = ArrayList<String>()
 
-        var spinLocationBetween: Spinner = viewMain!!.findViewById<Spinner>(R.id.spin_location_between_signal)
-        var txtLocationBetween: EditText = viewMain!!.findViewById<EditText>(R.id.txt_location_between_signal)
+        var spinLocationBetween: Spinner = viewMain.findViewById<Spinner>(R.id.spin_location_between_signal)
+        var txtLocationBetween: EditText = viewMain.findViewById<EditText>(R.id.txt_location_between_signal)
 
-        var spinLocation: Spinner = viewMain!!.findViewById<Spinner>(R.id.spin_location_and_signal)
-        var txtLocation: EditText = viewMain!!.findViewById<EditText>(R.id.txt_location_and_signal)
+        var spinLocation: Spinner = viewMain.findViewById<Spinner>(R.id.spin_location_and_signal)
+        var txtLocation: EditText = viewMain.findViewById<EditText>(R.id.txt_location_and_signal)
 
-        var spinLocationSignal: Spinner = viewMain!!.findViewById<Spinner>(R.id.spin_location_with_signal)
-        var txtLocationSignal: EditText = viewMain!!.findViewById<EditText>(R.id.txt_location_with_signal)
+        var spinLocationSignal: Spinner = viewMain.findViewById<Spinner>(R.id.spin_location_with_signal)
+        var txtLocationSignal: EditText = viewMain.findViewById<EditText>(R.id.txt_location_with_signal)
 
 
         tempLocationSignal = spinLocationBetween.selectedItem.toString() + " # " + txtLocationBetween.text.toString()
@@ -94,7 +94,7 @@ class AddressLocationOnTheWayActivity : Fragment() {
 
     private fun saveAddress() {
 
-        viewMain!!.findViewById<Button>(R.id.btn_next_address).setOnClickListener {
+        viewMain.findViewById<Button>(R.id.btn_next_address).setOnClickListener {
 
 
             var locationSignal = LocationSignal()
@@ -121,7 +121,7 @@ class AddressLocationOnTheWayActivity : Fragment() {
                 id = R.id.stateSignalActivity
             }
             // Start Activity
-            Navigation.findNavController(viewMain!!).navigate(id, bundle)
+            Navigation.findNavController(viewMain).navigate(id, bundle)
         }
     }
 

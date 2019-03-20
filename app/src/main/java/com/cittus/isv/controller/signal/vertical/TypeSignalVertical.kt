@@ -1,4 +1,4 @@
-package com.cittus.isv.view.signal.vertical
+package com.cittus.isv.controller.signal.vertical
 
 import android.os.Bundle
 import android.support.v4.app.Fragment
@@ -66,46 +66,46 @@ class TypeSignalVertical : Fragment() {
     }
 
     private fun btnInformation(){
-        viewMain!!.findViewById<ImageButton>(R.id.ibtn_vertical_informative).setOnClickListener { view ->
+        viewMain.findViewById<ImageButton>(R.id.ibtn_vertical_informative).setOnClickListener { view ->
             sendData(0, false)
         }
-        viewMain!!.findViewById<Button>(R.id.btn_vertical_informative).setOnClickListener { view ->
+        viewMain.findViewById<Button>(R.id.btn_vertical_informative).setOnClickListener { view ->
             sendData(0, false)
         }
     }
 
     private fun btnRegulatory(){
-        viewMain!!.findViewById<ImageButton>(R.id.ibtn_vertical_regulatory).setOnClickListener { view ->
+        viewMain.findViewById<ImageButton>(R.id.ibtn_vertical_regulatory).setOnClickListener { view ->
             makeActivityImages(R.string.title_vertical_regulatory, EndPoints.URL_GET_VERTICAL_REGULATORY)
         }
-        viewMain!!.findViewById<Button>(R.id.btn_vertical_regulatory).setOnClickListener { view ->
+        viewMain.findViewById<Button>(R.id.btn_vertical_regulatory).setOnClickListener { view ->
             makeActivityImages(R.string.title_vertical_regulatory, EndPoints.URL_GET_VERTICAL_REGULATORY)
         }
     }
 
     private fun btnPreventive(){
-        viewMain!!.findViewById<ImageButton>(R.id.ibtn_vertical_preventive).setOnClickListener { view ->
+        viewMain.findViewById<ImageButton>(R.id.ibtn_vertical_preventive).setOnClickListener { view ->
             makeActivityImages(R.string.title_vertical_preventives, EndPoints.URL_GET_VERTICAL_PREVENTIVES)
         }
-        viewMain!!.findViewById<Button>(R.id.btn_vertical_preventive).setOnClickListener { view ->
+        viewMain.findViewById<Button>(R.id.btn_vertical_preventive).setOnClickListener { view ->
             makeActivityImages(R.string.title_vertical_preventives, EndPoints.URL_GET_VERTICAL_PREVENTIVES)
         }
     }
 
     private fun btnWork(){
-        viewMain!!.findViewById<ImageButton>(R.id.ibtn_vertical_work).setOnClickListener { view ->
+        viewMain.findViewById<ImageButton>(R.id.ibtn_vertical_work).setOnClickListener { view ->
             makeActivityImages(R.string.title_vertical_work, EndPoints.URL_GET_VERTICAL_WORK)
         }
-        viewMain!!.findViewById<Button>(R.id.btn_vertical_work).setOnClickListener { view ->
+        viewMain.findViewById<Button>(R.id.btn_vertical_work).setOnClickListener { view ->
             makeActivityImages(R.string.title_vertical_work, EndPoints.URL_GET_VERTICAL_WORK)
         }
     }
 
     private fun btnCycleRoute(){
-        viewMain!!.findViewById<ImageButton>(R.id.ibtn_vertical_cycle_route).setOnClickListener { view ->
+        viewMain.findViewById<ImageButton>(R.id.ibtn_vertical_cycle_route).setOnClickListener { view ->
             makeActivityImages(R.string.title_vertical_cycle_route, EndPoints.URL_GET_VERTICAL_CYCLE_ROUTE)
         }
-        viewMain!!.findViewById<Button>(R.id.btn_vertical_cycle_route).setOnClickListener { view ->
+        viewMain.findViewById<Button>(R.id.btn_vertical_cycle_route).setOnClickListener { view ->
             makeActivityImages(R.string.title_vertical_cycle_route, EndPoints.URL_GET_VERTICAL_CYCLE_ROUTE)
         }
     }
@@ -147,6 +147,6 @@ class TypeSignalVertical : Fragment() {
         // Set and Send Data Main
         bundle.putParcelable("CittusDB", cittusDB)
         // Start Activity
-        Navigation.findNavController(viewMain!!).navigate(idSiganl, bundle)
+        Navigation.findNavController(viewMain).navigate(idSiganl, bundle)
     }
 }

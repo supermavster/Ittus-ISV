@@ -1,4 +1,4 @@
-package com.cittus.isv.controller
+package com.cittus.isv.controller.Image
 
 import android.os.Bundle
 import android.support.v4.app.Fragment
@@ -64,19 +64,19 @@ class MainImage : Fragment() {
 
     private fun initProcess() {
 
-        var viewPager = viewMain!!.findViewById<ViewPager>(R.id.viewPager)
-        var SliderDots = viewMain!!.findViewById<LinearLayout>(R.id.SliderDots)
-        var spinCode = viewMain!!.findViewById<Spinner>(R.id.spin_code_images)
+        var viewPager = viewMain.findViewById<ViewPager>(R.id.viewPager)
+        var SliderDots = viewMain.findViewById<LinearLayout>(R.id.SliderDots)
+        var spinCode = viewMain.findViewById<Spinner>(R.id.spin_code_images)
 
         // Start Process
         mainImages.getValuesMain(imagenSelect, context, viewPager, SliderDots, spinCode)
 
         // Active Select
-        viewMain!!.findViewById<LinearLayout>(R.id.codeMain).visibility =
+        viewMain.findViewById<LinearLayout>(R.id.codeMain).visibility =
             View.VISIBLE//findViewById(R.id.codeMain).setVisibility(intent.getBooleanExtra("code", true) ? View.VISIBLE : View.GONE);
 
         // Set Template New Activity
-        viewMain!!.findViewById<TextView>(R.id.lbl_title_images).text = imagenSelect!!.title
+        viewMain.findViewById<TextView>(R.id.lbl_title_images).text = imagenSelect!!.title
 
         saveElements()
 
@@ -86,7 +86,7 @@ class MainImage : Fragment() {
     internal var elementsBase = ArrayList<String>()
 
     private fun saveElements() {
-        viewMain!!.findViewById<Button>(R.id.btn_save_image).setOnClickListener {
+        viewMain.findViewById<Button>(R.id.btn_save_image).setOnClickListener {
             // TODO: Get Data Images
             // 0 -> Number
             // 1 -> Code
@@ -116,7 +116,7 @@ class MainImage : Fragment() {
                 // Set and Send Data Main
                 Log.e("Data-Image", cittusDB.toString())
                 bundle.putParcelable("CittusDB", cittusDB)
-                Navigation.findNavController(viewMain!!).navigate(R.id.addressLocationOnTheWayActivity, bundle)
+                Navigation.findNavController(viewMain).navigate(R.id.addressLocationOnTheWayActivity, bundle)
             }
         }
     }

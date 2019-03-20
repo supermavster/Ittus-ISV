@@ -1,4 +1,4 @@
-package com.cittus.isv.view.base
+package com.cittus.isv.controller.base
 
 import android.os.Bundle
 import android.support.v4.app.Fragment
@@ -137,7 +137,7 @@ class GeolocationActivity : Fragment() {
             Log.e("Data-Geolocation", cittusDB.toString())
             // Set and Send Data Main
             bundle.putParcelable("CittusDB", cittusDB)
-            Navigation.findNavController(viewMain!!).navigate(R.id.typeSignalActivity, bundle)
+            Navigation.findNavController(viewMain).navigate(R.id.typeSignalActivity, bundle)
 
         }
     }

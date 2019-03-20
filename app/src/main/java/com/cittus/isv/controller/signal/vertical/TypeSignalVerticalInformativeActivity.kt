@@ -1,4 +1,4 @@
-package com.cittus.isv.view.signal.vertical
+package com.cittus.isv.controller.signal.vertical
 
 import android.os.Bundle
 import android.support.v4.app.Fragment
@@ -64,28 +64,28 @@ class TypeSignalVerticalInformativeActivity : Fragment() {
     }
 
     private fun btnServices(){
-        viewMain!!.findViewById<ImageButton>(R.id.ibtn_vts_informative_services).setOnClickListener { view ->
+        viewMain.findViewById<ImageButton>(R.id.ibtn_vts_informative_services).setOnClickListener { view ->
             makeActivityImages(R.string.title_vertical_info_services, EndPoints.URL_GET_VERTICAL_INFO_SERVICES)
         }
-        viewMain!!.findViewById<Button>(R.id.btn_vts_informative_services).setOnClickListener {view->
+        viewMain.findViewById<Button>(R.id.btn_vts_informative_services).setOnClickListener { view ->
             makeActivityImages(R.string.title_vertical_info_services, EndPoints.URL_GET_VERTICAL_INFO_SERVICES)
         }
     }
 
     private fun btnTouristic(){
-        viewMain!!.findViewById<ImageButton>(R.id.ibtn_vts_informative_turist).setOnClickListener {
+        viewMain.findViewById<ImageButton>(R.id.ibtn_vts_informative_turist).setOnClickListener {
             makeActivityImages(R.string.title_vertical_info_turistic, EndPoints.URL_GET_VERTICAL_INFO_TOURIST)
         }
-        viewMain!!.findViewById<Button>(R.id.btn_vts_informative_turist).setOnClickListener {
+        viewMain.findViewById<Button>(R.id.btn_vts_informative_turist).setOnClickListener {
             makeActivityImages(R.string.title_vertical_info_turistic, EndPoints.URL_GET_VERTICAL_INFO_TOURIST)
         }
     }
 
     private fun btnLocation(){
-        viewMain!!.findViewById<ImageButton>(R.id.ibtn_vts_informative_location).setOnClickListener {
+        viewMain.findViewById<ImageButton>(R.id.ibtn_vts_informative_location).setOnClickListener {
             makeActivityImages(R.string.title_vertical_info_localization, EndPoints.URL_GET_VERTICAL_INFO_LOCATION)
         }
-        viewMain!!.findViewById<Button>(R.id.btn_vts_informative_location).setOnClickListener {
+        viewMain.findViewById<Button>(R.id.btn_vts_informative_location).setOnClickListener {
             makeActivityImages(R.string.title_vertical_info_localization, EndPoints.URL_GET_VERTICAL_INFO_LOCATION)
         }
     }
@@ -126,7 +126,7 @@ class TypeSignalVerticalInformativeActivity : Fragment() {
         // Set and Send Data Main
         bundle.putParcelable("CittusDB", cittusDB)
         // Start Activity
-        Navigation.findNavController(viewMain!!).navigate(idSiganl, bundle)
+        Navigation.findNavController(viewMain).navigate(idSiganl, bundle)
     }
 
 }

@@ -1,4 +1,4 @@
-package com.cittus.isv.view.signal
+package com.cittus.isv.controller.signal
 
 import android.os.Bundle
 import android.support.v4.app.Fragment
@@ -58,16 +58,16 @@ class TypeSignalActivity: Fragment() {
     private fun initProcess() {
         viewMain.findViewById<Button>(R.id.btn_horizontal).setOnClickListener {
             setData("Horizontal")
-            Navigation.findNavController(viewMain!!).navigate(R.id.locationOnTheWayActivity, bundle)
+            Navigation.findNavController(viewMain).navigate(R.id.locationOnTheWayActivity, bundle)
         }
 
         viewMain.findViewById<Button>(R.id.btn_vertical).setOnClickListener {
             setData("Vertical")
-            Navigation.findNavController(viewMain!!).navigate(R.id.typeSignalVertical, bundle)
+            Navigation.findNavController(viewMain).navigate(R.id.typeSignalVertical, bundle)
         }
 
         viewMain.findViewById<ImageButton>(R.id.ibtn_count).setOnClickListener {
-            Toast.makeText(this.context, "Total de señales registradas: ${signalArrayList!!.size}", Toast.LENGTH_SHORT)
+            Toast.makeText(this.context, "Total de señales registradas: ${signalArrayList.size}", Toast.LENGTH_SHORT)
                 .show()
         }
 
