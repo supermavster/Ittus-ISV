@@ -6,10 +6,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.NumberPicker
-import android.widget.RadioButton
-import android.widget.RadioGroup
+import android.widget.*
 import androidx.navigation.Navigation
 import com.cittus.isv.R
 import com.cittus.isv.model.*
@@ -149,6 +146,7 @@ class GenearlDataActivity : Fragment() {
         // 1-0 -> Direccion
         // 1-1 -> Carril
         // 1-2 -> Porcentaje
+        // 1-3 -> State
         try {
             // Direccion
             var rg_directional = viewMain.findViewById<RadioGroup>(R.id.rg_directional)
@@ -159,6 +157,9 @@ class GenearlDataActivity : Fragment() {
             tempValues.add(1, carril) // 1-2 -> Carril
 
             tempValues.add(2, porcentaje) // 1-3 -> Porcentaje
+
+            tempValues.add(3, viewMain.findViewById<RatingBar>(R.id.ratingBar).rating.toString())
+
 
             exceptionMain = false
         } catch (e: Exception) {
@@ -186,13 +187,14 @@ class GenearlDataActivity : Fragment() {
 
             var dataTemp = getDataMain()
             // 1-0 -> Direccion
-            // 1-2 -> Carril
-            // 1-3 -> Porcentaje
-
+            // 1-1 -> Carril
+            // 1-2 -> Porcentaje
+            // 1-3 -> State
 
             horizontalSignal!!.directionJourney = dataTemp[0]
             horizontalSignal!!.rail = dataTemp[1]
             horizontalSignal!!.percentage = dataTemp[2]
+            horizontalSignal!!.stateSingal = dataTemp[3].toFloat()
 
             // Add data to Object
             signalArrayList[signalArrayList.size - 1].horizontalSignal = horizontalSignal

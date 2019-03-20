@@ -11,7 +11,7 @@ import androidx.navigation.Navigation
 import com.cittus.isv.R
 import com.cittus.isv.model.*
 
-class StateSignalActivity: Fragment() {
+class StateSignalActivity : Fragment() {
 
 
     // Main Variables

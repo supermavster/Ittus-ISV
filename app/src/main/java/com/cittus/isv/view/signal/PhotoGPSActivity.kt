@@ -223,8 +223,6 @@ class PhotoGPSActivity : Fragment() {
     private var locationNetwork: Location? = null
 
 
-    private var listenerGPS: LocationListener? = null;
-    private var listenerNetwork: LocationListener? = null;
 
 
     @SuppressLint("MissingPermission")
@@ -236,7 +234,11 @@ class PhotoGPSActivity : Fragment() {
 
             if (hasGps) {
                 Log.d("CodeAndroidLocation", "hasGps")
-                listenerGPS = object : LocationListener {
+                locationManager.requestLocationUpdates(
+                    LocationManager.GPS_PROVIDER,
+                    5000,
+                    0F,
+                    object : LocationListener {
                     override fun onLocationChanged(location: Location?) {
                         if (location != null) {
                             locationGps = location
@@ -262,8 +264,7 @@ class PhotoGPSActivity : Fragment() {
 
                     }
 
-                }
-                locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 5000, 0F, listenerGPS)
+                    })
 
                 val localGpsLocation = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER)
                 if (localGpsLocation != null)
@@ -271,7 +272,11 @@ class PhotoGPSActivity : Fragment() {
             }
             if (hasNetwork) {
                 Log.d("CodeAndroidLocation", "hasGps")
-                listenerGPS = object : LocationListener {
+                locationManager.requestLocationUpdates(
+                    LocationManager.NETWORK_PROVIDER,
+                    5000,
+                    0F,
+                    object : LocationListener {
                     override fun onLocationChanged(location: Location?) {
                         if (location != null) {
                             locationNetwork = location
@@ -299,8 +304,7 @@ class PhotoGPSActivity : Fragment() {
 
                     }
 
-                }
-                locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 5000, 0F, listenerNetwork)
+                    })
 
                 val localNetworkLocation = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER)
                 if (localNetworkLocation != null)
@@ -315,7 +319,6 @@ class PhotoGPSActivity : Fragment() {
 
                     Log.d("CodeAndroidLocation", " Network Latitude : " + locationNetwork!!.latitude)
                     Log.d("CodeAndroidLocation", " Network Longitude : " + locationNetwork!!.longitude)
-                    locationManager.removeUpdates(listenerNetwork)
                 } else {
                     viewMain.findViewById<TextView>(R.id.txt_latitude).text = locationGps!!.latitude.toString()
                     viewMain.findViewById<TextView>(R.id.txt_longitude).text = locationGps!!.longitude.toString()
@@ -323,7 +326,6 @@ class PhotoGPSActivity : Fragment() {
 
                     Log.d("CodeAndroidLocation", " GPS Latitude : " + locationGps!!.latitude)
                     Log.d("CodeAndroidLocation", " GPS Longitude : " + locationGps!!.longitude)
-                    locationManager.removeUpdates(listenerGPS)
                 }
 
 
@@ -333,12 +335,6 @@ class PhotoGPSActivity : Fragment() {
             Log.e("ERROR", "GPS")
         }
 
-        try {
-            locationManager.removeUpdates(listenerGPS)
-            locationManager.removeUpdates(listenerNetwork)
-        } catch (ex: Exception) {
-
-        }
     }
 
     fun getData(): ArrayList<String> {
