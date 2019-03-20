@@ -7,6 +7,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.ImageButton
+import android.widget.Toast
 import androidx.navigation.Navigation
 import com.cittus.isv.R
 import com.cittus.isv.model.CittusISV
@@ -25,6 +27,8 @@ class TypeSignalActivity: Fragment() {
     var login = 0
     private var municipalities: Municipalities? = null
     private var geolocationCardinalImages: ArrayList<GeolocationCardinalImages>? = null
+    private var signalArrayList = ArrayList<CittusISV>()
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -42,6 +46,8 @@ class TypeSignalActivity: Fragment() {
             login = it.login
             municipalities = it.municipality
             geolocationCardinalImages = it.geolocationCardinalImages
+            signalArrayList = it.signal!!
+
         }
         if (login === 1) {
             // Init Process
@@ -59,14 +65,19 @@ class TypeSignalActivity: Fragment() {
             setData("Vertical")
             Navigation.findNavController(viewMain!!).navigate(R.id.typeSignalVertical, bundle)
         }
+
+        viewMain.findViewById<ImageButton>(R.id.ibtn_count).setOnClickListener {
+            Toast.makeText(this.context, "Total de señales registradas: ${signalArrayList!!.size}", Toast.LENGTH_SHORT)
+                .show()
+        }
+
     }
 
     private fun setData(typeSignal: String) {
 
-        var signalArrayList = ArrayList<CittusISV>()
 
         // Add Signal Values
-        var signal = CittusISV(typeSignal)
+        var signal = CittusISV(signalArrayList.size - 1, typeSignal)
         signalArrayList.add(signal)
 
         // Make Object Main

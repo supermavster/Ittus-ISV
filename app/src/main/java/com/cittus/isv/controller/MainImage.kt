@@ -25,6 +25,7 @@ class MainImage : Fragment() {
     private var municipalities: Municipalities? = null
     private var geolocationCardinalImages: ArrayList<GeolocationCardinalImages>? = null
     var signalArrayList = ArrayList<CittusISV>()
+    private var size = 0
 
     // Variables locals - IMG
     private var imagenSelect: CittusImage? = null
@@ -54,6 +55,7 @@ class MainImage : Fragment() {
         imagenSelect = arguments?.getParcelable("CittusImage")
 
         if (login === 1) {
+            size = signalArrayList.size - 1
             // Init Process
             initProcess()
         }
@@ -106,7 +108,7 @@ class MainImage : Fragment() {
                 imagesByCode.codeImagen = elementsBase.get(1)
                 imagesByCode.pathImagen = elementsBase.get(2)
 
-                signalArrayList.get(0).imagesByCode = imagesByCode
+                signalArrayList[size].imagesByCode = imagesByCode
 
                 // Make Object Main
                 var cittusDB: CittusListSignal =

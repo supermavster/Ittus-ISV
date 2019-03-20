@@ -11,10 +11,7 @@ import android.widget.ImageButton
 import androidx.navigation.Navigation
 import com.cittus.isv.R
 import com.cittus.isv.complements.camera.TakePicture
-import com.cittus.isv.model.ActionsRequest
-import com.cittus.isv.model.CittusListSignal
-import com.cittus.isv.model.GeolocationCardinalImages
-import com.cittus.isv.model.Municipalities
+import com.cittus.isv.model.*
 import kotlinx.android.synthetic.main.activity_geolocalization.view.*
 
 class GeolocationActivity : Fragment() {
@@ -134,7 +131,8 @@ class GeolocationActivity : Fragment() {
             geolocationCardinalImages.add(geoImagen)
 
             // Make Object Main
-            var cittusDB: CittusListSignal = CittusListSignal(login, municipalities, null, geolocationCardinalImages)
+            var cittusDB: CittusListSignal =
+                CittusListSignal(login, municipalities, ArrayList<CittusISV>(), geolocationCardinalImages)
             // Show Data
             Log.e("Data-Geolocation", cittusDB.toString())
             // Set and Send Data Main

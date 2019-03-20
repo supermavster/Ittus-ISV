@@ -33,6 +33,8 @@ class PhotoGPSActivity : Fragment() {
     private var signalArrayList = ArrayList<CittusISV>()
     // Variables Class
 
+    private var size = 0
+
     // Cameras
     lateinit var takePictureFront: TakePicture
     lateinit var takePictureBack: TakePicture
@@ -59,6 +61,7 @@ class PhotoGPSActivity : Fragment() {
 
         }
         if (login == 1) {
+            size = signalArrayList.size - 1
             // Init Process
             initProcess()
         }
@@ -67,6 +70,7 @@ class PhotoGPSActivity : Fragment() {
 
     private fun initProcess() {
 
+        hiddenItems()
         // Btn Camera
         cameraActions()
         // Btn GPS
@@ -77,6 +81,21 @@ class PhotoGPSActivity : Fragment() {
 
         // Btn Save and Next
         btnSave()
+    }
+
+    private fun hiddenItems() {
+        // Ids
+        if (signalArrayList[size].typeSignal == "Horizontal") {
+            viewMain.findViewById<LinearLayout>(R.id.linear_vertical_two).visibility = View.GONE
+            viewMain.findViewById<LinearLayout>(R.id.linear_vertical_three).visibility = View.GONE
+            viewMain.findViewById<LinearLayout>(R.id.box_location).visibility = View.GONE
+            viewMain.findViewById<TextView>(R.id.lbl_location_signal).visibility = View.GONE
+        } else {
+            viewMain.findViewById<LinearLayout>(R.id.linear_vertical_two).visibility = View.VISIBLE
+            viewMain.findViewById<LinearLayout>(R.id.linear_vertical_three).visibility = View.VISIBLE
+            viewMain.findViewById<LinearLayout>(R.id.box_location).visibility = View.VISIBLE
+            viewMain.findViewById<TextView>(R.id.lbl_location_signal).visibility = View.VISIBLE
+        }
     }
 
     var main = false
@@ -141,12 +160,14 @@ class PhotoGPSActivity : Fragment() {
             cittusSignal.longitude = tempData.get(1).toFloat()
             cittusSignal.altitude = tempData.get(2).toFloat()
             cittusSignal.photoFront = tempData.get(3)
-            cittusSignal.photoBack = tempData.get(4)
-            cittusSignal.photoPlaque = tempData.get(5)
-            cittusSignal.location = tempData.get(6)
+            if (signalArrayList[size].typeSignal == "Vertical") {
+                cittusSignal.photoBack = tempData.get(4)
+                cittusSignal.photoPlaque = tempData.get(5)
+                cittusSignal.location = tempData.get(6)
+            }
 
 
-            signalArrayList.get(0).cittusSignal = cittusSignal
+            signalArrayList[size].cittusSignal = cittusSignal
 
             // Make Object Main
             var cittusDB: CittusListSignal =
@@ -202,6 +223,10 @@ class PhotoGPSActivity : Fragment() {
     private var locationNetwork: Location? = null
 
 
+    private var listenerGPS: LocationListener? = null;
+    private var listenerNetwork: LocationListener? = null;
+
+
     @SuppressLint("MissingPermission")
     private fun getLocation() {
         locationManager = viewMain.context.getSystemService(Context.LOCATION_SERVICE) as LocationManager
@@ -211,8 +236,7 @@ class PhotoGPSActivity : Fragment() {
 
             if (hasGps) {
                 Log.d("CodeAndroidLocation", "hasGps")
-                locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 5000, 0F, object :
-                    LocationListener {
+                listenerGPS = object : LocationListener {
                     override fun onLocationChanged(location: Location?) {
                         if (location != null) {
                             locationGps = location
@@ -238,7 +262,8 @@ class PhotoGPSActivity : Fragment() {
 
                     }
 
-                })
+                }
+                locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 5000, 0F, listenerGPS)
 
                 val localGpsLocation = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER)
                 if (localGpsLocation != null)
@@ -246,8 +271,7 @@ class PhotoGPSActivity : Fragment() {
             }
             if (hasNetwork) {
                 Log.d("CodeAndroidLocation", "hasGps")
-                locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 5000, 0F, object :
-                    LocationListener {
+                listenerGPS = object : LocationListener {
                     override fun onLocationChanged(location: Location?) {
                         if (location != null) {
                             locationNetwork = location
@@ -275,7 +299,8 @@ class PhotoGPSActivity : Fragment() {
 
                     }
 
-                })
+                }
+                locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 5000, 0F, listenerNetwork)
 
                 val localNetworkLocation = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER)
                 if (localNetworkLocation != null)
@@ -290,6 +315,7 @@ class PhotoGPSActivity : Fragment() {
 
                     Log.d("CodeAndroidLocation", " Network Latitude : " + locationNetwork!!.latitude)
                     Log.d("CodeAndroidLocation", " Network Longitude : " + locationNetwork!!.longitude)
+                    locationManager.removeUpdates(listenerNetwork)
                 } else {
                     viewMain.findViewById<TextView>(R.id.txt_latitude).text = locationGps!!.latitude.toString()
                     viewMain.findViewById<TextView>(R.id.txt_longitude).text = locationGps!!.longitude.toString()
@@ -297,7 +323,10 @@ class PhotoGPSActivity : Fragment() {
 
                     Log.d("CodeAndroidLocation", " GPS Latitude : " + locationGps!!.latitude)
                     Log.d("CodeAndroidLocation", " GPS Longitude : " + locationGps!!.longitude)
+                    locationManager.removeUpdates(listenerGPS)
                 }
+
+
             }
 
         } else {
@@ -330,35 +359,37 @@ class PhotoGPSActivity : Fragment() {
             tempArray.add(3, "NONE")
         }
 
-        if (viewMain.findViewById<ImageButton>(R.id.ibtn_back).isClickable) {//&& vertical){
-            tempArray.add(4, takePictureBack.getPath()!!) // 4 -> Img Back
-        } else {
-            tempArray.add(4, "NONE")
+        if (signalArrayList[size].typeSignal == "Vertical") {
+
+            if (viewMain.findViewById<ImageButton>(R.id.ibtn_back).isClickable) {//&& vertical){
+                tempArray.add(4, takePictureBack.getPath()!!) // 4 -> Img Back
+            } else {
+                tempArray.add(4, "NONE")
+            }
+
+            if (viewMain.findViewById<ImageButton>(R.id.ibtn_plaque).isClickable) {//&& vertical){S
+                tempArray.add(5, takePicturePlaque.getPath()!!) // 5 -> Img Plaque
+            } else {
+                tempArray.add(5, "NONE")
+            }
+
+            var btn_stretch = viewMain.findViewById<ToggleButton>(R.id.btn_left)
+            var btn_intersection = viewMain.findViewById<ToggleButton>(R.id.btn_right)
+
+            // Location in the Trayect
+            var btnLocationMain: String = ""
+            if (btn_stretch.isChecked) {
+                btnLocationMain = btn_stretch.textOff.toString()
+            } else if (btn_intersection.isChecked) {
+                btnLocationMain = btn_intersection.textOff.toString()
+            }
+            if (btnLocationMain.isNotEmpty()) {
+                tempArray.add(6, btnLocationMain)// 1-1 -> Location Trayecto
+            } else {
+                throw Exception("Location was not Select")
+            }
+
         }
-
-        if (viewMain.findViewById<ImageButton>(R.id.ibtn_plaque).isClickable) {//&& vertical){S
-            tempArray.add(5, takePicturePlaque.getPath()!!) // 5 -> Img Plaque
-        } else {
-            tempArray.add(5, "NONE")
-        }
-
-        var btn_stretch = viewMain.findViewById<ToggleButton>(R.id.btn_left)
-        var btn_intersection = viewMain.findViewById<ToggleButton>(R.id.btn_right)
-
-        // Location in the Trayect
-        var btnLocationMain: String = ""
-        if (btn_stretch.isChecked) {
-            btnLocationMain = btn_stretch.textOff.toString()
-        } else if (btn_intersection.isChecked) {
-            btnLocationMain = btn_intersection.textOff.toString()
-        }
-        if (btnLocationMain.isNotEmpty()) {
-            tempArray.add(6, btnLocationMain)// 1-1 -> Location Trayecto
-        } else {
-            throw Exception("Location was not Select")
-        }
-
-
         return tempArray
     }
 }

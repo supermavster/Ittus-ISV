@@ -25,6 +25,8 @@ class AddressLocationOnTheWayActivity : Fragment() {
     private var geolocationCardinalImages: ArrayList<GeolocationCardinalImages>? = null
     private var signalArrayList = ArrayList<CittusISV>()
 
+    private var sizeSignal = 0
+
     // Variables Class
     private var tempLocationSignal = ""
 
@@ -49,6 +51,7 @@ class AddressLocationOnTheWayActivity : Fragment() {
 
         }
         if (login === 1) {
+            sizeSignal = signalArrayList.size - 1
             // Init Process
             initProcess()
         }
@@ -102,7 +105,7 @@ class AddressLocationOnTheWayActivity : Fragment() {
             locationSignal.thirdAddressSignal = tempData.get(2)
 
             // Set Data Address
-            signalArrayList.get(0).locationSignal = locationSignal
+            signalArrayList[sizeSignal].locationSignal = locationSignal
 
             // Make Object Main
             var cittusDB: CittusListSignal =
@@ -114,7 +117,7 @@ class AddressLocationOnTheWayActivity : Fragment() {
 
             // Ids
             var id = R.id.genearlDataActivity
-            if (signalArrayList.get(0).typeSignal == "Vertical") {
+            if (signalArrayList[sizeSignal].typeSignal == "Vertical") {
                 id = R.id.stateSignalActivity
             }
             // Start Activity

@@ -93,10 +93,10 @@ class TypeSignalVertical : Fragment() {
     }
 
     private fun btnWork(){
-        viewMain!!.findViewById<ImageButton>(R.id.ibtn_vertical_preventive).setOnClickListener { view ->
+        viewMain!!.findViewById<ImageButton>(R.id.ibtn_vertical_work).setOnClickListener { view ->
             makeActivityImages(R.string.title_vertical_work, EndPoints.URL_GET_VERTICAL_WORK)
         }
-        viewMain!!.findViewById<Button>(R.id.btn_vertical_preventive).setOnClickListener { view ->
+        viewMain!!.findViewById<Button>(R.id.btn_vertical_work).setOnClickListener { view ->
             makeActivityImages(R.string.title_vertical_work, EndPoints.URL_GET_VERTICAL_WORK)
         }
     }

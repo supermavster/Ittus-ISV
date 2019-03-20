@@ -120,7 +120,11 @@ class FinishSaveActivity : Fragment() {
 
     private fun uploadImages() {
         var makeToUpoad: MakeToUpoad = MakeToUpoad(viewMain.context);
-        var uri = Uri.fromFile(File(signalArrayList.get(0)!!.imagesByCode!!.pathImagen))
+        var signal = signalArrayList[signalArrayList.size - 1]
+        var image = signal.imagesByCode
+        var path = image!!.pathImagen
+        var file = File(path)
+        var uri = Uri.fromFile(file)
         makeToUpoad.showFileChooser(uri)
 
 

@@ -69,6 +69,7 @@ class LoginActivity : Fragment() {
             var cittusDB: CittusListSignal = CittusListSignal(login,municipalities,signal,geolocationCardinal)*/
             // Check Login
             if (login === 1) {
+                // Start Main Object
                 // Make Object Main
                 var cittusDB: CittusListSignal = CittusListSignal(login, null, null, null)
                 // Show Data

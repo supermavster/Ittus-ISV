@@ -36,9 +36,15 @@ data class CittusListSignal(
             // Data Municipality
             dest.writeParcelable(municipality, flags)
             // Cittus ISV - Signal
-            dest.writeParcelableArray(arrayOf(signal?.get(0)), flags)
+            var size: Int? = signal?.size
+            if (size == null) {
+                size = 0
+            }
+            for (i in 0 until size) {
+                dest.writeParcelableArray(arrayOf(signal?.get(i)), flags)
+            }
             // Cardinal Images
-            var size: Int? = geolocationCardinalImages?.size
+            size = geolocationCardinalImages?.size
             if (size == null) {
                 size = 0
             }
@@ -51,7 +57,7 @@ data class CittusListSignal(
     override fun describeContents(): Int = 0
 
     override fun toString(): String {
-        return "[{\"CittusListSignal\":{\"login\":\"$login\",$municipality,$signal,\"GeolocationCardinalImages\":{$geolocationCardinalImages}}}]"
+        return "[{\"CittusListSignal\":{\"login\":\"$login\",$municipality,\"CittusISV\":{$signal},\"GeolocationCardinalImages\":{$geolocationCardinalImages}}}]"
     }
 
 

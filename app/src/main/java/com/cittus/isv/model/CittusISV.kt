@@ -3,7 +3,7 @@ package com.cittus.isv.model
 import android.os.Parcel
 import android.os.Parcelable
 
-data class CittusISV(var typeSignal: String) : Parcelable {
+data class CittusISV(var count: Int, var typeSignal: String) : Parcelable {
 
     var imagesByCode: ImagenSignalCode? = null
     var locationSignal: LocationSignal? = null
@@ -21,6 +21,7 @@ data class CittusISV(var typeSignal: String) : Parcelable {
     }
 
     constructor(source: Parcel) : this(
+        source.readInt(),
         source.readString()
     )
 
@@ -39,7 +40,7 @@ data class CittusISV(var typeSignal: String) : Parcelable {
         } else if (horizontalSignal != null) {
             typeSignalMain = "$horizontalSignal"
         }
-        return "\"CittusISV\":{\"typeSignal\":\"$typeSignal\",$imagesByCode,$locationSignal,$cittusSignal,$typeSignalMain}"
+        return "\"$count\":{\"typeSignal\":\"$typeSignal\",$imagesByCode,$locationSignal,$cittusSignal,$typeSignalMain}"
     }
 
 
